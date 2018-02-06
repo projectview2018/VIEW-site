@@ -3,6 +3,7 @@
 
 {% block content %}
 
+<html>
 <div class="jumbotron text-center">
   <div class="container">
     <a href="/" class="lang-logo">
@@ -54,5 +55,248 @@
    <div class="alert alert-info text-center" role="alert">
     Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
   </div>
+<div id="instructiontxt"> Chose field of view image to upload</div>
+    <br>
+<div id="canvas">Click to draw<br/></div>
+<button onclick="clearPanel()">Clear</button>
+<button onclick="nextPanel()">Next</button>
+ <input type="file" onchange="previewFile()"><br>
+ <img src="" height="0" alt="">
 </div>
+</html>
+
+
+
+
+<script type="text/javascript">
+function clearPanel() {
+    ctx.addBack(my_image);
+}
+
+function nextPanel() {
+    ctx.addNext(my_image);
+}
+
+var color_marks = [];
+var curr_step = 0;
+var bottom_view = [];
+var bottom_view_driver = [];
+var bottom_view_front = [];
+var bottom_view_passenger = [];
+var height_map = {};
+var driver_height = 57; // will need to be user entered
+var marks_dist = 92; 
+
+function c(img) {
+    // Creates a new canvas element and appends it as a child
+    // to the parent element, and returns the reference to
+    // the newly created canvas element
+
+    function createCanvas(parent, width, height) {
+        var canvas = {};
+        canvas.node = document.createElement("canvas");
+        canvas.context = canvas.node.getContext("2d");
+        canvas.node.width = width || 100;
+        canvas.node.height = height || 100;
+
+        parent.appendChild(canvas.node);
+
+        return canvas;
+    }
+
+    function storeCoordinate(xVal, yVal, array) {
+        array.push({x: xVal, y: yVal});
+    }
+
+    function storeHeight(yVal, array){
+        array.push(yVal);
+    }
+
+    function getAverage(array){
+        var sum = 0;
+        for( var i = 0; i < array.length; i++ ){
+            sum += parseInt( array[i], 10 ); //don't forget to add the base
+        }
+        var avg = sum/array.length;
+        avg = Math.round(avg);
+        return avg;
+    }
+
+    function init(container, width, height, fillColor) {
+        var canvas = createCanvas(container, width, height);
+        var coords = [];
+        ctx = canvas.context;
+
+        // define a custom fillCircle method
+        ctx.fillCircle = function(x, y, radius, fillColor) {
+            this.fillStyle = fillColor;
+            this.beginPath();
+            this.moveTo(x, y);
+            this.arc(x, y, radius, 0, Math.PI * 2, false);
+            this.fill();
+        };
+
+        ctx.addBack = function (img){
+          var image = new Image()
+          image.onload = function () {
+            console.log('here back');
+                coords = [];
+            ctx.drawImage(image, 0, 0, 800, 400);
+          }
+          image.src = img
+        }
+        ctx.addBack(img);
+
+        ctx.addNext = function (img){
+            var image = new Image()
+            image.onload = function () {
+                console.log('here next');
+                if (curr_step < 7) {
+                    console.log(coords);
+                    avg = getAverage(coords);
+                    color_marks.push(avg);
+                    coords = [];
+                    curr_step += 1;
+                    if (curr_step < 7) {
+                        instructiontxt.innerHTML = "If " + curr_step + " foot mark is visible use click to draw small horizontal line on mark, when done click next. If not visible, click next. Press clear if errors are made.";
+                    } else if (curr_step == 7) {
+                        instructiontxt.innerHTML = "Draw line along bottom of driver side field of view.";
+                        curr_step += 1;
+                    }
+                    console.log(color_marks);
+                } else if (curr_step == 8) {
+                    // console.log(curr_step);
+                    // console.log(color_marks);
+                    bottom_view_driver = coords;
+                    instructiontxt.innerHTML = "Draw line along bottom of front field of view.";
+                    curr_step += 1
+                } else if (curr_step == 9) {
+                    bottom_view_front = coords;
+                    instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
+                    curr_step += 1;
+                } else {
+                    bottom_view_passenger = coords;
+                    // instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
+                    // curr_step += 1;
+                    createHeightMap();
+                    calcGroundIntersection();
+                }
+                ctx.drawImage(image, 0, 0, 800, 400);
+            }
+            image.src = img;
+        }
+        ctx.addNext(img);
+          
+
+
+        // bind mouse events
+        canvas.node.onmousemove = function(e) {
+            if (!canvas.isDrawing) {
+               return;
+            }
+            var x = e.pageX - this.offsetLeft;
+            var y = e.pageY - this.offsetTop;
+            var radius = 5; // or whatever
+            var fillColor = '#ff0000';
+            // var coords = [];
+            if (curr_step < 7) {
+                storeHeight(y, coords);
+                // console.log(y);
+            } else {
+                storeCoordinate(x, y, coords);
+                // console.log(x, y);
+            }
+            ctx.fillCircle(x, y, radius, fillColor);
+        };
+        canvas.node.onmousedown = function(e) {
+            canvas.isDrawing = true;
+            console.log(canvas);
+        };
+        canvas.node.onmouseup = function(e) {
+            canvas.isDrawing = false;
+        };
+    }
+
+    var container = document.getElementById('canvas');
+    init(container, 800, 400, '#ddd', img);
+};
+
+function previewFile() {
+    // Where you will display your image
+    var preview = document.querySelector('img');
+    // The button where the user chooses the local image to display
+    var file = document.querySelector('input[type=file]').files[0];
+    // FileReader instance
+    var reader  = new FileReader();
+
+    // When the image is loaded we will set it as source of
+    // our img tag
+    reader.onloadend = function () {
+      preview.src = reader.result;
+      my_image = preview.src;
+      console.log(reader);
+    c(preview.src);
+    }
+    
+    if (file) {
+      // Load image as a base64 encoded URI
+      reader.readAsDataURL(file);
+
+    } else {
+      preview.src = "";
+    }
+}
+
+function createHeightMap(){
+    for (i = 0; i < color_marks.length; i++){
+        if (color_marks[i] & color_marks[i+1]){
+            var diff = color_marks[i] - color_marks[i+1];
+            var increment = 12 / diff;
+            var inches_val = i * 12;
+            for (j = color_marks[i]; j >= color_marks[i+1]; j--){
+                height_map[j] = inches_val;
+                inches_val += increment;
+            }
+
+        } else if (color_marks[i+1] & color_marks[i+2]){
+            var diff = color_marks[i+1] - color_marks[i+2];
+            var increment = 12 / diff;
+            var inches_val = i * 12;
+            // console.log(color_marks[i + 1]- diff);
+            // console.log(color_marks[i+1]);
+            for (j = color_marks[i + 1] + diff; j >= color_marks[i+1]; j--){
+                // console.log(j);
+                height_map[j] = inches_val;
+                inches_val += increment;
+            }
+        }
+    }
+    // console.log(height_map);
+}
+
+function getTanDeg(deg) {
+  var rad = deg * Math.PI/180;
+  return Math.tan(rad);
+}
+
+function getATanDeg(deg) {
+  return Math.atan(deg) * (180/Math.PI);
+}
+
+function calcGroundIntersection(){
+    ground_intersections = [];
+    Array.prototype.push.apply(bottom_view,bottom_view_driver, bottom_view_front, bottom_view_passenger)
+    for (i = 0; i < bottom_view.length; i++){
+        bottom_view_inches = height_map[Math.round(bottom_view[i].y)];
+        opposite_side = driver_height - bottom_view_inches;
+        fov_angle = getATanDeg(opposite_side/marks_dist);
+        ground_intersection = driver_height * getTanDeg(90-fov_angle);
+        ground_intersections.push(ground_intersection / 12); 
+    }
+    console.log(ground_intersections);
+}
+
+
+</script>
+
 {% endblock %}
