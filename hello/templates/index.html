@@ -210,9 +210,11 @@ function c(img) {
         ctx.addNext(img);
           
         ctx.calculateNVP = function(){
+            console.log("THEOSEOHTUHOe");
             createHeightMap();
             calcGroundIntersection();
         }
+        ctx.calculateNVP();
 
         // bind mouse events
         canvas.node.onmousemove = function(e) {
