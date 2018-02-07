@@ -83,9 +83,9 @@ function nextPanel() {
 }
 
 function submitForm() {
-    ctx.calculateNVP(my_image);
-    // createHeightMap();
-    // calcGroundIntersection();
+    // ctx.calculateNVP();
+    createHeightMap();
+    calcGroundIntersection();
 
 }
 
@@ -212,12 +212,12 @@ function c(img) {
         }
         ctx.addNext(img);
           
-        ctx.calculateNVP = function(img){
-            console.log("THEOSEOHTUHOe");
-            createHeightMap();
-            calcGroundIntersection();
-        }
-        ctx.calculateNVP(img);
+        // ctx.calculateNVP = function(){
+        //     console.log("THEOSEOHTUHOe");
+        //     createHeightMap();
+        //     calcGroundIntersection();
+        // }
+        // ctx.calculateNVP();
 
         // bind mouse events
         canvas.node.onmousemove = function(e) {
@@ -284,7 +284,6 @@ function previewFile() {
 }
 
 function createHeightMap(){
-    console.log("HEGIHT MAP");
     for (i = 0; i < color_marks.length; i++){
         if (color_marks[i] & color_marks[i+1]){
             var diff = color_marks[i] - color_marks[i+1];
