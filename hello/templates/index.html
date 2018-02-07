@@ -55,7 +55,7 @@
     <input type="text" class="form-control" id="r" placeholder="Enter distance eg: 94">
     <small id="radiusdescript" class="form-text text-muted">This is not the hypotenuse, but the distance along the ground.</small>
   </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
+  <button type="submit" class="btn btn-primary" onclick="submitForm()">Submit</button>
 </form>
 <hr>
 </div>
@@ -80,6 +80,10 @@ function clearPanel() {
 
 function nextPanel() {
     ctx.addNext(my_image);
+}
+
+function submitForm() {
+    ctx.calculateNVP();
 }
 
 var color_marks = [];
@@ -181,6 +185,7 @@ function c(img) {
                     instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
                     curr_step += 1;
                 } else if (curr_step == 10) {
+                    bottom_view_passenger = coords;
                     var item = document.getElementById('dataentry');
                     if (item) {
                       if(item.className =='hidden'){
@@ -191,11 +196,12 @@ function c(img) {
                     curr_step += 1;
                 }
                 else {
-                    bottom_view_passenger = coords;
+                    // bottom_view_passenger = coords;
                     // instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
                     // curr_step += 1;
-                    createHeightMap();
-                    calcGroundIntersection();
+                    console.log("why are we here??");
+                    // createHeightMap();
+                    // calcGroundIntersection();
                 }
                 ctx.drawImage(image, 0, 0, 800, 400);
             }
@@ -203,7 +209,10 @@ function c(img) {
         }
         ctx.addNext(img);
           
-
+        ctx.calculateNVP = function(){
+            createHeightMap();
+            calcGroundIntersection();
+        }
 
         // bind mouse events
         canvas.node.onmousemove = function(e) {
