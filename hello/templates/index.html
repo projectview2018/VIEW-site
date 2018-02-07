@@ -23,6 +23,7 @@
       <h3><span class="glyphicon glyphicon-info-sign"></span> What this is/Instructions</h3>
       <ul>
         <li>Todo: instructions here</li>
+        <li> The image you upload will look warped, that's okay </li>
       </ul>
     </div>
   </div>
@@ -32,10 +33,18 @@
     Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
   </div> -->
   <h3>
-    <span class="glyphicon glyphicon-info-sign"></span>
 <div id="instructiontxt">Chose field of view image to upload</div></h3>
     <br>
 <div id="steps" class="hidden">
+  <div class="form-group">
+  <label for="usr">Driver eye heigh above ground (inches):</label>
+  <input type="text" class="form-control" id="h">
+</div>
+<div class="form-group">
+  <label for="pwd">Radius from driver to measurement stick (inches):</label>
+  <input type="text" class="form-control" id="r">
+</div>
+
 <div id="canvas">Click to draw<br/></div>
 <button onclick="clearPanel()">Clear</button>
 <button onclick="nextPanel()">Next</button>
@@ -63,6 +72,7 @@ var bottom_view_passenger = [];
 var height_map = {};
 var driver_height = 57; // will need to be user entered
 var marks_dist = 92; 
+
 
 function c(img) {
     // Creates a new canvas element and appends it as a child
