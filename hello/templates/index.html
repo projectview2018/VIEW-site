@@ -284,6 +284,7 @@ function previewFile() {
 }
 
 function createHeightMap(){
+    console.log("HEGIHT MAP");
     for (i = 0; i < color_marks.length; i++){
         if (color_marks[i] & color_marks[i+1]){
             var diff = color_marks[i] - color_marks[i+1];
