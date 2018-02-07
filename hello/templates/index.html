@@ -44,26 +44,30 @@
   <label for="pwd">Radius from driver to measurement stick (inches):</label>
   <input type="text" class="form-control" id="r">
 </div> -->
-<div id="steps" class="hidden">
-
-<div id="canvas">Click to draw<br/></div>
-<button class="btn btn-primary" onclick="clearPanel()">Clear</button>
-<button class="btn btn-primary" onclick="nextPanel()">Next</button>
-<hr>
+<div id="dataentry" class="hidden">
 <form>
   <div class="form-group">
     <label for="h">Driver eye heigh above ground in inches:</label>
     <input type="text" class="form-control" id="r" placeholder="Enter height eg: 63">
   </div>
   <div class="form-group">
-    <label for="r">Radius from driver to measurement stick in inches:</label>
+    <label for="r">Radial distance from driver to measurement stick in inches:</label>
     <input type="text" class="form-control" id="r" placeholder="Enter distance eg: 94">
+    <small id="radiusdescript" class="form-text text-muted">This is not the hypotenuse, but the distance along the ground.</small>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
 <hr>
 </div>
+
+<div id="steps" class="hidden">
+<div id="canvas">Click to draw<br/></div>
+<button class="btn btn-primary" onclick="clearPanel()">Clear</button>
+<button class="btn btn-primary" onclick="nextPanel()">Next</button>
+<hr>
+</div>
+
+
  <input type="file" onchange="previewFile()"><br>
  <img src="" height="0" alt="">
 </div>
@@ -177,7 +181,14 @@ function c(img) {
                     instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
                     curr_step += 1;
                 } else if (curr_step == 10) {
-
+                    var item = document.getElementById('dataentry');
+                    if (item) {
+                      if(item.className =='hidden'){
+                        item.className = 'unhidden';
+                      }
+                    }
+                    instructiontxt.innerHTML = "Enter the driver height and distance from driver to measurement stick";
+                    curr_step += 1;
                 }
                 else {
                     bottom_view_passenger = coords;
