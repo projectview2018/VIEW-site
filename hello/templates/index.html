@@ -35,7 +35,7 @@
   <h3>
 <div id="instructiontxt">Chose field of view image to upload</div></h3>
     <br>
-<div id="steps" class="hidden">
+<!-- <div id="steps" class="hidden">
   <div class="form-group">
   <label for="usr">Driver eye heigh above ground (inches):</label>
   <input type="text" class="form-control" id="h">
@@ -43,11 +43,26 @@
 <div class="form-group">
   <label for="pwd">Radius from driver to measurement stick (inches):</label>
   <input type="text" class="form-control" id="r">
-</div>
+</div> -->
+<div id="steps" class="hidden">
 
 <div id="canvas">Click to draw<br/></div>
-<button onclick="clearPanel()">Clear</button>
-<button onclick="nextPanel()">Next</button>
+<button class="btn btn-primary" onclick="clearPanel()">Clear</button>
+<button class="btn btn-primary" onclick="nextPanel()">Next</button>
+<hr>
+<form>
+  <div class="form-group">
+    <label for="h">Driver eye heigh above ground in inches:</label>
+    <input type="text" class="form-control" id="r" placeholder="Enter height eg: 63">
+  </div>
+  <div class="form-group">
+    <label for="r">Radius from driver to measurement stick in inches:</label>
+    <input type="text" class="form-control" id="r" placeholder="Enter distance eg: 94">
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<hr>
 </div>
  <input type="file" onchange="previewFile()"><br>
  <img src="" height="0" alt="">
@@ -161,7 +176,10 @@ function c(img) {
                     bottom_view_front = coords;
                     instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
                     curr_step += 1;
-                } else {
+                } else if (curr_step == 10) {
+
+                }
+                else {
                     bottom_view_passenger = coords;
                     // instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
                     // curr_step += 1;
