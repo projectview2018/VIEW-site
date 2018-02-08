@@ -44,24 +44,25 @@
   <label for="pwd">Radius from driver to measurement stick (inches):</label>
   <input type="text" class="form-control" id="r">
 </div> -->
+
+
+<div id="steps" class="hidden">
+<div id="canvas">Click to draw<br/></div>
 <div id="dataentry" class="hidden">
 <form>
   <div class="form-group">
     <label for="h">Driver eye heigh above ground in inches:</label>
-    <input type="text" class="form-control" id="r" placeholder="Enter height eg: 63">
+    <input type="text" class="form-control" id="dh" placeholder="Enter height eg: 63">
   </div>
   <div class="form-group">
     <label for="r">Radial distance from driver to measurement stick in inches:</label>
-    <input type="text" class="form-control" id="r" placeholder="Enter distance eg: 94">
+    <input type="text" class="form-control" id="rd" placeholder="Enter distance eg: 94">
     <small id="radiusdescript" class="form-text text-muted">This is not the hypotenuse, but the distance along the ground.</small>
   </div>
-  <button class="btn btn-primary" onclick="submitForm()">Submit</button>
+  <!-- <button class="btn btn-primary" onclick="submitForm()">Submit</button> -->
 </form>
 <hr>
 </div>
-
-<div id="steps" class="hidden">
-<div id="canvas">Click to draw<br/></div>
 <button class="btn btn-primary" onclick="clearPanel()">Clear</button>
 <button class="btn btn-primary" onclick="nextPanel()">Next</button>
 <hr>
@@ -90,7 +91,7 @@ function submitForm() {
 }
 
 var color_marks = [];
-var curr_step = 0;
+var curr_step = 1;
 var bottom_view = [];
 var bottom_view_driver = [];
 var bottom_view_front = [];
@@ -164,30 +165,31 @@ function c(img) {
             var image = new Image()
             image.onload = function () {
                 console.log('here next');
-                if (curr_step < 7) {
+                if (curr_step <= 6) {
                     console.log(coords);
                     avg = getAverage(coords);
                     color_marks.push(avg);
                     coords = [];
+                    instructiontxt.innerHTML = "If " + curr_step + " foot mark is visible use click to draw small horizontal line on mark, when done click next. If not visible, click next. Press clear if errors are made.";
                     curr_step += 1;
-                    if (curr_step < 7) {
-                        instructiontxt.innerHTML = "If " + curr_step + " foot mark is visible use click to draw small horizontal line on mark, when done click next. If not visible, click next. Press clear if errors are made.";
-                    } else if (curr_step == 7) {
-                        instructiontxt.innerHTML = "Draw line along bottom of driver side field of view.";
-                        curr_step += 1;
-                    }
                     console.log(color_marks);
+                } else if (curr_step == 7){
+                    instructiontxt.innerHTML = "Draw vertical line at -90 degrees (directly to the right of the driver out of passenger window).";
+                    curr_step += 1;
                 } else if (curr_step == 8) {
+                    instructiontxt.innerHTML = "Draw line along bottom of driver side field of view.";
+                    curr_step += 1;
+                } else if (curr_step == 9) {
                     // console.log(curr_step);
                     // console.log(color_marks);
                     bottom_view_driver = coords;
                     instructiontxt.innerHTML = "Draw line along bottom of front field of view.";
                     curr_step += 1
-                } else if (curr_step == 9) {
+                } else if (curr_step == 10) {
                     bottom_view_front = coords;
                     instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
                     curr_step += 1;
-                } else if (curr_step == 10) {
+                } else if (curr_step == 11) {
                     bottom_view_passenger = coords;
                     var item = document.getElementById('dataentry');
                     if (item) {
@@ -201,8 +203,9 @@ function c(img) {
                 else {
                     // bottom_view_passenger = coords;
                     // instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
-                    // curr_step += 1;
-                    console.log("why are we here??");
+                    // curr_step += 1;\
+                    driver_height = document.getElementById('dh').value;
+                    marks_dist = document.getElementById('rd').value;
                     createHeightMap();
                     calcGroundIntersection();
                 }
