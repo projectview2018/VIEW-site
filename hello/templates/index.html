@@ -96,9 +96,6 @@ var bottom_view = [];
 var bottom_view_driver = [];
 var bottom_view_front = [];
 var bottom_view_passenger = [];
-var p_90;
-var n_90;
-var angle_map = {};
 var height_map = {};
 var driver_height = 57; // will need to be user entered
 var marks_dist = 92; 
@@ -185,23 +182,26 @@ function c(img) {
                 } else if (curr_step == 8){
                     instructiontxt.innerHTML = "Draw vertical line at -90 degrees (directly to the right of the driver out of passenger window).";
                     curr_step += 1;
+                    console.log('step 8');
+                    console.log(coords);
                 } else if (curr_step == 9) {
-
+                    coords = [];
                     instructiontxt.innerHTML = "Draw line along bottom of driver side field of view.";
                     curr_step += 1;
                 } else if (curr_step == 10) {
+                    // console.log(curr_step);
+                    // console.log(color_marks);
                     bottom_view_driver = coords;
-                    coords = [];
+                    // coords = [];
                     instructiontxt.innerHTML = "Draw line along bottom of front field of view.";
                     curr_step += 1
                 } else if (curr_step == 11) {
                     bottom_view_front = coords;
-                    coords = [];
+                    // coords = []
                     instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
                     curr_step += 1;
                 } else if (curr_step == 12) {
                     bottom_view_passenger = coords;
-                    coords = [];
                     var item = document.getElementById('dataentry');
                     if (item) {
                       if(item.className =='hidden'){
