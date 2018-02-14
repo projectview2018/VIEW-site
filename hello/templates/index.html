@@ -84,10 +84,8 @@ function nextPanel() {
 }
 
 function submitForm() {
-    // ctx.calculateNVP();
     createHeightMap();
     calcGroundIntersection();
-
 }
 
 var color_marks = [];
@@ -100,10 +98,13 @@ var height_map = {};
 var neg_90;
 var pos_90;
 var angle_map = {};
-var driver_height = 57; // will need to be user entered
-var marks_dist = 92; 
+var driver_height; // will need to be user entered
+var marks_dist; 
 var HEIGHT_CUTOFF = 74; // 6'2" 95th percentile male US
 var RADIUS_CUTOFF = 180; // 15 feet
+var RIGHT_CUTOFF = -135;
+var left_cutoff;
+
 
 
 function c(img) {
@@ -158,7 +159,6 @@ function c(img) {
         ctx.addBack = function (img){
           var image = new Image()
           image.onload = function () {
-            console.log('here back');
                 coords = [];
             ctx.drawImage(image, 0, 0, 800, 400);
           }
@@ -170,18 +170,15 @@ function c(img) {
             var image = new Image()
             image.onload = function () {
                 if (curr_step <= 6) {
-                    console.log(coords);
                     var avg = getAverage(coords);
                     color_marks.push(avg);
                     coords = [];
                     instructiontxt.innerHTML = "If " + curr_step + " foot mark is visible use click to draw small horizontal line on mark, when done click next. If not visible, click next. Press clear if errors are made.";
                     curr_step += 1;
-                    console.log(color_marks);
                 } else if (curr_step == 7) {
                     var avg = getAverage(coords);
                     color_marks.push(avg);
                     coords = [];
-                    console.log(color_marks);
                     instructiontxt.innerHTML = "Draw vertical line at 90 degrees (directly to the left of the driver out of driver window, should be where the measuring stick was placed).";
                     curr_step += 1;
                 } else if (curr_step == 8){
@@ -197,16 +194,12 @@ function c(img) {
                     instructiontxt.innerHTML = "Draw line along bottom of driver side field of view.";
                     curr_step += 1;
                 } else if (curr_step == 10) {
-                    // console.log(curr_step);
-                    // console.log(color_marks);
                     bottom_view_driver = coords;
-                    // coords = [];
                     instructiontxt.innerHTML = "Draw line along bottom of front field of view.";
                     coords = [];
                     curr_step += 1
                 } else if (curr_step == 11) {
                     bottom_view_front = coords;
-                    // coords = []
                     instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
                     coords = [];
                     curr_step += 1;
@@ -248,16 +241,10 @@ function c(img) {
             // var coords = [];
             if (curr_step <= 7) {
                 storeOneCord(y, coords);
-                // console.log('y');
-                // console.log(y);
             } else if (curr_step <= 9) {
                 storeOneCord(x, coords);
-                // console.log('x');
-                // console.log(coords);
             } else {
                 storeCoordinate(x, y, coords);
-                // console.log('x,y');
-                // console.log(coords);
             }
             ctx.fillCircle(x, y, radius, fillColor);
         };
@@ -293,7 +280,6 @@ function previewFile() {
     reader.onloadend = function () {
       preview.src = reader.result;
       my_image = preview.src;
-      console.log(reader);
     c(preview.src);
     }
     
@@ -321,10 +307,7 @@ function createHeightMap(){
             var diff = color_marks[i+1] - color_marks[i+2];
             var increment = 12 / diff;
             var inches_val = i * 12;
-            // console.log(color_marks[i + 1]- diff);
-            // console.log(color_marks[i+1]);
             for (var j = color_marks[i + 1] + diff; j >= color_marks[i+1]; j--){
-                // console.log(j);
                 height_map[j] = inches_val;
                 inches_val += increment;
             }
@@ -356,8 +339,6 @@ function calcGroundIntersection(){
     var phis_front = [];
     var phis_passenger = [];
     // Array.prototype.push.apply(bottom_view,bottom_view_driver, bottom_view_front, bottom_view_passenger);
-    console.log("bf", bottom_view_front);
-    console.log("bp", bottom_view_passenger);
 
     for (var i = 0; i < bottom_view_front.length; i++){
         var bottom_view_inches = height_map[Math.round(bottom_view_front[i].y)];
@@ -385,12 +366,16 @@ function calcGroundIntersection(){
     console.log("gp", ground_intersections_passenger);
     console.log("pf", phis_front);
     console.log("pp", phis_passenger);
+
+    left_cutoff = phis_front[0];
     var front_volume = calcBlindVolume(ground_intersections_front, phis_front);
     var passenger_volume = calcBlindVolume(ground_intersections_passenger, phis_passenger);
-    console.log(front_volume);
-    console.log(passenger_volume);
-    var total_volume = front_volume + passenger_volume;
+    var total_blind_volume = front_volume + passenger_volume;
+    console.log(total_blind_volume);
+    var total_volume = calcTotalVolume();
     console.log(total_volume);
+    var ratio = (total_volume - total_blind_volume)/total_volume);
+    console.log(ratio);
 }
 
 function calcBlindVolume(ground_intersections, phis){
@@ -420,6 +405,13 @@ function calcBlindVolume(ground_intersections, phis){
     }
     return volume_sum;
     
+}
+
+function calcTotalVolume(){
+    var total_volume = Math.PI*Math.pow(RADIUS_CUTOFF,2)*HEIGHT_CUTOFF;
+    var total_phi = left_cutoff - RIGHT_CUTOFF;
+    var percentage = total_phi / 360;
+    return total_volume * percentage;
 }
 
 </script>
