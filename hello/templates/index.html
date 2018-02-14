@@ -385,15 +385,15 @@ function calcGroundIntersection(){
     console.log("gp", ground_intersections_passenger);
     console.log("pf", phis_front);
     console.log("pp", phis_passenger);
-    var front_volume = calcVisibleVolume(ground_intersections_front, phis_front);
-    var passenger_volume = calcVisibleVolume(ground_intersections_passenger, phis_passenger);
+    var front_volume = calcBlindVolume(ground_intersections_front, phis_front);
+    var passenger_volume = calcBlindVolume(ground_intersections_passenger, phis_passenger);
     console.log(front_volume);
     console.log(passenger_volume);
     var total_volume = front_volume + passenger_volume;
     console.log(total_volume);
 }
 
-function calcVisibleVolume(ground_intersections, phis){
+function calcBlindVolume(ground_intersections, phis){
     var volume_sum = 0;
     if (driver_height > HEIGHT_CUTOFF) {
         for (var i = 0; i < ground_intersections.length - 1; i++){ // minus one because we use pairs
