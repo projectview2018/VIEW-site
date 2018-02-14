@@ -92,7 +92,7 @@ function submitForm() {
 
 var color_marks = [];
 var curr_step = 1;
-var bottom_view = [];
+// var bottom_view = [];
 var bottom_view_driver = [];
 var bottom_view_front = [];
 var bottom_view_passenger = [];
@@ -102,6 +102,8 @@ var pos_90;
 var angle_map = {};
 var driver_height = 57; // will need to be user entered
 var marks_dist = 92; 
+var HEIGHT_CUTOFF = 74; // 6'2" 95th percentile male US
+var RADIUS_CUTOFF = 180; // 15 feet
 
 
 function c(img) {
@@ -169,27 +171,27 @@ function c(img) {
             image.onload = function () {
                 if (curr_step <= 6) {
                     console.log(coords);
-                    avg = getAverage(coords);
+                    var avg = getAverage(coords);
                     color_marks.push(avg);
                     coords = [];
                     instructiontxt.innerHTML = "If " + curr_step + " foot mark is visible use click to draw small horizontal line on mark, when done click next. If not visible, click next. Press clear if errors are made.";
                     curr_step += 1;
                     console.log(color_marks);
                 } else if (curr_step == 7) {
-                    avg = getAverage(coords);
+                    var avg = getAverage(coords);
                     color_marks.push(avg);
                     coords = [];
                     console.log(color_marks);
                     instructiontxt.innerHTML = "Draw vertical line at 90 degrees (directly to the left of the driver out of driver window, should be where the measuring stick was placed).";
                     curr_step += 1;
                 } else if (curr_step == 8){
-                    avg = getAverage(coords);
+                    var avg = getAverage(coords);
                     pos_90 = avg;
                     coords = [];
                     instructiontxt.innerHTML = "Draw vertical line at -90 degrees (directly to the right of the driver out of passenger window).";
                     curr_step += 1;
                 } else if (curr_step == 9) {
-                    avg = getAverage(coords);
+                    var avg = getAverage(coords);
                     neg_90 = avg;
                     coords = [];
                     instructiontxt.innerHTML = "Draw line along bottom of driver side field of view.";
@@ -200,11 +202,13 @@ function c(img) {
                     bottom_view_driver = coords;
                     // coords = [];
                     instructiontxt.innerHTML = "Draw line along bottom of front field of view.";
+                    coords = [];
                     curr_step += 1
                 } else if (curr_step == 11) {
                     bottom_view_front = coords;
                     // coords = []
                     instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
+                    coords = [];
                     curr_step += 1;
                 } else if (curr_step == 12) {
                     bottom_view_passenger = coords;
@@ -303,12 +307,12 @@ function previewFile() {
 }
 
 function createHeightMap(){
-    for (i = 0; i < color_marks.length; i++){
+    for (var i = 0; i < color_marks.length; i++){
         if (color_marks[i] & color_marks[i+1]){
             var diff = color_marks[i] - color_marks[i+1];
             var increment = 12 / diff;
             var inches_val = i * 12;
-            for (j = color_marks[i]; j >= color_marks[i+1]; j--){
+            for (var j = color_marks[i]; j >= color_marks[i+1]; j--){
                 height_map[j] = inches_val;
                 inches_val += increment;
             }
@@ -319,21 +323,20 @@ function createHeightMap(){
             var inches_val = i * 12;
             // console.log(color_marks[i + 1]- diff);
             // console.log(color_marks[i+1]);
-            for (j = color_marks[i + 1] + diff; j >= color_marks[i+1]; j--){
+            for (var j = color_marks[i + 1] + diff; j >= color_marks[i+1]; j--){
                 // console.log(j);
                 height_map[j] = inches_val;
                 inches_val += increment;
             }
         }
     }
-    // console.log(height_map);
 }
 
 function getPhi(px_x){
-    diff = pos_90 - neg_90;
-    degree_v = diff/180;
-    past_90 = px_x - pos_90;
-    deg = past_90/degree_v;
+    var diff = pos_90 - neg_90;
+    var degree_v = diff/180;
+    var past_90 = px_x - pos_90;
+    var deg = past_90/degree_v;
     deg = 90 + deg;
     return deg;
 }
@@ -345,33 +348,80 @@ function getTanDeg(deg) {
 
 function getATanDeg(deg) {
   return Math.atan(deg) * (180/Math.PI);
-}   
+} 
 
 function calcGroundIntersection(){
-    ground_intersections = [];
-    phis = [];
-    console.log(bottom_view_driver);
-    console.log(bottom_view_front);
-    console.log(bottom_view_passenger);
-    Array.prototype.push.apply(bottom_view,bottom_view_driver, bottom_view_front, bottom_view_passenger);
-    console.log(bottom_view);
-    for (i = 0; i < bottom_view.length; i++){
-        bottom_view_inches = height_map[Math.round(bottom_view[i].y)];
-        opposite_side = driver_height - bottom_view_inches;
-        fov_angle = getATanDeg(opposite_side/marks_dist);
-        ground_intersection = driver_height * getTanDeg(90-fov_angle);
-        ground_intersections.push(ground_intersection / 12); 
+    var ground_intersections_front = [];
+    var ground_intersections_passenger = [];
+    var phis_front = [];
+    var phis_passenger = [];
+    // Array.prototype.push.apply(bottom_view,bottom_view_driver, bottom_view_front, bottom_view_passenger);
+    console.log("bf", bottom_view_front);
+    console.log("bp", bottom_view_passenger);
 
-        phi = getPhi(bottom_view[i].x);
-        phis.push(phi);
+    for (var i = 0; i < bottom_view_front.length; i++){
+        var bottom_view_inches = height_map[Math.round(bottom_view_front[i].y)];
+        var opposite_side = driver_height - bottom_view_inches;
+        var fov_angle = getATanDeg(opposite_side/marks_dist);
+        var ground_intersection = driver_height * getTanDeg(90-fov_angle);
+        ground_intersections_front.push(ground_intersection / 12); 
+
+        var phi = getPhi(bottom_view_front[i].x);
+        phis_front.push(phi);
 
     }
-    console.log(ground_intersections);
-    console.log(phis);
+    for (var i = 0; i < bottom_view_passenger.length; i++){
+        var bottom_view_inches = height_map[Math.round(bottom_view_passenger[i].y)];
+        var opposite_side = driver_height - bottom_view_inches;
+        var fov_angle = getATanDeg(opposite_side/marks_dist);
+        var ground_intersection = driver_height * getTanDeg(90-fov_angle);
+        ground_intersections_passenger.push(ground_intersection / 12); 
+
+        var phi = getPhi(bottom_view_passenger[i].x);
+        phis_passenger.push(phi);
+
+    }
+    console.log("gf", ground_intersections_front);
+    console.log("gp", ground_intersections_passenger);
+    console.log("pf", phis_front);
+    console.log("pp", phis_passenger);
+    var front_volume = calcVisibleVolume(ground_intersections_front, phis_front);
+    var passenger_volume = calcVisibleVolume(ground_intersections_passenger, phis_passenger);
+    console.log(front_volume);
+    console.log(passenger_volume);
+    var total_volume = front_volume + passenger_volume;
+    console.log(total_volume);
 }
 
+function calcVisibleVolume(ground_intersections, phis){
+    var volume_sum = 0;
+    if (driver_height > HEIGHT_CUTOFF) {
+        for (var i = 0; i < ground_intersections.length - 1; i++){ // minus one because we use pairs
+            var phi = Math.abs(phis[i] - phis[i + 1]);
+            var t = ((driver_height - HEIGHT_CUTOFF)*ground_intersections[i])/driver_height;
+            if (ground_intersections[i] < RADIUS_CUTOFF) {
+                var volume = (phi/2)*Math.pow(t, 2)*driver_height + phi*driver_height*(((Math.pow(RADIUS_CUTOFF, 2) - Math.pow(ground_intersections[i], 2))/2) - ((Math.pow(RADIUS_CUTOFF, 3) - Math.pow(ground_intersections[i], 3))/(3*ground_intersections[i])))
+            } else {
+                var volume = (phi/2)*Math.pow(t, 2)*driver_height + phi*driver_height*(((Math.pow(RADIUS_CUTOFF, 2) - Math.pow(t, 2))/2) - ((Math.pow(RADIUS_CUTOFF, 3) - Math.pow(t, 3))/(3*ground_intersections[i])))
+            }
+            volume_sum += volume;
+        }
+    } else {
+        for (var i = 0; i < ground_intersections.length - 1; i++){
+            var phi = Math.abs(phis[i] - phis[i + 1]);
+            if (ground_intersections[i] < RADIUS_CUTOFF) {
+                var volume = phi*((driver_height*Math.pow(ground_intersections[i], 2))/6)
+            } else {
+                var volume = phi*(((driver_height*Math.pow(HEIGHT_CUTOFF, 2))/2) - ((driver_height*Math.pow(15, 3)) / (3*ground_intersections[i])))
+            }
+            volume_sum += volume;
+        }
+
+    }
+    return volume_sum;
+    
+}
 
 </script>
 
 {% endblock %}
-s
