@@ -345,7 +345,7 @@ function calcGroundIntersection(){
         var opposite_side = driver_height - bottom_view_inches;
         var fov_angle = getATanDeg(opposite_side/marks_dist);
         var ground_intersection = driver_height * getTanDeg(90-fov_angle);
-        ground_intersections_front.push(ground_intersection / 12); 
+        ground_intersections_front.push(ground_intersection); 
 
         var phi = getPhi(bottom_view_front[i].x);
         phis_front.push(phi);
@@ -356,7 +356,7 @@ function calcGroundIntersection(){
         var opposite_side = driver_height - bottom_view_inches;
         var fov_angle = getATanDeg(opposite_side/marks_dist);
         var ground_intersection = driver_height * getTanDeg(90-fov_angle);
-        ground_intersections_passenger.push(ground_intersection / 12); 
+        ground_intersections_passenger.push(ground_intersection); 
 
         var phi = getPhi(bottom_view_passenger[i].x);
         phis_passenger.push(phi);
