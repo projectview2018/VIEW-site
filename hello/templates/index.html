@@ -97,6 +97,9 @@ var bottom_view_driver = [];
 var bottom_view_front = [];
 var bottom_view_passenger = [];
 var height_map = {};
+var neg_90;
+var pos_90;
+var angle_map = {};
 var driver_height = 57; // will need to be user entered
 var marks_dist = 92; 
 
@@ -180,11 +183,14 @@ function c(img) {
                     instructiontxt.innerHTML = "Draw vertical line at 90 degrees (directly to the left of the driver out of driver window, should be where the measuring stick was placed).";
                     curr_step += 1;
                 } else if (curr_step == 8){
+                    avg = getAverage(coords);
+                    pos_90 = avg;
+                    coords = [];
                     instructiontxt.innerHTML = "Draw vertical line at -90 degrees (directly to the right of the driver out of passenger window).";
                     curr_step += 1;
-                    console.log('step 8');
-                    console.log(coords);
                 } else if (curr_step == 9) {
+                    avg = getAverage(coords);
+                    neg_90 = avg;
                     coords = [];
                     instructiontxt.innerHTML = "Draw line along bottom of driver side field of view.";
                     curr_step += 1;
@@ -323,6 +329,15 @@ function createHeightMap(){
     // console.log(height_map);
 }
 
+function getPhi(px_x){
+    diff = pos_90 - neg_90;
+    degree_v = diff/180;
+    past_90 = px_x - pos_90;
+    deg = past_90/degree_v;
+    deg = 90 + deg;
+    return deg;
+}
+
 function getTanDeg(deg) {
   var rad = deg * Math.PI/180;
   return Math.tan(rad);
@@ -330,10 +345,11 @@ function getTanDeg(deg) {
 
 function getATanDeg(deg) {
   return Math.atan(deg) * (180/Math.PI);
-}
+}   
 
 function calcGroundIntersection(){
     ground_intersections = [];
+    phis = [];
     console.log(bottom_view_driver);
     console.log(bottom_view_front);
     console.log(bottom_view_passenger);
@@ -345,11 +361,17 @@ function calcGroundIntersection(){
         fov_angle = getATanDeg(opposite_side/marks_dist);
         ground_intersection = driver_height * getTanDeg(90-fov_angle);
         ground_intersections.push(ground_intersection / 12); 
+
+        phi = getPhi(bottom_view[i].x);
+        phis.push(phi);
+
     }
     console.log(ground_intersections);
+    console.log(phis);
 }
 
 
 </script>
 
 {% endblock %}
+s
