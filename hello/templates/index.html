@@ -68,6 +68,22 @@
 <hr>
 </div>
 
+<h3>
+<div id="percentage">
+
+</div>
+</h3>
+
+<div id="vinentry" class="hidden">
+<form>
+  <div class="form-group">
+    <label for="r">VIN number:</label>
+    <input type="text" class="form-control" id="rd" placeholder="Eg: 1C3CCBBGXCN287756">
+<!--     <small id="radiusdescript" class="form-text text-muted">This is not the hypotenuse, but the distance along the ground.</small> -->
+  </div>
+  <!-- <button class="btn btn-primary" onclick="submitForm()">Submit</button> -->
+</form>
+</div>
 
  <input type="file" onchange="previewFile()"><br>
  <img src="" height="0" alt="">
@@ -91,12 +107,11 @@ function submitForm() {
 var color_marks = [];
 var curr_step = 1;
 // var bottom_view = [];
-var bottom_view_driver = [];
 var bottom_view_front = [];
 var bottom_view_passenger = [];
 var height_map = {};
 var neg_90;
-var pos_90;
+var zero;
 var angle_map = {};
 var driver_height; // will need to be user entered
 var marks_dist; 
@@ -174,16 +189,17 @@ function c(img) {
                     color_marks.push(avg);
                     coords = [];
                     instructiontxt.innerHTML = "If " + curr_step + " foot mark is visible use click to draw small horizontal line on mark, when done click next. If not visible, click next. Press clear if errors are made.";
+                    truckInfoFromVIN();
                     curr_step += 1;
                 } else if (curr_step == 7) {
                     var avg = getAverage(coords);
                     color_marks.push(avg);
                     coords = [];
-                    instructiontxt.innerHTML = "Draw vertical line at 90 degrees (directly to the left of the driver out of driver window, should be where the measuring stick was placed).";
+                    instructiontxt.innerHTML = "Draw vertical line at 0 degrees (directly in front of the driver, should be where the measuring stick was placed).";
                     curr_step += 1;
                 } else if (curr_step == 8){
                     var avg = getAverage(coords);
-                    pos_90 = avg;
+                    zero = avg;
                     coords = [];
                     instructiontxt.innerHTML = "Draw vertical line at -90 degrees (directly to the right of the driver out of passenger window).";
                     curr_step += 1;
@@ -191,19 +207,14 @@ function c(img) {
                     var avg = getAverage(coords);
                     neg_90 = avg;
                     coords = [];
-                    instructiontxt.innerHTML = "Draw line along bottom of driver side field of view.";
-                    curr_step += 1;
-                } else if (curr_step == 10) {
-                    bottom_view_driver = coords;
                     instructiontxt.innerHTML = "Draw line along bottom of front field of view.";
-                    coords = [];
                     curr_step += 1
-                } else if (curr_step == 11) {
+                } else if (curr_step == 10) {
                     bottom_view_front = coords;
                     instructiontxt.innerHTML = "Draw line along bottom of passenger side field of view.";
                     coords = [];
                     curr_step += 1;
-                } else if (curr_step == 12) {
+                } else if (curr_step == 11) {
                     bottom_view_passenger = coords;
                     var item = document.getElementById('dataentry');
                     if (item) {
@@ -316,11 +327,10 @@ function createHeightMap(){
 }
 
 function getPhi(px_x){
-    var diff = pos_90 - neg_90;
+    var diff = zero - neg_90;
     var degree_v = diff/180;
-    var past_90 = px_x - pos_90;
-    var deg = past_90/degree_v;
-    deg = 90 + deg;
+    var past_zero = px_x - zero;
+    var deg = past_zero/degree_v;
     return deg;
 }
 
@@ -375,37 +385,11 @@ function calcGroundIntersection(){
     var total_volume = calcTotalVolume();
     console.log(total_volume);
     var ratio = (total_volume - total_blind_volume)/total_volume;
+    var perc = ratio * 100;
+    percentage.innerHTML = "Percent of area visible: " + Math.round(perc, 0) + "%";
     console.log(ratio);
+
 }
-
-// function calcBlindVolume(ground_intersections, phis){
-//     var volume_sum = 0;
-//     if (driver_height > HEIGHT_CUTOFF) {
-//         for (var i = 0; i < ground_intersections.length - 1; i++){ // minus one because we use pairs
-//             var phi = Math.abs(phis[i] - phis[i + 1]);
-//             var t = ((driver_height - HEIGHT_CUTOFF)*ground_intersections[i])/driver_height;
-//             if (ground_intersections[i] < RADIUS_CUTOFF) {
-//                 var volume = (phi/2)*Math.pow(t, 2)*driver_height + phi*driver_height*(((Math.pow(RADIUS_CUTOFF, 2) - Math.pow(ground_intersections[i], 2))/2) - ((Math.pow(RADIUS_CUTOFF, 3) - Math.pow(ground_intersections[i], 3))/(3*ground_intersections[i])))
-//             } else {
-//                 var volume = (phi/2)*Math.pow(t, 2)*driver_height + phi*driver_height*(((Math.pow(RADIUS_CUTOFF, 2) - Math.pow(t, 2))/2) - ((Math.pow(RADIUS_CUTOFF, 3) - Math.pow(t, 3))/(3*ground_intersections[i])))
-//             }
-//             volume_sum += volume;
-//         }
-//     } else {
-//         for (var i = 0; i < ground_intersections.length - 1; i++){
-//             var phi = Math.abs(phis[i] - phis[i + 1]);
-//             if (ground_intersections[i] < RADIUS_CUTOFF) {
-//                 var volume = phi*((driver_height*Math.pow(ground_intersections[i], 2))/6)
-//             } else {
-//                 var volume = phi*(((driver_height*Math.pow(HEIGHT_CUTOFF, 2))/2) - ((driver_height*Math.pow(15, 3)) / (3*ground_intersections[i])))
-//             }
-//             volume_sum += volume;
-//         }
-
-//     }
-//     return volume_sum;
-    
-// }
 
 function calcBlindVolume(ground_intersections, phis){
     var volume_sum = 0;
@@ -433,6 +417,32 @@ function calcTotalVolume(){
     var total_phi = left_cutoff - RIGHT_CUTOFF;
     var percentage = total_phi / 360;
     return total_volume * percentage;
+}
+
+function truckInfoFromVIN(){
+    var vin = "1C3CCBBGXCN287756"; // example
+    let request = new XMLHttpRequest();
+    let url = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValues/" + vin + "?format=json";
+
+    request.onreadystatechange = function() {
+      if (this.readyState === 4 && this.status === 200) {
+        let response = JSON.parse(this.responseText);
+        getElements(response);
+      }
+    }
+
+    request.open("GET", url, true);
+    request.send();
+    
+    getElements = function(response){
+        console.log(response);
+        var make = response["Results"]["0"]["Make"];
+        var model = response["Results"]["0"]["Model"];
+        var series = response["Results"]["0"]["Series"];
+        var gvwr = response["Results"]["0"]["GVWR"];
+        
+
+    }
 }
 
 </script>
