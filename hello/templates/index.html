@@ -378,33 +378,54 @@ function calcGroundIntersection(){
     console.log(ratio);
 }
 
+// function calcBlindVolume(ground_intersections, phis){
+//     var volume_sum = 0;
+//     if (driver_height > HEIGHT_CUTOFF) {
+//         for (var i = 0; i < ground_intersections.length - 1; i++){ // minus one because we use pairs
+//             var phi = Math.abs(phis[i] - phis[i + 1]);
+//             var t = ((driver_height - HEIGHT_CUTOFF)*ground_intersections[i])/driver_height;
+//             if (ground_intersections[i] < RADIUS_CUTOFF) {
+//                 var volume = (phi/2)*Math.pow(t, 2)*driver_height + phi*driver_height*(((Math.pow(RADIUS_CUTOFF, 2) - Math.pow(ground_intersections[i], 2))/2) - ((Math.pow(RADIUS_CUTOFF, 3) - Math.pow(ground_intersections[i], 3))/(3*ground_intersections[i])))
+//             } else {
+//                 var volume = (phi/2)*Math.pow(t, 2)*driver_height + phi*driver_height*(((Math.pow(RADIUS_CUTOFF, 2) - Math.pow(t, 2))/2) - ((Math.pow(RADIUS_CUTOFF, 3) - Math.pow(t, 3))/(3*ground_intersections[i])))
+//             }
+//             volume_sum += volume;
+//         }
+//     } else {
+//         for (var i = 0; i < ground_intersections.length - 1; i++){
+//             var phi = Math.abs(phis[i] - phis[i + 1]);
+//             if (ground_intersections[i] < RADIUS_CUTOFF) {
+//                 var volume = phi*((driver_height*Math.pow(ground_intersections[i], 2))/6)
+//             } else {
+//                 var volume = phi*(((driver_height*Math.pow(HEIGHT_CUTOFF, 2))/2) - ((driver_height*Math.pow(15, 3)) / (3*ground_intersections[i])))
+//             }
+//             volume_sum += volume;
+//         }
+
+//     }
+//     return volume_sum;
+    
+// }
+
 function calcBlindVolume(ground_intersections, phis){
     var volume_sum = 0;
-    if (driver_height > HEIGHT_CUTOFF) {
-        for (var i = 0; i < ground_intersections.length - 1; i++){ // minus one because we use pairs
-            var phi = Math.abs(phis[i] - phis[i + 1]);
-            var t = ((driver_height - HEIGHT_CUTOFF)*ground_intersections[i])/driver_height;
-            if (ground_intersections[i] < RADIUS_CUTOFF) {
-                var volume = (phi/2)*Math.pow(t, 2)*driver_height + phi*driver_height*(((Math.pow(RADIUS_CUTOFF, 2) - Math.pow(ground_intersections[i], 2))/2) - ((Math.pow(RADIUS_CUTOFF, 3) - Math.pow(ground_intersections[i], 3))/(3*ground_intersections[i])))
-            } else {
-                var volume = (phi/2)*Math.pow(t, 2)*driver_height + phi*driver_height*(((Math.pow(RADIUS_CUTOFF, 2) - Math.pow(t, 2))/2) - ((Math.pow(RADIUS_CUTOFF, 3) - Math.pow(t, 3))/(3*ground_intersections[i])))
-            }
-            volume_sum += volume;
+    var a = 0;
+    if(driver_height >= HEIGHT_CUTOFF){
+        a = driver_height - HEIGHT_CUTOFF;
+    }
+    for (var i = 0; i < ground_intersections.length - 1; i++){ // minus one because we use pairs
+        var b = 0;
+        if (ground_intersections[i] >= RADIUS_CUTOFF){
+            b = ground_intersections[i] - RADIUS_CUTOFF;
         }
-    } else {
-        for (var i = 0; i < ground_intersections.length - 1; i++){
-            var phi = Math.abs(phis[i] - phis[i + 1]);
-            if (ground_intersections[i] < RADIUS_CUTOFF) {
-                var volume = phi*((driver_height*Math.pow(ground_intersections[i], 2))/6)
-            } else {
-                var volume = phi*(((driver_height*Math.pow(HEIGHT_CUTOFF, 2))/2) - ((driver_height*Math.pow(15, 3)) / (3*ground_intersections[i])))
-            }
-            volume_sum += volume;
-        }
-
+        var phi = Math.abs(phis[i] - phis[i + 1]);
+        var overall = ((1/6)*Math.pow(ground_intersections[i],2)*driver_height*getTanDeg(phi))
+        var top = (1/6)*(Math.pow(ground_intersections[i],2)/Math.pow(driver_height, 2))*Math.pow(a, 3)*getTanDeg(phi);
+        var end = (1/2)*(driver_height/ground_intersections[i])*Math.pow(b,2)*RADIUS_CUTOFF*getTanDeg(phi);
+        var volume = 2*(overall - top - end);
+        volume_sum += volume;
     }
     return volume_sum;
-    
 }
 
 function calcTotalVolume(){
