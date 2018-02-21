@@ -5,10 +5,10 @@ class Greeting(models.Model):
     when = models.DateTimeField('date created', auto_now_add=True)
 
 class Vehicles(models.Model):
-	full_vin = models.IntegerField()
-	partial_vin = models.IntegerField()
-	v_make = models.CharField(max_length=100)
-	v_model = models.CharField(max_length=100)
-	v_series = models.CharField(max_length=100)
-	v_gvwr = models.CharField(max_length=100)
+	fullvin = models.IntegerField()
+	partialvin = models.IntegerField()
+	vmake = models.CharField(max_length=100)
+	vmodel = models.CharField(max_length=100)
+	vseries = models.CharField(max_length=100)
+	vgvwr = models.CharField(max_length=100)
 	when = models.DateTimeField('date created', auto_now_add=True)

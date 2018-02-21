@@ -19,17 +19,5 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('when', models.DateTimeField(auto_now_add=True, verbose_name=b'date created')),
             ],
-        ), migrations.CreateModel(
-            name='Vehicles',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('full_vin', models.IntegerField()),
-                ('partial_vin', models.IntegerField()),
-                ('v_make', models.CharField(max_length=100)),
-                ('v_model', models.CharField(max_length=100)),
-                ('v_series', models.CharField(max_length=100)),
-                ('v_gvwr', models.CharField(max_length=100)),
-                ('when', models.DateTimeField(auto_now_add=True, verbose_name=b'date created')),
-            ],
         ),
     ]
