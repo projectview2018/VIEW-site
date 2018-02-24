@@ -443,7 +443,7 @@ function truckInfoFromVIN(){
         var partialvin = vin.substring(0,10);
         let requestpost = new XMLHttpRequest();
         let urlpost = "https://enigmatic-oasis-34994.herokuapp.com/api/v1/" + vin + "/" + partialvin + "/" + vmake + "/" + vmodel + "/" + vseries + "/" + vgvwr;
-        requestpost.open("POST", url, true);
+        requestpost.open("POST", urlpost, true);
         requestpost.send();
     }  
 }
