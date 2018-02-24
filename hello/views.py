@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 from .models import Greeting, Vehicles
+from django.views.decorators.http import require_http_methods
 # from rest_framework.test import APIClient
 # from rest_framework import status
 # from django.core.urlresolvers import reverse
@@ -22,6 +23,7 @@ def db(request):
 
     return render(request, 'db.html', {'greetings': greetings})
 
+@require_http_methods(["POST"])
 def addvehicle(request, fullvin, partialvin, vmake, vmodel, vseries, vgvwr):
 	v = Vehicles(fullvin, partialvin, vmake, vmodel, vseries, vgvwr)
 	v.save()
