@@ -5,9 +5,11 @@ class Greeting(models.Model):
     when = models.DateTimeField('date created', auto_now_add=True)
 
 class Vehicles(models.Model):
-	fullvin = models.IntegerField()
-	partialvin = models.IntegerField()
+	fullvin = models.CharField(max_length=100)
+	partialvin = models.CharField(max_length=100)
 	vmake = models.CharField(max_length=100)
 	vmodel = models.CharField(max_length=100)
 	vgvwr = models.CharField(max_length=100)
 	when = models.DateTimeField('date created', auto_now_add=True)
+
+#https://stackoverflow.com/questions/28598676/django-heroku-error-your-models-have-changes-that-are-not-yet-reflected-in-a-mi
