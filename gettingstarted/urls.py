@@ -14,5 +14,5 @@ urlpatterns = [
     url(r'^$', hello.views.index, name='index'),
     url(r'^db', hello.views.db, name='db'),
     path('admin/', admin.site.urls),
-    path('api/v1/<int:fullvin>/<int:partialvin>/<str:vmake>/<str:vmodel>/<slug:vgvwr>/', hello.views.addvehicle),
+    path('api/v1/<str:fullvin>/<str:partialvin>/<str:vmake>/<str:vmodel>/<slug:vgvwr>/', hello.views.addvehicle),
 ]
