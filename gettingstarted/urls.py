@@ -11,7 +11,7 @@ import hello.views
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
-	path('api/v1/<str:fullvin>/<str:partialvin>/<str:vmake>/<str:vmodel>/<str:vgvwr>/', hello.views.addvehicle),
+	path('api/v1/<fullvin>/<partialvin>/<vmake>/<vmodel>/<vgvwr>/', hello.views.addvehicle),
     url(r'^$', hello.views.index, name='index'),
     url(r'^db', hello.views.db, name='db'),
     path('admin/', admin.site.urls),
