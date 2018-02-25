@@ -28,4 +28,6 @@ def addvehicle(request, fullvin, partialvin, vmake, vmodel, vgvwr):
 	v = Vehicles(fullvin, partialvin, vmake, vmodel, vgvwr)
 	v.save()
 
+	return render(request)
+
 
