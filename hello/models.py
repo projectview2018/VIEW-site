@@ -9,6 +9,5 @@ class Vehicles(models.Model):
 	partialvin = models.IntegerField()
 	vmake = models.CharField(max_length=100)
 	vmodel = models.CharField(max_length=100)
-	vseries = models.CharField(max_length=100)
 	vgvwr = models.CharField(max_length=100)
 	when = models.DateTimeField('date created', auto_now_add=True)

@@ -441,8 +441,9 @@ function truckInfoFromVIN(){
         var vseries = response["Results"]["0"]["Series"];
         var vgvwr = response["Results"]["0"]["GVWR"];
         var partialvin = vin.substring(0,10);
+        console.log(vmake, "*", vmodel, "*", vseries);
         let requestpost = new XMLHttpRequest();
-        let urlpost = "https://enigmatic-oasis-34994.herokuapp.com/api/v1/" + vin + "/" + partialvin + "/" + vmake + "/" + vmodel + "/" + vseries + "/" + vgvwr;
+        let urlpost = "https://enigmatic-oasis-34994.herokuapp.com/api/v1/" + vin + "/" + partialvin + "/" + vmake + "/" + vmodel + "/" + vgvwr;
         requestpost.open("POST", urlpost, true);
         requestpost.send();
     }  
