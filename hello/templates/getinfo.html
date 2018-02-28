@@ -14,18 +14,21 @@
   </div>
 </div>
 <div class="container">
+	<button class="btn btn-primary" onclick="getByVGVWR(5)">Next</button>
+</div>
 </html>
 
 <script type="text/javascript">
 
 function getByVGVWR(vgvwr){
 	let request = new XMLHttpRequest();
+	var vgvwr = "Class" + vgvwr;
 	let url = "https://enigmatic-oasis-34994.herokuapp.com/api/v1/vgvwr/" + vgvwr + "/";
 
 	request.onreadystatechange = function() {
 	  if (this.readyState === 4 && this.status === 200) {
 	    let response = JSON.parse(this.responseText);
-	    getElements(response);
+	   console.log(response);
 	  }
 	}
 
