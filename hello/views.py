@@ -32,3 +32,10 @@ def addvehicle(request, fullvin, partialvin, vmake, vmodel, vgvwr, perc_vis):
 	v.save()
 	return HttpResponse("thanks")
 
+@require_http_methods(["GET"])
+def getbyvgvwr(request, vgvwr):
+	q = Vehicles.objects.filter(vgvwr=vgvwr)
+	# v = Vehicles(fullvin=fullvin, partialvin=partialvin, vmake=vmake, vmodel=vmodel, vgvwr=vgvwr, perc_vis=perc_vis)
+	# v.save()
+	return q
+

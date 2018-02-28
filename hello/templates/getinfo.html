@@ -15,3 +15,39 @@
 </div>
 <div class="container">
 </html>
+
+<script type="text/javascript">
+
+function getByVGVWR(vgvwr){
+	let request = new XMLHttpRequest();
+	let url = "https://enigmatic-oasis-34994.herokuapp.com/api/v1/vgvwr/" + vgvwr + "/";
+
+	request.onreadystatechange = function() {
+	  if (this.readyState === 4 && this.status === 200) {
+	    let response = JSON.parse(this.responseText);
+	    getElements(response);
+	  }
+	}
+
+	request.open("GET", url, true);
+	request.send();
+
+	// getElements = function(response){
+	//     console.log(response);
+	//     var vmake = response["Results"]["0"]["Make"];
+	//     var vmodel = response["Results"]["0"]["Model"];
+	//     var vgvwr = response["Results"]["0"]["GVWR"];
+	//     var partialvin = vin.substring(0,10);
+	//     var vwc = vgvwr.substring(0,7);
+	//     console.log(vmake, "*", vmodel, "*", vwc);
+	//     let requestpost = new XMLHttpRequest();
+	//     let urlpost = "https://enigmatic-oasis-34994.herokuapp.com/api/v1/vwc/" + vwc + "/";
+	//     requestpost.open("POST", urlpost);
+	//     requestpost.send();
+	// }  
+}
+	
+
+</script>
+
+{% endblock %}

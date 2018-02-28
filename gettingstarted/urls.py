@@ -12,8 +12,9 @@ import hello.views
 
 urlpatterns = [
 	path('api/v1/<fullvin>/<partialvin>/<vmake>/<vmodel>/<vgvwr>/<perc_vis>/', hello.views.addvehicle),
+	path('api/v1/<vgvwr>/', hello.views.getbyvgvwr),
     url(r'^$', hello.views.index, name='index'),
-    url(r'^$', hello.views.getinfo, name='getinfo'),
+    url(r'^getinfo', hello.views.getinfo, name='getinfo'),
     url(r'^db', hello.views.db, name='db'),
     path('admin/', admin.site.urls),
     
