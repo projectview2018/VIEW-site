@@ -39,5 +39,5 @@ def getbyvgvwr(request, vgvwr):
 	# # v = Vehicles(fullvin=fullvin, partialvin=partialvin, vmake=vmake, vmodel=vmodel, vgvwr=vgvwr, perc_vis=perc_vis)
 	# # v.save()
 	# return q
-	return HttpResponse(status=200, responseText="thanks!!")
+	return HttpResponse(status_=200, content="thanks!!")
 
