@@ -13,6 +13,9 @@ def index(request):
     # return HttpResponse('Hello from Python!')
     return render(request, 'index.html')
 
+def getinfo(request):
+    # return HttpResponse('Hello from Python!')
+    return render(request, 'getinfo.html')
 
 def db(request):
 
