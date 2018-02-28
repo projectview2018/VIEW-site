@@ -24,8 +24,8 @@ def db(request):
     return render(request, 'db.html', {'greetings': greetings})
 
 @require_http_methods(["POST"])
-def addvehicle(request, fullvin, partialvin, vmake, vmodel, vgvwr):
-	v = Vehicles(fullvin=fullvin, partialvin=partialvin, vmake=vmake, vmodel=vmodel, vgvwr=vgvwr)
+def addvehicle(request, fullvin, partialvin, vmake, vmodel, vgvwr, perc_vis):
+	v = Vehicles(fullvin=fullvin, partialvin=partialvin, vmake=vmake, vmodel=vmodel, vgvwr=vgvwr, perc_vis=perc_vis)
 	v.save()
 	return HttpResponse("thanks")
 
