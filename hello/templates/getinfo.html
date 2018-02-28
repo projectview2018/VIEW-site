@@ -25,9 +25,10 @@ function getByVGVWR(vgvwr){
 	let url = "https://enigmatic-oasis-34994.herokuapp.com/api/v1/vgvwr/" + vgvwr + "/";
 
 	request.onreadystatechange = function() {
-	  console.log(response);
-	  if (this.readyState === 4 && this.status === 200) {
+	  if (this.status === 200) {
 	    let response = JSON.parse(this.responseText);
+	    console.log(response);
+
 	  }
 	}
 
