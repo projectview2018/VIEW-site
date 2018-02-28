@@ -27,7 +27,7 @@ function getByVGVWR(vgvwr){
 	request.onreadystatechange = function() {
 	  if (this.status == 200) {
 	    // let response = JSON.parse(this.responseText);
-	    let response = this.content;
+	    let response = this.responseText;
 	    console.log(response);
 
 	  }
