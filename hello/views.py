@@ -38,8 +38,7 @@ def addvehicle(request, fullvin, partialvin, vmake, vmodel, vgvwr, perc_vis):
 def getbyvgvwr(request, vgvwr):
 	vgvwr = "Class " + vgvwr 
 	q = serializers.serialize("json", Vehicles.objects.filter(vgvwr=vgvwr))
-	data = {"q": q}
-	return JsonResponse(q)
+	return JsonResponse({"data": q})
 	# # v = Vehicles(fullvin=fullvin, partialvin=partialvin, vmake=vmake, vmodel=vmodel, vgvwr=vgvwr, perc_vis=perc_vis)
 	# # v.save()
 	# return q
