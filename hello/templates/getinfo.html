@@ -30,7 +30,7 @@
 	<form>
 	  <div class="form-group">
 	    <label for="partialvin">Look up by partial VIN number:</label>
-	    <input type="text" class="form-control" id="partialvin" placeholder="Eg: 1C3CCBBGXCN287756">
+	    <input type="text" class="form-control" id="partialvin" placeholder="Eg: 1C3CCBBGXC">
 	    <small id="descript" class="form-text text-muted">Please enter a partial vin with at least 10 digits, this will return any vehicle where the first 10 digits of the VIN match.</small>
 	  </div>
 	  <button class="btn btn-primary" onclick="getByPartialVIN()">Submit</button>
@@ -74,8 +74,9 @@ function getByPerc(perc){
 	request.send();
 }
 
-function getByFullVIN(fullvin){
+function getByFullVIN(){
 	var fullvin = document.getElementById('fullvin').value;
+	console.log(fullvin);
 	let request = new XMLHttpRequest();
 	let url = "https://findyourblindspots.herokuapp.com/api/v1/fullvin/" + fullvin + "/";
 
@@ -89,7 +90,7 @@ function getByFullVIN(fullvin){
 	request.send();
 }	
 
-function getByPartialVIN(partialvin){
+function getByPartialVIN(){
 	var partialvin = document.getElementById('partialvin').value;
 	let request = new XMLHttpRequest();
 	let url = "https://findyourblindspots.herokuapp.com/api/v1/partialvin/" + partialvin + "/";
