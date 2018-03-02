@@ -27,7 +27,8 @@ function getByVGVWR(vgvwr){
 	request.onreadystatechange = function() {
 	    // let response = JSON.parse(this.responseText);
 	    let response = JSON.parse(this.responseText);
-	    console.log(response);
+
+	    console.log(response['data']);
 	}
 
 	request.open("GET", url);
