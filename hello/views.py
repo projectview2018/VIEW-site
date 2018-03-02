@@ -43,7 +43,7 @@ def getbyvgvwr(request, vgvwr):
 
 @require_http_methods(["GET"])
 def getbyperc(request, perc):
-	q = serializers.serialize("json", Vehicles.objects.filter(perc__gte=perc))
+	q = serializers.serialize("json", Vehicles.objects.filter(perc_vis__gte=perc))
 	return JsonResponse({"data": q})
 
 
