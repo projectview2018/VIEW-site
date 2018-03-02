@@ -40,10 +40,23 @@ def getbyvgvwr(request, vgvwr):
 	q = serializers.serialize("json", Vehicles.objects.filter(vgvwr=vgvwr))
 	return JsonResponse({"data": q})
 
-
 @require_http_methods(["GET"])
 def getbyperc(request, perc):
 	q = serializers.serialize("json", Vehicles.objects.filter(perc_vis__gte=perc))
 	return JsonResponse({"data": q})
 
+@require_http_methods(["GET"])
+def getbyfullvin(request, fullvin):
+    q = serializers.serialize("json", Vehicles.objects.filter(fullvin=fullvin))
+    return JsonResponse({"data": q})
 
+@require_http_methods(["GET"])
+def getbypartialvin(request, partialvin):
+    partialvin = partialvin[:10]
+    q = serializers.serialize("json", Vehicles.objects.filter(partialvin=partialvin))
+    return JsonResponse({"data": q})
+
+@require_http_methods(["GET"])
+def getbyvmake(request, vmake):
+    q = serializers.serialize("json", Vehicles.objects.filter(vmake=vmake))
+    return JsonResponse({"data": q})

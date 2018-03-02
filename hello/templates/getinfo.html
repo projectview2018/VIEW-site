@@ -16,6 +16,9 @@
 <div class="container">
 	<button class="btn btn-primary" onclick="getByVGVWR(5)">Class</button>
 	<button class="btn btn-primary" onclick="getByPerc(60)">Rating Limit</button>
+	<button class="btn btn-primary" onclick="getByFullVIN('5PVNC6JK562S10283')">Full VIN</button>
+	<button class="btn btn-primary" onclick="getByPartialVIN('5PVNC6JK562S10283')">Partial VIN</button>
+	<button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button>
 
 </div>
 </html>
@@ -49,7 +52,48 @@ function getByPerc(perc){
 	request.open("GET", url);
 	request.send();
 }
-	
+
+function getByFullVIN(fullvin){
+	let request = new XMLHttpRequest();
+	let url = "https://findyourblindspots.herokuapp.com/api/v1/fullvin/" + fullvin + "/";
+
+	request.onreadystatechange = function() {
+	    let response = JSON.parse(this.responseText);
+
+	    console.log(response['data']); //can loop through this for responses
+	}
+
+	request.open("GET", url);
+	request.send();
+}	
+
+function getByPartialVIN(partialvin){
+	let request = new XMLHttpRequest();
+	let url = "https://findyourblindspots.herokuapp.com/api/v1/partialvin/" + partialvin + "/";
+
+	request.onreadystatechange = function() {
+	    let response = JSON.parse(this.responseText);
+
+	    console.log(response['data']); //can loop through this for responses
+	}
+
+	request.open("GET", url);
+	request.send();
+}	
+
+function getByVMake(vmake){
+	let request = new XMLHttpRequest();
+	let url = "https://findyourblindspots.herokuapp.com/api/v1/vmake/" + vmake + "/";
+
+	request.onreadystatechange = function() {
+	    let response = JSON.parse(this.responseText);
+
+	    console.log(response['data']); //can loop through this for responses
+	}
+
+	request.open("GET", url);
+	request.send();
+}	
 
 </script>
 
