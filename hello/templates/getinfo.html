@@ -23,8 +23,10 @@
 	    <input type="text" class="form-control" id="fullvin" placeholder="Eg: 1C3CCBBGXCN287756">
 	    <small id="descript" class="form-text text-muted">This will only return anything if the vehicle with this VIN is already in the database.</small>
 	  </div>
-	  <button class="btn btn-primary" onclick="getByFullVIN()">Submit</button>
+	  <!-- <button class="btn btn-primary" onclick="getByFullVIN()">Submit</button> -->
 	</form>
+	<button class="btn btn-primary" onclick="getByFullVIN()">Full VIN</button>
+
 
 
 	<form>
@@ -33,12 +35,10 @@
 	    <input type="text" class="form-control" id="partialvin" placeholder="Eg: 1C3CCBBGXC">
 	    <small id="descript" class="form-text text-muted">Please enter a partial vin with at least 10 digits, this will return any vehicle where the first 10 digits of the VIN match.</small>
 	  </div>
-	  <button class="btn btn-primary" onclick="getByPartialVIN()">Submit</button>
+	  <!-- <button class="btn btn-primary" onclick="getByPartialVIN()">Submit</button> -->
 	</form>
 
-
-	<button class="btn btn-primary" onclick="getByFullVIN('5PVNC6JK562S10283')">Full VIN</button>
-	<button class="btn btn-primary" onclick="getByPartialVIN('5PVNC6JK562S10283')">Partial VIN</button>
+	<button class="btn btn-primary" onclick="getByPartialVIN()">Partial VIN</button>
 	<button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button>
 
 </div>
