@@ -463,7 +463,7 @@ function truckInfoFromVIN(vin, perc){
         var vwc = vgvwr.substring(0,7);
         console.log(vmake, "*", vmodel, "*", vwc);
         let requestpost = new XMLHttpRequest();
-        let urlpost = "https://enigmatic-oasis-34994.herokuapp.com/api/v1/" + vin + "/" + partialvin + "/" + vmake + "/" + vmodel + "/" + vwc + "/" + perc + "/";
+        let urlpost = "https://findyourblindspots.herokuapp.com/api/v1/" + vin + "/" + partialvin + "/" + vmake + "/" + vmodel + "/" + vwc + "/" + perc + "/";
         requestpost.open("POST", urlpost);
         requestpost.send();
     }  
