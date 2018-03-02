@@ -16,6 +16,27 @@
 <div class="container">
 	<button class="btn btn-primary" onclick="getByVGVWR(5)">Class</button>
 	<button class="btn btn-primary" onclick="getByPerc(60)">Rating Limit</button>
+
+	<form>
+	  <div class="form-group">
+	    <label for="fullvin">Look up by full VIN number:</label>
+	    <input type="text" class="form-control" id="fullvin" placeholder="Eg: 1C3CCBBGXCN287756">
+	    <small id="descript" class="form-text text-muted">This will only return anything if the vehicle with this VIN is already in the database.</small>
+	  </div>
+	  <button class="btn btn-primary" onclick="getByFullVIN()">Submit</button>
+	</form>
+
+
+	<form>
+	  <div class="form-group">
+	    <label for="partialvin">Look up by partial VIN number:</label>
+	    <input type="text" class="form-control" id="partialvin" placeholder="Eg: 1C3CCBBGXCN287756">
+	    <small id="descript" class="form-text text-muted">Please enter a partial vin with at least 10 digits, this will return any vehicle where the first 10 digits of the VIN match.</small>
+	  </div>
+	  <button class="btn btn-primary" onclick="getByPartialVIN()">Submit</button>
+	</form>
+
+
 	<button class="btn btn-primary" onclick="getByFullVIN('5PVNC6JK562S10283')">Full VIN</button>
 	<button class="btn btn-primary" onclick="getByPartialVIN('5PVNC6JK562S10283')">Partial VIN</button>
 	<button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button>
@@ -54,6 +75,7 @@ function getByPerc(perc){
 }
 
 function getByFullVIN(fullvin){
+	var fullvin = document.getElementById('fullvin').value;
 	let request = new XMLHttpRequest();
 	let url = "https://findyourblindspots.herokuapp.com/api/v1/fullvin/" + fullvin + "/";
 
@@ -68,6 +90,7 @@ function getByFullVIN(fullvin){
 }	
 
 function getByPartialVIN(partialvin){
+	var partialvin = document.getElementById('partialvin').value;
 	let request = new XMLHttpRequest();
 	let url = "https://findyourblindspots.herokuapp.com/api/v1/partialvin/" + partialvin + "/";
 
