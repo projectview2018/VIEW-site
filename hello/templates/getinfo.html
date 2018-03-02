@@ -76,18 +76,18 @@ function getByPerc(perc){
 
 function getByFullVIN(){
 	var fullvin = document.getElementById('fullvin').value;
-	console.log(fullvin);
-	let request = new XMLHttpRequest();
-	let url = "https://findyourblindspots.herokuapp.com/api/v1/fullvin/" + fullvin + "/";
+	// console.log(fullvin);
+	// let request = new XMLHttpRequest();
+	// let url = "https://findyourblindspots.herokuapp.com/api/v1/fullvin/" + fullvin + "/";
 
-	request.onreadystatechange = function() {
-	    let response = JSON.parse(this.responseText);
+	// request.onreadystatechange = function() {
+	//     let response = JSON.parse(this.responseText);
 
-	    console.log(response['data']); //can loop through this for responses
-	}
+	//     console.log(response['data']); //can loop through this for responses
+	// }
 
-	request.open("GET", url);
-	request.send();
+	// request.open("GET", url);
+	// request.send();
 }	
 
 function getByPartialVIN(){
