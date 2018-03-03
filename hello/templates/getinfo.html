@@ -14,8 +14,27 @@
   </div>
 </div>
 <div class="container">
+
+	<form>
+	  <div class="form-group">
+	    <label for="vgvwr">Look up by weight class:</label>
+	    <input type="text" class="form-control" id="vgvwr" placeholder="Eg: 5">
+	    <small id="descript" class="form-text text-muted">Please enter weight class number, not lbs.</small>
+	  </div>
+	  <!-- <button class="btn btn-primary" onclick="getByFullVIN()">Submit</button> -->
+	</form
 	<button class="btn btn-primary" onclick="getByVGVWR(5)">Class</button>
-	<button class="btn btn-primary" onclick="getByPerc(60)">Rating Limit</button>
+
+	<form>
+	  <div class="form-group">
+	    <label for="perc">Look up by percentage of visible volume:</label>
+	    <input type="text" class="form-control" id="perc" placeholder="Eg: 60">
+	    <small id="descript" class="form-text text-muted">Returns trucks which have an equal of greater percentage of visible volume.</small>
+	  </div>
+	  <!-- <button class="btn btn-primary" onclick="getByFullVIN()">Submit</button> -->
+	</form
+
+	<button class="btn btn-primary" onclick="getByPerc()">Rating Limit</button>
 
 	<form>
 	  <div class="form-group">
@@ -46,7 +65,8 @@
 
 <script type="text/javascript">
 
-function getByVGVWR(vgvwr){
+function getByVGVWR(){
+	var vgvwr = document.getElementById('vgvwr').value;
 	let request = new XMLHttpRequest();
 	let url = "https://findyourblindspots.herokuapp.com/api/v1/vgvwr/" + vgvwr + "/";
 
@@ -60,7 +80,8 @@ function getByVGVWR(vgvwr){
 	request.send();
 }
 
-function getByPerc(perc){
+function getByPerc(){
+	var perc = document.getElementById('perc').value;
 	let request = new XMLHttpRequest();
 	let url = "https://findyourblindspots.herokuapp.com/api/v1/perc/" + perc + "/";
 
