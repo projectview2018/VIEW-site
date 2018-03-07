@@ -63,5 +63,5 @@ def getbyvmake(request, vmake):
 
 @require_http_methods(["GET"])
 def getmakes(request):
-    q = serializers.serialize("json", Vehicles.objects.order_by().values_list('vmake', flat=True).distinct())
+    q = Vehicles.objects.order_by().values_list('vmake', flat=True).distinct()
     return JsonResponse({"data": q})
