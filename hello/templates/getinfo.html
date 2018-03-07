@@ -143,9 +143,9 @@ function getMakes(){
 		select = document.createElement("select");
 		for (var i = 0; i < res_data.length; i++){
 			if (i == 0) {
-				select.options.add(res_data[i], res_data[i], true, true);
+				select.options.add( new Option(res_data[i], res_data[i], true, true));
 			} else {
-				select.options.add(res_data[i], res_data[i]);
+				select.options.add( new Option(res_data[i], res_data[i]));
 			}
 			frag.appendChild(select);
 			div.appendChild(frag);
