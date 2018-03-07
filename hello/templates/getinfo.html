@@ -93,7 +93,8 @@ function displayTable(data){
 		var txt = "";
 		if (len > 0) {
 			for (var i = 0; i < len; i++){
-				if (data[i].fullvin && data[i].partialvin && data[i].vmake && data[i].vmodel && data[i].vgvwr && data[i].perc_vis){
+				console.log(data[i]["fields"]);
+				if (data[i]["fields"].fullvin && data[i].partialvin && data[i].vmake && data[i].vmodel && data[i].vgvwr && data[i].perc_vis){
 					txt += "<tr><td>" + data[i].fullvin + "</td><td>" + data[i].partialvin + "</td><td>" + data[i].vmake + "</td><td>" + data[i].vmodel + "</td><td>" + data[i].vgvwr + "</td><td>" + data[i].perc_vis + "</td></tr>";
 				}
 			}
