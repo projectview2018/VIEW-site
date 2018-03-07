@@ -132,9 +132,9 @@ function getMakes(){
 	let url = "https://findyourblindspots.herokuapp.com/api/v1/getmakes/";
 
 	request.onreadystatechange = function() {
-	    let response = JSON.parse(this.responseText);
+	    let response = this.responseText;
 
-	    console.log(response['data']); 
+	    console.log(response); 
 	}
 
 	request.open("GET", url);
