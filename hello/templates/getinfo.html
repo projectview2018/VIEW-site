@@ -166,6 +166,8 @@ getMakes();
 
 function getByVMake(vmake){
 	var e = document.getElementById("makedropdown");
+	var strUser1 = e.options;
+	console.log(strUser1);
 	var strUser = e.options[e.selectedIndex].value;
 	console.log(strUser);
 
