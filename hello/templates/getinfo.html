@@ -138,21 +138,19 @@ function getMakes(){
 
 	    console.log(response['data']);
 		var res_data = response['data'];
-		var div = document.querySelector("#container"),
-	    frag = document.createDocumentFragment(),
-	    select = document.createElement("select");
-		for (var i = 0; i < res_data.length; i++){
-			if (i == 0){
-				select.options.add(new Option(res_data[i], res_data[i], true, true));
-			} else {
-				select.options.add(new Option(res_data[i], res_data[i]));
-			}
-			frag.appendChild(select);
-			div.appendChild(frag);
+		console.log(res_data);
+		// var div = document.querySelector("#container"),
+	 //    frag = document.createDocumentFragment(),
+	 //    select = document.createElement("select");
+		// for (var i = 0; i < res_data.length; i++){
+		// 	if (i == 0){
+		// 		select.options.add(new Option(res_data[i], res_data[i], true, true));
+		// 	} else {
+		// 		select.options.add(new Option(res_data[i], res_data[i]));
+		// 	}
+		// 	frag.appendChild(select);
+		// 	div.appendChild(frag);
 		} 
-
-
-
 
 	}
 
