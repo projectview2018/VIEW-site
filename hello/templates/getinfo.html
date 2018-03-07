@@ -97,6 +97,7 @@ function displayTable(data){
 				console.log("gen", data[i]);
 				// console.log("f", data[i]["fields"]);
 				if (data[i]["fields"].fullvin && data[i]["fields"].partialvin && data[i]["fields"].vmake && data[i]["fields"].vmodel && data[i]["fields"].vgvwr && data[i]["fields"].perc_vis){
+					console.log("adding txt");
 					txt += "<tr><td>" + data[i]["fields"].fullvin + "</td><td>" + data[i]["fields"].partialvin + "</td><td>" + data[i]["fields"].vmake + "</td><td>" + data[i]["fields"].vmodel + "</td><td>" + data[i]["fields"].vgvwr + "</td><td>" + data[i]["fields"].perc_vis + "</td></tr>";
 				}
 			}
