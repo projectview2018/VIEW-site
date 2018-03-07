@@ -94,19 +94,20 @@ function displayTable(data){
 		var txt = "";
 		if (len > 0) {
 			for (var i = 0; i < len; i++){
-				console.log("gen", data[i]);
-				console.log("f", data[i]["fields"].fullvin);
 
-				if (data[i]["fields"].fullvin && data[i]["fields"].partialvin && data[i]["fields"].vmake && data[i]["fields"].vmodel && data[i]["fields"].vgvwr && data[i]["fields"].perc_vis){
-					console.log("adding txt");
-					txt += "<tr><td>" + data[i]["fields"].fullvin + "</td><td>" + data[i]["fields"].partialvin + "</td><td>" + data[i]["fields"].vmake + "</td><td>" + data[i]["fields"].vmodel + "</td><td>" + data[i]["fields"].vgvwr + "</td><td>" + data[i]["fields"].perc_vis + "</td></tr>";
-				}
+				// if (data[i]["fields"].fullvin && data[i]["fields"].partialvin && data[i]["fields"].vmake && data[i]["fields"].vmodel && data[i]["fields"].vgvwr && data[i]["fields"].perc_vis){
+				console.log("adding txt");
+				txt += "<tr><td>" + data[i]["fields"].fullvin + "</td><td>" + data[i]["fields"].partialvin + "</td><td>" + data[i]["fields"].vmake + "</td><td>" + data[i]["fields"].vmodel + "</td><td>" + data[i]["fields"].vgvwr + "</td><td>" + data[i]["fields"].perc_vis + "</td></tr>";
+				// }
 			}
 			console.log(txt);
 			if (txt != ""){
 				console.log("in text");
 				var table = document.getElementById("table");	
-				table.append(txt).removeClass("hidden");
+				table.append(txt);
+				if(table.className =='hidden'){
+                    table.className = 'unhidden';
+              	}
 			}
 		}
 	}
