@@ -61,16 +61,46 @@
 	<div id=makedropdown>
 		<select id=makedropdownselect>
 		</select>
-		<!-- <button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button> -->
 	</div>
-	<button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button>
+	<br>
+	<button class="btn btn-primary" onclick="getByVMake()">Get By Make</button>
 	<hr>
+
+	<table id="table" class="hidden">
+	    <tr>
+	        <th>FullVin</th>
+	        <th>PartialVin</th>
+	        <th>Make</th>
+	        <th>Model</th>
+	        <th>GVWR</th>
+	        <th>Percentage Visible</th>
+	    </tr>
+	</table>
 
 
 </div>
 </html>
 
 <script type="text/javascript">
+
+// https://stackoverflow.com/questions/19901843/display-json-data-in-html-table
+function displayTable(data){
+	if (data){
+		var len = data.length;
+		var txt = "";
+		if (len > 0) {
+			for (var i = 0; i < len; i++){
+				if (data[i].fullvin && data[i].partialvin && data[i].vmake && data[i].vmodel && data[i].vgvwr && data[i].perc_vis){
+					txt += "<tr><td>" + data[i].fullvin + "</td><td>" + data[i].partialvin + "</td><td>" + data[i].vmake + "</td><td>" + data[i].vmodel + "</td><td>" + data[i].vgvwr + "</td><td>" + data[i].perc_vis + "</td></tr>";
+				}
+			}
+			if (txt != ""){
+				var table = document.getElementById("table");	
+				table.append(txt).removeClass("hidden");
+			}
+		}
+	}
+}
 
 function getByVGVWR(){
 	var vgvwr = document.getElementById('vgvwr').value;
@@ -167,7 +197,7 @@ function getMakes(){
 
 getMakes();
 
-function getByVMake(vmake){
+function getByVMake(){
 	var e = document.getElementById("makedropdownselect");
 	var strUser = e.options[e.selectedIndex].value;
 	console.log(strUser);
@@ -179,11 +209,15 @@ function getByVMake(vmake){
 	    let response = JSON.parse(this.responseText);
 
 	    console.log(response['data']); 
+	    var data = response['data'];
+	    displayTable(data);
 	}
 
 	request.open("GET", url);
 	request.send();
 }	
+
+
 
 </script>
 

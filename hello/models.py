@@ -16,4 +16,5 @@ class Vehicles(models.Model):
 	class Meta:
 		ordering = ['vmake']
 
+#go through this process if any changes are made to models
 #https://stackoverflow.com/questions/28598676/django-heroku-error-your-models-have-changes-that-are-not-yet-reflected-in-a-mi
