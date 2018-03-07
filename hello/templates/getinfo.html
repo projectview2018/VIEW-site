@@ -169,13 +169,11 @@ getMakes();
 
 function getByVMake(vmake){
 	var e = document.getElementById("makedropdownselect");
-	var strUser1 = e.options;
-	console.log(strUser1);
 	var strUser = e.options[e.selectedIndex].value;
 	console.log(strUser);
 
 	let request = new XMLHttpRequest();
-	let url = "https://findyourblindspots.herokuapp.com/api/v1/vmake/" + vmake + "/";
+	let url = "https://findyourblindspots.herokuapp.com/api/v1/vmake/" + strUser + "/";
 
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
