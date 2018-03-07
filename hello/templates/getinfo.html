@@ -94,7 +94,7 @@ function displayTable(data){
 		var table = document.getElementById("table");	
 		for (var i = 0; i < len; i++){
 
-			var txt += "<tr><td>" + data[i]["fields"].fullvin + "</td><td>" + data[i]["fields"].partialvin + "</td><td>" + data[i]["fields"].vmake + "</td><td>" + data[i]["fields"].vmodel + "</td><td>" + data[i]["fields"].vgvwr + "</td><td>" + data[i]["fields"].perc_vis + "</td></tr>";
+			var txt = "<tr><td>" + data[i]["fields"].fullvin + "</td><td>" + data[i]["fields"].partialvin + "</td><td>" + data[i]["fields"].vmake + "</td><td>" + data[i]["fields"].vmodel + "</td><td>" + data[i]["fields"].vgvwr + "</td><td>" + data[i]["fields"].perc_vis + "</td></tr>";
 			table.appendChild(txt);
 		}
 
