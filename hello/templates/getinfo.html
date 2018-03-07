@@ -59,6 +59,8 @@
 	<button class="btn btn-primary" onclick="getByPartialVIN()">Partial VIN</button>
 	  <hr>
 	<div id=makedropdown>
+		<select id=makedropdownselect>
+		</select>
 		<!-- <button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button> -->
 	</div>
 	<button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button>
@@ -143,7 +145,8 @@ function getMakes(){
 		console.log(res_data);
 		var div = document.querySelector("#makedropdown");
 		frag = document.createDocumentFragment();
-		select = document.createElement("select");
+		// select = document.createElement("select");
+		select = document.getElementById("makedropdownselect");
 		if (done_once == false){ // honestly don't know why this function is being called twice
 			done_once = true;
 			for (var i = 0; i < res_data.length; i++){
