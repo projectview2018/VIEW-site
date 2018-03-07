@@ -97,7 +97,9 @@ function displayTable(data){
 					txt += "<tr><td>" + data[i].fullvin + "</td><td>" + data[i].partialvin + "</td><td>" + data[i].vmake + "</td><td>" + data[i].vmodel + "</td><td>" + data[i].vgvwr + "</td><td>" + data[i].perc_vis + "</td></tr>";
 				}
 			}
+			console.log(txt);
 			if (txt != ""){
+				console.log("in text");
 				var table = document.getElementById("table");	
 				table.append(txt).removeClass("hidden");
 			}
