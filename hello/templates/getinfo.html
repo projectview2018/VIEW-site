@@ -59,7 +59,7 @@
 	<button class="btn btn-primary" onclick="getByPartialVIN()">Partial VIN</button>
 	  <hr>
 	<div id=makedropdown>
-		<button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button>
+		<!-- <button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button> -->
 	</div>
 
 </div>
@@ -132,6 +132,7 @@ function getByPartialVIN(){
 function getMakes(){
 	let request = new XMLHttpRequest();
 	let url = "https://findyourblindspots.herokuapp.com/api/v1/getmakes/";
+	done_once = false;
 
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
@@ -141,16 +142,18 @@ function getMakes(){
 		var div = document.querySelector("#makedropdown");
 		frag = document.createDocumentFragment();
 		select = document.createElement("select");
-		for (var i = 0; i < res_data.length; i++){
-			if (i == 0) {
-				select.options.add( new Option(res_data[i], res_data[i], true, true));
-			} else {
-				select.options.add( new Option(res_data[i], res_data[i]));
+		if (done_once == false){ // honestly don't know why this function is being called twice
+			done_once = true;
+			for (var i = 0; i < res_data.length; i++){
+				if (i == 0) {
+					select.options.add( new Option(res_data[i], res_data[i], true, true));
+				} else {
+					select.options.add( new Option(res_data[i], res_data[i]));
+				}
+				frag.appendChild(select);
+				div.appendChild(frag);
 			}
-			frag.appendChild(select);
-			div.appendChild(frag);
 		}
-
 	}
 
 	request.open("GET", url);
