@@ -13,4 +13,7 @@ class Vehicles(models.Model):
 	perc_vis = models.IntegerField()
 	when = models.DateTimeField('date created', auto_now_add=True)
 
+	# class Meta:
+	# 	ordering = ('make')
+
 #https://stackoverflow.com/questions/28598676/django-heroku-error-your-models-have-changes-that-are-not-yet-reflected-in-a-mi
