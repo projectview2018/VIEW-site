@@ -61,6 +61,9 @@
 	<div id=makedropdown>
 		<!-- <button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button> -->
 	</div>
+	<button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button>
+	<hr>
+
 
 </div>
 </html>
@@ -136,7 +139,6 @@ function getMakes(){
 
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
-	    console.log("ethu", response);
 		var res_data = response['data'];
 		console.log(res_data);
 		var div = document.querySelector("#makedropdown");
@@ -163,6 +165,10 @@ function getMakes(){
 getMakes();
 
 function getByVMake(vmake){
+	var e = document.getElementById("makedropdown");
+	var strUser = e.options[e.selectedIndex].value;
+	console.log(strUser);
+
 	let request = new XMLHttpRequest();
 	let url = "https://findyourblindspots.herokuapp.com/api/v1/vmake/" + vmake + "/";
 
