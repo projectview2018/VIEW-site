@@ -58,9 +58,9 @@
 
 	<button class="btn btn-primary" onclick="getByPartialVIN()">Partial VIN</button>
 	  <hr>
-	<!-- <div id=makedropdown> -->
+	<div id=makedropdown>
 		<button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button>
-	<!-- </div> -->
+	</div>
 
 </div>
 </html>
@@ -138,13 +138,26 @@ function getMakes(){
 	    console.log("ethu", response);
 		var res_data = response['data'];
 		console.log(res_data);
+		var div = document.querySelector("#container");
+		frag = document.createDocumentFragment();
+		select = document.createElement("select");
+		for (var i = 0; i < res_data.length; i++){
+			if (i == 0) {
+				select.options.add(res_data[i], res_data[i], true, true);
+			} else {
+				select.options.add(res_data[i], res_data[i]);
+			}
+			frag.appendChild(select);
+			div.appendChild(frag);
+		}
+
 	}
 
 	request.open("GET", url);
 	request.send();
 }
 
-// getMakes();
+getMakes();
 
 function getByVMake(vmake){
 	let request = new XMLHttpRequest();
