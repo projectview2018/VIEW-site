@@ -24,7 +24,7 @@
 	  <!-- <button class="btn btn-primary" onclick="getByFullVIN()">Submit</button> -->
 	</form>
 	<button class="btn btn-primary" onclick="getByVGVWR(5)">Class</button>
-
+  <hr>
 	<form>
 	  <div class="form-group">
 	    <label for="perc">Look up by percentage of visible volume:</label>
@@ -32,10 +32,10 @@
 	    <small id="descript" class="form-text text-muted">Returns trucks which have an equal of greater percentage of visible volume.</small>
 	  </div>
 	  <!-- <button class="btn btn-primary" onclick="getByFullVIN()">Submit</button> -->
-	</form
+	</form>
 
 	<button class="btn btn-primary" onclick="getByPerc()">Rating Limit</button>
-
+  <hr>
 	<form>
 	  <div class="form-group">
 	    <label for="fullvin">Look up by full VIN number:</label>
@@ -45,8 +45,7 @@
 	  <!-- <button class="btn btn-primary" onclick="getByFullVIN()">Submit</button> -->
 	</form>
 	<button class="btn btn-primary" onclick="getByFullVIN()">Full VIN</button>
-
-
+  <hr>
 
 	<form>
 	  <div class="form-group">
@@ -58,6 +57,7 @@
 	</form>
 
 	<button class="btn btn-primary" onclick="getByPartialVIN()">Partial VIN</button>
+	  <hr>
 	<button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button>
 
 </div>
@@ -126,6 +126,22 @@ function getByPartialVIN(){
 	request.send();
 	return false;
 }	
+
+function getMakes(){
+	let request = new XMLHttpRequest();
+	let url = "https://findyourblindspots.herokuapp.com/api/v1/getmakes/";
+
+	request.onreadystatechange = function() {
+	    let response = JSON.parse(this.responseText);
+
+	    console.log(response['data']); //can loop through this for responses
+	}
+
+	request.open("GET", url);
+	request.send();
+}
+
+getMakes();
 
 function getByVMake(vmake){
 	let request = new XMLHttpRequest();

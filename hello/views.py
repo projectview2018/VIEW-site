@@ -60,3 +60,8 @@ def getbypartialvin(request, partialvin):
 def getbyvmake(request, vmake):
     q = serializers.serialize("json", Vehicles.objects.filter(vmake=vmake))
     return JsonResponse({"data": q})
+
+@require_http_methods(["GET"])
+def getmakes(request):
+    q = serializers.serialize("json", Vehicles.objects.orderby().values_list(flat=True).distinct())
+    return JsonResponse({"data": q})
