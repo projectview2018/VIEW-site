@@ -58,9 +58,9 @@
 
 	<button class="btn btn-primary" onclick="getByPartialVIN()">Partial VIN</button>
 	  <hr>
-	<div id=makedropdown>
+	<!-- <div id=makedropdown> -->
 		<button class="btn btn-primary" onclick="getByVMake('HINO')">Make</button>
-	</div>
+	<!-- </div> -->
 
 </div>
 </html>
@@ -136,7 +136,7 @@ function getMakes(){
 	request.onreadystatechange = function() {
 	    let response = this.responseText;
 
-	    console.log(response['data']);
+	    console.log("ethu", response['data']);
 		var res_data = response['data'];
 		console.log(res_data);
 		// var div = document.querySelector("#container"),
