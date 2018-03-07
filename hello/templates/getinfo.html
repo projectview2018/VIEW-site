@@ -95,10 +95,10 @@ function displayTable(data){
 		if (len > 0) {
 			for (var i = 0; i < len; i++){
 				console.log("gen", data[i]);
-				console.log("f", data[i]["fields"]);
-				// if (data[i]["fields"].fullvin && data[i].partialvin && data[i].vmake && data[i].vmodel && data[i].vgvwr && data[i].perc_vis){
-				// 	txt += "<tr><td>" + data[i].fullvin + "</td><td>" + data[i].partialvin + "</td><td>" + data[i].vmake + "</td><td>" + data[i].vmodel + "</td><td>" + data[i].vgvwr + "</td><td>" + data[i].perc_vis + "</td></tr>";
-				// }
+				// console.log("f", data[i]["fields"]);
+				if (data[i]["fields"].fullvin && data[i]["fields"].partialvin && data[i]["fields"].vmake && data[i]["fields"].vmodel && data[i]["fields"].vgvwr && data[i]["fields"].perc_vis){
+					txt += "<tr><td>" + data[i]["fields"].fullvin + "</td><td>" + data[i]["fields"].partialvin + "</td><td>" + data[i]["fields"].vmake + "</td><td>" + data[i]["fields"].vmodel + "</td><td>" + data[i]["fields"].vgvwr + "</td><td>" + data[i]["fields"].perc_vis + "</td></tr>";
+				}
 			}
 			console.log(txt);
 			if (txt != ""){
