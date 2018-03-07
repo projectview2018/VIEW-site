@@ -88,7 +88,7 @@ function getByPerc(){
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
 
-	    console.log(response['data']); //can loop through this for responses
+	    console.log(response['data']);
 	}
 
 	request.open("GET", url);
@@ -103,7 +103,7 @@ function getByFullVIN(){
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
 
-	    console.log(response['data']); //can loop through this for responses
+	    console.log(response['data']); 
 	}
 
 	request.open("GET", url);
@@ -119,7 +119,7 @@ function getByPartialVIN(){
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
 
-	    console.log(response['data']); //can loop through this for responses
+	    console.log(response['data']); 
 	}
 
 	request.open("GET", url);
@@ -134,7 +134,7 @@ function getMakes(){
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
 
-	    console.log(response['data']); //can loop through this for responses
+	    console.log(response['data']); 
 	}
 
 	request.open("GET", url);
@@ -150,7 +150,7 @@ function getByVMake(vmake){
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
 
-	    console.log(response['data']); //can loop through this for responses
+	    console.log(response['data']); 
 	}
 
 	request.open("GET", url);
