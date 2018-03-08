@@ -97,14 +97,11 @@ function displayTable(data){
 			var row = document.createElement('tr');
 			for (var j = 0; j < props.length; j++){
 				var cell = document.createElement('td');
-				var text = document.createTextNode(data[i][props[j]]);
+				var text = document.createTextNode(data[i]["fields"][props[j]]);
 				cell.appendChild(text);
 				row.appendChild(cell);
 			}
 			table.appendChild(row);
-			// console.log("test", data[i]["fields"]["fullvin"]);
-			// var txt = "<tr><td>" + data[i]["fields"].fullvin + "</td><td>" + data[i]["fields"].partialvin + "</td><td>" + data[i]["fields"].vmake + "</td><td>" + data[i]["fields"].vmodel + "</td><td>" + data[i]["fields"].vgvwr + "</td><td>" + data[i]["fields"].perc_vis + "</td></tr>";
-			// table.appendChild(txt);
 		}
 
 		if(table.className =='hidden'){
