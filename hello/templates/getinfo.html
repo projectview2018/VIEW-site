@@ -67,14 +67,20 @@
 	<hr>
 
 	<table id="table" class="hidden">
+		<thead>
 	    <tr>
-	        <th>FullVin</th>
-	        <th>PartialVin</th>
+	        <th>Full Vin</th>
+	        <th>Partial Vin</th>
 	        <th>Make</th>
 	        <th>Model</th>
 	        <th>GVWR</th>
 	        <th>Percentage Visible</th>
 	    </tr>
+		</thead>
+		<tbody id="tablebody">
+			
+		</tbody>
+
 	</table>
 
 
@@ -91,7 +97,7 @@ function displayTable(data){
 	if (data){
 		console.log("indata");
 		var len = data.length;
-		var table = document.getElementById("table");	
+		var table = document.getElementById("tablebody");	
 		var props = ["fullvin", "partialvin", "vmake", "vmodel", "vgvwr", "perc_vis"];
 		for (var i = 0; i < len; i++){
 			var row = document.createElement('tr');
