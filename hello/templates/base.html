@@ -46,9 +46,22 @@
     .unhidden{
         display:block;
     }
-    .table, .th, .td {
+
+    table, th, td {
     border: 1px solid black;
+    padding: 0 30px 0 30px;
     }
+
+    /* cellspacing */
+    table { border-collapse: separate; border-spacing: 5px; } /* cellspacing="5" */
+    table { border-collapse: collapse; border-spacing: 0; }   /* cellspacing="0" */
+
+    /* valign */
+    th, td { vertical-align: top; }
+
+    /* align (center) */
+    table { margin: 0 auto; }
+
 
   </style>
 </head>
