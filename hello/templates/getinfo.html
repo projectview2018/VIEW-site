@@ -66,7 +66,7 @@
 	<button class="btn btn-primary" onclick="getByVMake()">Get By Make</button>
 	<hr>
 
-	<table id="table"  cellspacing="10">
+	<table id="table" class="hidden" cellspacing="10">
 		<thead>
 	    <tr>
 	        <th>Full VIN</th>
@@ -82,7 +82,7 @@
 		</tbody>
 
 	</table>
-
+	<hr>
 
 </div>
 </html>
@@ -98,6 +98,7 @@ function displayTable(data){
 		console.log("indata");
 		var len = data.length;
 		var tablebody = document.getElementById("tablebody");
+		var newtablebody = document.createElement('tbody');
 		var table = document.getElementById("table");	
 		var props = ["fullvin", "partialvin", "vmake", "vmodel", "vgvwr", "perc_vis"];
 		for (var i = 0; i < len; i++){
@@ -108,9 +109,10 @@ function displayTable(data){
 				cell.appendChild(text);
 				row.appendChild(cell);
 			}
-			tablebody.appendChild(row);
+			newtablebody.appendChild(row);
 		}
 
+		tablebody.parentNode.replaceChild(newtablebody, tablebody);
 		if(table.className =='hidden'){
       		table.className = 'unhidden';
       	}
