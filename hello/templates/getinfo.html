@@ -99,6 +99,7 @@ function displayTable(data){
 		var len = data.length;
 		var tablebody = document.getElementById("tablebody");
 		var newtablebody = document.createElement('tbody');
+		newtablebody.id = "tablebody";
 		var table = document.getElementById("table");	
 		var props = ["fullvin", "partialvin", "vmake", "vmodel", "vgvwr", "perc_vis"];
 		for (var i = 0; i < len; i++){
