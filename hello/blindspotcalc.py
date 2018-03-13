@@ -22,7 +22,7 @@ def find_total_truck_interest_area(angles):
     # initialize total volume counter:
     interest = 0
     angles = angles.split(',')
-    angles = list(map(int, angles))
+    angles = list(map(float, angles))
     print(angles)
     # Iterate through the list of slices
     for i in range(0, len(angles) - 1):
