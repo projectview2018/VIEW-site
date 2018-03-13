@@ -122,7 +122,8 @@ var marks_dist;
 var HEIGHT_CUTOFF = 74; // 6'2" 95th percentile male US
 var RADIUS_CUTOFF = 180; // 15 feet
 var RIGHT_CUTOFF = -135;
-
+var total_volume;
+var blind_volume;
 
 function c(img) {
     // Creates a new canvas element and appends it as a child
@@ -230,7 +231,7 @@ function c(img) {
                     driver_height = document.getElementById('dh').value;
                     marks_dist = document.getElementById('rd').value;
                     createHeightMap();
-                    perc = calcGroundIntersection();
+                    calcGroundIntersection();
                     var item = document.getElementById('dataentry');
                     if (item) {
                       if(item.className =='unhidden'){
@@ -389,34 +390,27 @@ function calcGroundIntersection(){
         phis_passenger.push(phi);
 
     }
-    console.log("gf", ground_intersections_front);
-    console.log("gp", ground_intersections_passenger);
-    console.log("pf", phis_front);
-    console.log("pp", phis_passenger);
+    // console.log("gf", ground_intersections_front);
+    // console.log("gp", ground_intersections_passenger);
+    // console.log("pf", phis_front);
+    // console.log("pp", phis_passenger);
 
     var phis = phis_front.concat(phis_passenger);
-    var total_volume = calcTotalVolume(phis);
-    console.log(total_volume);
 
     var ground_intersections = ground_intersections_front.concat(ground_intersections_passenger);
-    var blind_volume = calcBlindVolume(ground_intersections, phis);
-    console.log(blind_volume)
-    var ratio = (total_volume - blind_volume)/total_volume;
-    var perc = ratio * 100;
-    var rounded_perc = Math.round(perc, 0);
-    percentage.innerHTML = "Percent of area visible: " + rounded_perc + "%";
-    console.log(ratio);
-    return rounded_perc;
+    calcBlindVolume(ground_intersections, phis);
 }
 
 function calcBlindVolume(ground_intersections, phis){
     let request = new XMLHttpRequest();
     //50 are a test for now
     let url = "https://findyourblindspots.herokuapp.com/api/v1/getblindarea/" + ground_intersections + "/" + phis + "/" + driver_height + "/50/50/";
+
     request.onreadystatechange = function() {
         let response = JSON.parse(this.responseText);
         console.log(response);
-        return response['data'];
+        blind_volume = response['data'];
+        calcTotalVolume(phis);
     }
 
     request.open("GET", url, true);
@@ -431,12 +425,22 @@ function calcTotalVolume(phis){
     request.onreadystatechange = function() {
         let response = JSON.parse(this.responseText);
         console.log(response);
-        return response['data'];
+        total_volume = response['data'];
+
     }
 
     request.open("GET", url, true);
     request.send();
 
+}
+
+function postRatio(){
+    var ratio = (total_volume - blind_volume)/total_volume;
+    var perc = ratio * 100;
+    var rounded_perc = Math.round(perc, 0);
+    percentage.innerHTML = "Percent of area visible: " + rounded_perc + "%";
+    console.log(ratio);
+    perc = rounded_perc;
 }
 
 function truckInfoFromVIN(vin, perc){
