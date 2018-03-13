@@ -20,6 +20,8 @@ def find_total_truck_interest_area(angles, c, d):
     interest = 0
     angles = angles.split(',')
     angles = list(map(float, angles))
+    c = int(c)
+    d = int(d)
     # Iterate through the list of slices
     for i in range(0, len(angles) - 1):
         # determine angle
@@ -48,6 +50,10 @@ def find_total_truck_blind_area(NVPs, angles, DH, c, d):
 
     # initialize total volume counter:
     blind = 0
+    angles = angles.split(',')
+    angles = list(map(float, angles))
+    c = int(c)
+    d = int(d)
 
     # Iterate through the list of slices
     for i in range(0, len(NVPs) - 1):
