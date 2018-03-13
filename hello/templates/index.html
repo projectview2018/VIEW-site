@@ -441,7 +441,7 @@ function calcTotalVolume(phis){
     // var percentage = total_phi / 360;
     // return total_volume * percentage;
     let request = new XMLHttpRequest();
-    let url = "https://findyourblindspots.herokuapp.com/api/v1/vgvwr/" + phis + "/";
+    let url = "https://findyourblindspots.herokuapp.com/api/v1/getinterestarea/" + phis + "/";
     request.onreadystatechange = function() {
         let response = JSON.parse(this.responseText);
         console.log(response);
