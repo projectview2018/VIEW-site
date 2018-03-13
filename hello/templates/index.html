@@ -349,7 +349,8 @@ function getPhi(px_x){
     var degree_v = diff/180;
     var past_zero = px_x - zero;
     var deg = past_zero/degree_v;
-    return deg;
+    var radians = deg * (Math.PI / 180);
+    return radians;
 }
 
 function getTanDeg(deg) {
@@ -396,18 +397,20 @@ function calcGroundIntersection(){
     console.log("pp", phis_passenger);
 
     left_cutoff = phis_front[0];
-    var front_volume = calcBlindVolume(ground_intersections_front, phis_front);
-    var passenger_volume = calcBlindVolume(ground_intersections_passenger, phis_passenger);
-    var total_blind_volume = front_volume + passenger_volume;
-    console.log(total_blind_volume);
-    var total_volume = calcTotalVolume();
+    // var front_volume = calcBlindVolume(ground_intersections_front, phis_front);
+    // var passenger_volume = calcBlindVolume(ground_intersections_passenger, phis_passenger);
+    // var total_blind_volume = front_volume + passenger_volume;
+    // console.log(total_blind_volume);
+    var phis = phis_front.concat(phis_passenger);
+    var total_volume = calcTotalVolume(phis);
     console.log(total_volume);
-    var ratio = (total_volume - total_blind_volume)/total_volume;
-    var perc = ratio * 100;
-    var rounded_perc = Math.round(perc, 0);
-    percentage.innerHTML = "Percent of area visible: " + rounded_perc + "%";
-    console.log(ratio);
-    return rounded_perc;
+    // var ratio = (total_volume - total_blind_volume)/total_volume;
+    // var perc = ratio * 100;
+    // var rounded_perc = Math.round(perc, 0);
+    // percentage.innerHTML = "Percent of area visible: " + rounded_perc + "%";
+    // console.log(ratio);
+    // return rounded_perc;
+    return 0 // temp
 
 }
 
@@ -432,11 +435,22 @@ function calcBlindVolume(ground_intersections, phis){
     return volume_sum;
 }
 
-function calcTotalVolume(){
-    var total_volume = Math.PI*Math.pow(RADIUS_CUTOFF,2)*HEIGHT_CUTOFF;
-    var total_phi = left_cutoff - RIGHT_CUTOFF;
-    var percentage = total_phi / 360;
-    return total_volume * percentage;
+function calcTotalVolume(phis){
+    // var total_volume = Math.PI*Math.pow(RADIUS_CUTOFF,2)*HEIGHT_CUTOFF;
+    // var total_phi = left_cutoff - RIGHT_CUTOFF;
+    // var percentage = total_phi / 360;
+    // return total_volume * percentage;
+    let request = new XMLHttpRequest();
+    let url = "https://findyourblindspots.herokuapp.com/api/v1/vgvwr/" + phis + "/";
+    request.onreadystatechange = function() {
+        let response = JSON.parse(this.responseText);
+        console.log(response);
+        return response['data'];
+    }
+
+    request.open("GET", url, true);
+    request.send();
+
 }
 
 function truckInfoFromVIN(vin, perc){

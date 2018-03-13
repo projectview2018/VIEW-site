@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from .models import Greeting, Vehicles
 from django.views.decorators.http import require_http_methods
 from django.core import serializers
+from blindspotcalc import *
 # from rest_framework.test import APIClient
 # from rest_framework import status
 # from django.core.urlresolvers import reverse
@@ -65,3 +66,8 @@ def getbyvmake(request, vmake):
 def getmakes(request):
     q = list(Vehicles.objects.order_by().values_list('vmake', flat=True).distinct())
     return JsonResponse({"data": q})
+
+@require_http_methods(["GET"])
+def getinterestarea(request, angles):
+    interest_area = find_total_truck_interest_area(angles)
+    return JsonResponse({"data": interest_area})
