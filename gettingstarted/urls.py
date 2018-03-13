@@ -18,7 +18,7 @@ urlpatterns = [
 	path('api/v1/partialvin/<partialvin>/', hello.views.getbypartialvin),
 	path('api/v1/vmake/<vmake>/', hello.views.getbyvmake),
 	path('api/v1/getmakes/', hello.views.getmakes),
-	path('api/v1/getinterestarea/<angles>/', hello.views.getinterestarea),
+	path('api/v1/getinterestarea/<angles>/<c>/<d>/', hello.views.getinterestarea),
     url(r'^$', hello.views.index, name='index'),
     url(r'^getinfo', hello.views.getinfo, name='getinfo'),
     url(r'^db', hello.views.db, name='db'),
