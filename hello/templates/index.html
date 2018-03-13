@@ -122,8 +122,6 @@ var marks_dist;
 var HEIGHT_CUTOFF = 74; // 6'2" 95th percentile male US
 var RADIUS_CUTOFF = 180; // 15 feet
 var RIGHT_CUTOFF = -135;
-var left_cutoff;
-
 
 
 function c(img) {
@@ -396,53 +394,40 @@ function calcGroundIntersection(){
     console.log("pf", phis_front);
     console.log("pp", phis_passenger);
 
-    left_cutoff = phis_front[0];
-    // var front_volume = calcBlindVolume(ground_intersections_front, phis_front);
-    // var passenger_volume = calcBlindVolume(ground_intersections_passenger, phis_passenger);
-    // var total_blind_volume = front_volume + passenger_volume;
-    // console.log(total_blind_volume);
     var phis = phis_front.concat(phis_passenger);
     var total_volume = calcTotalVolume(phis);
     console.log(total_volume);
-    // var ratio = (total_volume - total_blind_volume)/total_volume;
-    // var perc = ratio * 100;
-    // var rounded_perc = Math.round(perc, 0);
-    // percentage.innerHTML = "Percent of area visible: " + rounded_perc + "%";
-    // console.log(ratio);
-    // return rounded_perc;
-    return 0 // temp
 
+    var ground_intersections = ground_intersections_front.concat(ground_intersections_passenger);
+    var blind_volume = calcBlindVolume(ground_intersections, phis);
+    console.log(blind_volume)
+    var ratio = (total_volume - blind_volume)/total_volume;
+    var perc = ratio * 100;
+    var rounded_perc = Math.round(perc, 0);
+    percentage.innerHTML = "Percent of area visible: " + rounded_perc + "%";
+    console.log(ratio);
+    return rounded_perc;
 }
 
 function calcBlindVolume(ground_intersections, phis){
-    var volume_sum = 0;
-    var a = 0;
-    if(driver_height >= HEIGHT_CUTOFF){
-        a = driver_height - HEIGHT_CUTOFF;
+    let request = new XMLHttpRequest();
+    //50 are a test for now
+    let url = "https://findyourblindspots.herokuapp.com/api/v1/getblindarea/" + ground_intersections "/" + phis + "/" + driver_height + "/50/50/";
+    request.onreadystatechange = function() {
+        let response = JSON.parse(this.responseText);
+        console.log(response);
+        return response['data'];
     }
-    for (var i = 0; i < ground_intersections.length - 1; i++){ // minus one because we use pairs
-        var b = 0;
-        if (ground_intersections[i] >= RADIUS_CUTOFF){
-            b = ground_intersections[i] - RADIUS_CUTOFF;
-        }
-        var phi = Math.abs(phis[i] - phis[i + 1]);
-        var overall = ((1/6)*Math.pow(ground_intersections[i],2)*driver_height*getTanDeg(phi))
-        var top = (1/6)*(Math.pow(ground_intersections[i],2)/Math.pow(driver_height, 2))*Math.pow(a, 3)*getTanDeg(phi);
-        var end = (1/2)*(driver_height/ground_intersections[i])*Math.pow(b,2)*RADIUS_CUTOFF*getTanDeg(phi);
-        var volume = 2*(overall - top - end);
-        volume_sum += volume;
-    }
-    return volume_sum;
+
+    request.open("GET", url, true);
+    request.send();
+
 }
 
 function calcTotalVolume(phis){
-    // var total_volume = Math.PI*Math.pow(RADIUS_CUTOFF,2)*HEIGHT_CUTOFF;
-    // var total_phi = left_cutoff - RIGHT_CUTOFF;
-    // var percentage = total_phi / 360;
-    // return total_volume * percentage;
     let request = new XMLHttpRequest();
-    //7 are a test for now
-    let url = "https://findyourblindspots.herokuapp.com/api/v1/getinterestarea/" + phis + "/7/7/";
+    //50 are a test for now
+    let url = "https://findyourblindspots.herokuapp.com/api/v1/getinterestarea/" + phis + "/50/50/";
     request.onreadystatechange = function() {
         let response = JSON.parse(this.responseText);
         console.log(response);

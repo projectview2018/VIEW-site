@@ -1,8 +1,8 @@
 from math import *
 
-ceiling = 6.16666 # 6'2" which is the 95th percentile male
-e = 15
-f = 15
+ceiling = 74 # 6'2" which is the 95th percentile male
+e = 180 # 15 feet
+f = 180
 
 def find_total_truck_interest_area(angles, c, d):
     # finds the total interest volume for a truck
@@ -52,6 +52,7 @@ def find_total_truck_blind_area(NVPs, angles, DH, c, d):
     blind = 0
     angles = angles.split(',')
     angles = list(map(float, angles))
+    DH = float(DH)
     c = int(c)
     d = int(d)
 
