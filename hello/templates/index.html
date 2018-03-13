@@ -412,7 +412,7 @@ function calcGroundIntersection(){
 function calcBlindVolume(ground_intersections, phis){
     let request = new XMLHttpRequest();
     //50 are a test for now
-    let url = "https://findyourblindspots.herokuapp.com/api/v1/getblindarea/" + ground_intersections "/" + phis + "/" + driver_height + "/50/50/";
+    let url = "https://findyourblindspots.herokuapp.com/api/v1/getblindarea/" + ground_intersections + "/" + phis + "/" + driver_height + "/50/50/";
     request.onreadystatechange = function() {
         let response = JSON.parse(this.responseText);
         console.log(response);
