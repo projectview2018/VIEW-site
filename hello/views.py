@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from .models import Greeting, Vehicles
 from django.views.decorators.http import require_http_methods
 from django.core import serializers
-from blindspotcalc import *
+from <hello>.blindspotcalc import *
 # from rest_framework.test import APIClient
 # from rest_framework import status
 # from django.core.urlresolvers import reverse
