@@ -14,7 +14,7 @@
 <div class="container">
 
   <h3>
-<div id="instructiontxt">Chose field of view image to upload</div></h3>
+<div id="instructiontxt">Choose field of view image to upload</div></h3>
     <br>
 <div id="steps" class="hidden">
 <div id="canvas">Click to draw<br/></div>
@@ -55,7 +55,6 @@
   <div class="form-group">
     <label for="vin">VIN number:</label>
     <input type="text" class="form-control" id="vvin" placeholder="Eg: 1C3CCBBGXCN287756">
-<!--     <small id="radiusdescript" class="form-text text-muted">This is not the hypotenuse, but the distance along the ground.</small> -->
   </div>
 </form>
 </div>
@@ -100,7 +99,7 @@ var height_map = {};
 var neg_90;
 var zero;
 var angle_map = {};
-var driver_height; // will need to be user entered
+var driver_height
 var marks_dist; 
 var c;
 var d;
@@ -167,10 +166,12 @@ function c(img) {
         }
         ctx.addBack(img);
 
+        // todo : literally any error checking on user inputs would be nice
+        // step instruction block
         ctx.addNext = function (img){
             var image = new Image()
             image.onload = function () {
-                if (curr_step <= 6) {
+                if (curr_step <= 6) { // right now we are accepting marks up to 6 feet 
                     var avg = getAverage(coords);
                     color_marks.push(avg);
                     coords = [];
@@ -305,6 +306,7 @@ function previewFile() {
     }
 }
 
+// todo : fix this so it handles lower values
 function createHeightMap(){
     for (var i = 0; i < color_marks.length; i++){
         if (color_marks[i] & color_marks[i+1]){
@@ -328,10 +330,11 @@ function createHeightMap(){
     }
 }
 
+
 function getPhi(px_x){
-    var diff = zero - neg_90;
-    var degree_v = diff/90;
-    var past_zero = px_x - zero;
+    var diff = zero - neg_90; // px difference between the angle marks
+    var degree_v = diff/90; // number of px each angle, 90 is diff angle size
+    var past_zero = px_x - zero; // number of px off zero deg
     var deg = past_zero/degree_v;
     var radians = deg * (Math.PI / 180);
     return radians;
@@ -351,8 +354,8 @@ function calcGroundIntersection(){
     var ground_intersections_passenger = [];
     var phis_front = [];
     var phis_passenger = [];
-    // Array.prototype.push.apply(bottom_view,bottom_view_driver, bottom_view_front, bottom_view_passenger);
 
+    // make lists of phis and nvps for frount and passenger
     for (var i = 0; i < bottom_view_front.length; i++){
         var bottom_view_inches = height_map[Math.round(bottom_view_front[i].y)];
         var opposite_side = driver_height - bottom_view_inches;
@@ -365,6 +368,7 @@ function calcGroundIntersection(){
         phis_front.push(phi);
 
     }
+
     for (var i = 0; i < bottom_view_passenger.length; i++){
         var bottom_view_inches = height_map[Math.round(bottom_view_passenger[i].y)];
         var opposite_side = driver_height - bottom_view_inches;
@@ -376,10 +380,11 @@ function calcGroundIntersection(){
         phis_passenger.push(phi);
 
     }
+    // todo : I need to split this out so front and passenger are calculate seperatly to handle the middle bar... there was a reason these were seperate to begin with..
     var phis = phis_front.concat(phis_passenger);
-
     var ground_intersections = ground_intersections_front.concat(ground_intersections_passenger);
-    calcBlindVolume(ground_intersections, phis);
+    
+    calcBlindVolume(ground_intersections, phis); 
 }
 
 function calcBlindVolume(ground_intersections, phis){
@@ -401,7 +406,6 @@ function calcBlindVolume(ground_intersections, phis){
 
 function calcTotalVolume(phis){
     let request = new XMLHttpRequest();
-    //50 are a test for now
     let url = "/api/v1/getinterestarea/";
     request.responseType = "json";
     var headers = {'content-type': 'application/json'};
@@ -428,6 +432,7 @@ function postRatio(){
     perc = rounded_perc;
 }
 
+// todo : hide vin entry form after vin is entered
 function truckInfoFromVIN(vin, perc){
     // var vin = "5PVNC6JK562S10283"; // example
     let request = new XMLHttpRequest();
@@ -452,6 +457,7 @@ function truckInfoFromVIN(vin, perc){
         var vwc = vgvwr.substring(0,7);
         console.log(vmake, "*", vmodel, "*", vwc);
         let requestpost = new XMLHttpRequest();
+        // todo : fix this and pass vars in body
         let urlpost = "/api/v1/" + vin + "/" + partialvin + "/" + vmake + "/" + vmodel + "/" + vwc + "/" + perc + "/";
         requestpost.onload = function() {
             let response = this.response;

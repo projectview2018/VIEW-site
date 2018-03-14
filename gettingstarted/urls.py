@@ -6,9 +6,7 @@ admin.autodiscover()
 
 import hello.views
 
-# Examples:
-# url(r'^$', 'gettingstarted.views.home', name='home'),
-# url(r'^blog/', include('blog.urls')),
+# todo : args should be passed in body... so fix views too
 
 urlpatterns = [
 	path('api/v1/<fullvin>/<partialvin>/<vmake>/<vmodel>/<vgvwr>/<perc_vis>/', hello.views.addvehicle),

@@ -92,9 +92,9 @@
 
 <script type="text/javascript">
 
-// https://stackoverflow.com/questions/19901843/display-json-data-in-html-table
+// todo : message if nothing is avalible instead of just nothing happening
+
 function displayTable(data){
-	console.log("here", data);
 	data = JSON.parse(data);
 
 	if (data){
@@ -122,6 +122,8 @@ function displayTable(data){
 	}
 }
 
+
+// todo : fix all these so args are passed in body
 function getByVGVWR(){
 	var vgvwr = document.getElementById('vgvwr').value;
 	let request = new XMLHttpRequest();
