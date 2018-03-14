@@ -72,7 +72,7 @@ def getinterestarea(request, angles, c, d):
     interest_area = find_total_truck_interest_area(angles, c, d)
     return HttpResponse(interest_area)
 
-@require_http_methods(["GET"])
+@require_http_methods(["POST"])
 def getblindarea(request, NVPs, angles, DH, c, d):
     blind_area = find_total_truck_blind_area(NVPs, angles, DH, c, d)
     return HttpResponse(blind_area)

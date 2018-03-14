@@ -231,7 +231,6 @@ function c(img) {
                     driver_height = document.getElementById('dh').value;
                     marks_dist = document.getElementById('rd').value;
                     createHeightMap();
-                    console.log("in step 12");
                     calcGroundIntersection();
                     var item = document.getElementById('dataentry');
                     if (item) {
@@ -399,7 +398,6 @@ function calcGroundIntersection(){
     var phis = phis_front.concat(phis_passenger);
 
     var ground_intersections = ground_intersections_front.concat(ground_intersections_passenger);
-    console.log("in calc ground");
     calcBlindVolume(ground_intersections, phis);
 }
 
@@ -415,13 +413,12 @@ function calcBlindVolume(ground_intersections, phis){
         calcTotalVolume(phis);
     }
 
-    request.open("GET", url);
+    request.open("POST", url);
     request.send();
 
 }
 
 function calcTotalVolume(phis){
-    console.log("here");
     let request = new XMLHttpRequest();
     //50 are a test for now
     let url = "https://findyourblindspots.herokuapp.com/api/v1/getinterestarea/" + phis + "/50/50/";
