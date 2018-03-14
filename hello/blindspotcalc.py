@@ -65,7 +65,6 @@ def find_total_truck_blind_area(NVPs, angles, DH, c, d):
         theta = 0.5 * abs(-angles[i + 1] + angles[i])  # width of slice, divided in half for right angle math
         hood = find_rectangular_coordinate(c, d, angles[i])  # distance of edge of truck
         boundary = find_rectangular_coordinate(c + e, d + f, angles[i])  # distance of edge of interest
-
         blindvolume = 2 * find_blind_volume(NVPs[i], DH, hood, boundary, ceiling, theta)  # blind volume in slice
         blind += blindvolume
 
@@ -256,6 +255,8 @@ def trap_donut(r1, r2, R, H, theta):
     quadrilateral with vertical sides at r1 and r2
     top slope runs from (0, H) to (R, 0)
     """
+
+
     # find height where view line enters the area of interest
     h1 = height(R, H, r1)
     # find height where view line exits the area of interest

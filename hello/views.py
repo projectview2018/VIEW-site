@@ -86,4 +86,4 @@ def getblindarea(request):
     c = json_data['c']
     d = json_data['d']
     blind_area = find_total_truck_blind_area(NVPs, angles, DH, c, d)
-    return JSONResponse({"data" : blind_area})
+    return JsonResponse({"data" : blind_area})
