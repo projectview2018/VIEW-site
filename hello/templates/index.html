@@ -399,6 +399,7 @@ function calcGroundIntersection(){
     var phis = phis_front.concat(phis_passenger);
 
     var ground_intersections = ground_intersections_front.concat(ground_intersections_passenger);
+    console.log("in calc ground");
     calcBlindVolume(ground_intersections, phis);
 }
 
