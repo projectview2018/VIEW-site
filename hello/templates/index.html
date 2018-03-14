@@ -374,7 +374,7 @@ function calcGroundIntersection(){
         var fov_angle = getATanDeg(opposite_side/marks_dist);
         var ground_intersection = driver_height * getTanDeg(90-fov_angle);
 
-        ground_intersections_front.push(Math.round(ground_intersection, 1)); 
+        ground_intersections_front.push(ground_intersection, 1); 
 
         var phi = getPhi(bottom_view_front[i].x);
         phis_front.push(phi);
@@ -385,7 +385,7 @@ function calcGroundIntersection(){
         var opposite_side = driver_height - bottom_view_inches;
         var fov_angle = getATanDeg(opposite_side/marks_dist);
         var ground_intersection = driver_height * getTanDeg(90-fov_angle);
-        ground_intersections_passenger.push(Math.round(ground_intersection, 1)); 
+        ground_intersections_passenger.push(ground_intersection); 
 
         var phi = getPhi(bottom_view_passenger[i].x);
         phis_passenger.push(phi);
@@ -399,24 +399,24 @@ function calcGroundIntersection(){
     var phis = phis_front.concat(phis_passenger);
 
     var ground_intersections = ground_intersections_front.concat(ground_intersections_passenger);
-    // calcBlindVolume(ground_intersections, phis);
-    calcTotalVolume(phis);
+    calcBlindVolume(ground_intersections, phis);
+    // calcTotalVolume(phis);
 }
 
 function calcBlindVolume(ground_intersections, phis){
     let request = new XMLHttpRequest();
-    //50 are a test for now
-    let url = "/api/v1/getblindarea/" + ground_intersections + "/" + phis + "/" + driver_height + "/50/50/";
-
+    let url = "/api/v1/getblindarea/";
+    request.responseType = "json";
+    var headers = {'content-type': 'application/json'};
     request.onload = function() {
-        let response = this.responseText;
+        let response = this.response;
         console.log(response);
-        blind_volume = response;
+        blind_volume = response['data'];
         calcTotalVolume(phis);
     }
 
     request.open("POST", url);
-    request.send();
+    request.send(body=JSON.stringify({'NVPs': ground_intersections, 'phis' : phis, 'DH' : driver_height, 'c' : 1, 'd': 1}));
 
 }
 
@@ -429,16 +429,19 @@ function calcTotalVolume(phis){
     request.onload = function() {
         let response = this.response;
         console.log(response);
-        total_volume = response;
+        total_volume = response['data'];
         postRatio();
     }
 
     request.open("POST", url);
-    request.send(body=JSON.stringify({'phis': phis, 'c': 50, 'd': 50}), headers=headers);
+    //50 are a test for now
+    request.send(body=JSON.stringify({'phis': phis, 'c': 1, 'd': 1}), headers=headers);
 
 }
 
 function postRatio(){
+    console.log(total_volume);
+    console.log(blind_volume);
     var ratio = (total_volume - blind_volume)/total_volume;
     var perc = ratio * 100;
     var rounded_perc = Math.round(perc, 0);

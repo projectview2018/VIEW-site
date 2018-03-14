@@ -70,16 +70,20 @@ def getmakes(request):
 
 @require_http_methods(["POST"])
 def getinterestarea(request):
-    print(request)
     json_data = json.loads(request.body.decode("utf-8"))
     angles = json_data['phis']
     c = json_data['c']
     d = json_data['d']
     interest_area = find_total_truck_interest_area(angles, c, d)
-    # q = serializers.serialize("json", interest_area)
     return JsonResponse({"data": interest_area})
 
 @require_http_methods(["POST"])
-def getblindarea(request, NVPs, angles, DH, c, d):
+def getblindarea(request):
+    json_data = json.loads(request.body.decode("utf-8"))
+    NVPs = json_data['NVPs']
+    angles = json_data['phis']
+    DH = json_data['DH']
+    c = json_data['c']
+    d = json_data['d']
     blind_area = find_total_truck_blind_area(NVPs, angles, DH, c, d)
-    return HttpResponse(blind_area)
+    return JSONResponse({"data" : blind_area})
