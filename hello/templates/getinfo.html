@@ -159,7 +159,7 @@ function getByFullVIN(){
 	let url = "https://findyourblindspots.herokuapp.com/api/v1/fullvin/" + fullvin + "/";
 
 	request.onreadystatechange = function() {
-	    let response = JSON.parse(this.responseText);
+	    let response = this.responseText;
 
 	    console.log(response['data']); 
 	    var data = response['data'];
