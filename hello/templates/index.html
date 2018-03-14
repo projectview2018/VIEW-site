@@ -432,7 +432,7 @@ function truckInfoFromVIN(vin, perc){
     let request = new XMLHttpRequest();
     let url = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValues/" + vin + "?format=json";
 
-    request.onreadystatechange = function() {
+    request.onload = function() {
       if (this.readyState === 4 && this.status === 200) {
         let response = JSON.parse(this.responseText);
         getElements(response);
@@ -452,6 +452,11 @@ function truckInfoFromVIN(vin, perc){
         console.log(vmake, "*", vmodel, "*", vwc);
         let requestpost = new XMLHttpRequest();
         let urlpost = "/api/v1/" + vin + "/" + partialvin + "/" + vmake + "/" + vmodel + "/" + vwc + "/" + perc + "/";
+        requestpost.onload = function() {
+            let response = this.response;
+            console.log(response);
+        }
+
         requestpost.open("POST", urlpost);
         requestpost.send();
     }  
