@@ -13,17 +13,6 @@
 </div>
 <div class="container">
 
-  <div class="row">
-    <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> What this is/Instructions</h3>
-      <ul>
-        <li>Todo: instructions here</li>
-        <li> The image you upload will look warped, that's okay </li>
-      </ul>
-    </div>
-  </div>
-  <hr>
-
   <h3>
 <div id="instructiontxt">Chose field of view image to upload</div></h3>
     <br>
@@ -78,6 +67,19 @@
 
  <input type="file" onchange="previewFile()"><br>
  <img src="" height="0" alt="">
+
+<hr>
+
+  <div class="row">
+    <div class="col-md-6">
+      <h3><span class="glyphicon glyphicon-info-sign"></span> What this is/Instructions</h3>
+      <ul>
+        <li>Todo: instructions here</li>
+        <li> The image you upload will look warped, that's okay </li>
+      </ul>
+    </div>
+  </div>
+  
 </div>
 </html>
 
@@ -173,7 +175,6 @@ function c(img) {
                     color_marks.push(avg);
                     coords = [];
                     instructiontxt.innerHTML = "If " + curr_step + " foot mark is visible use click to draw small horizontal line on mark, when done click next. If not visible, click next. Press clear if errors are made.";
-                    // truckInfoFromVIN();
                     curr_step += 1;
                 } else if (curr_step == 7) {
                     var avg = getAverage(coords);
