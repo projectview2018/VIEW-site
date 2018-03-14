@@ -406,7 +406,7 @@ function calcGroundIntersection(){
 function calcBlindVolume(ground_intersections, phis){
     let request = new XMLHttpRequest();
     //50 are a test for now
-    let url = "https://findyourblindspots.herokuapp.com/api/v1/getblindarea/" + ground_intersections + "/" + phis + "/" + driver_height + "/50/50/";
+    let url = "/api/v1/getblindarea/" + ground_intersections + "/" + phis + "/" + driver_height + "/50/50/";
 
     request.onload = function() {
         let response = this.responseText;
@@ -423,8 +423,9 @@ function calcBlindVolume(ground_intersections, phis){
 function calcTotalVolume(phis){
     let request = new XMLHttpRequest();
     //50 are a test for now
-    let url = "https://findyourblindspots.herokuapp.com/api/v1/getinterestarea/";
+    let url = "/api/v1/getinterestarea/";
     request.responseType = "json";
+    var headers = {'content-type': 'application/json'};
     request.onload = function() {
         let response = this.response;
         console.log(response);
@@ -433,7 +434,7 @@ function calcTotalVolume(phis){
     }
 
     request.open("POST", url);
-    request.send(JSON.stringify({'phis': phis, 'c': 50, 'd': 50}));
+    request.send(body=JSON.stringify({'phis': phis, 'c': 50, 'd': 50}), headers=headers);
 
 }
 
@@ -470,7 +471,7 @@ function truckInfoFromVIN(vin, perc){
         var vwc = vgvwr.substring(0,7);
         console.log(vmake, "*", vmodel, "*", vwc);
         let requestpost = new XMLHttpRequest();
-        let urlpost = "https://findyourblindspots.herokuapp.com/api/v1/" + vin + "/" + partialvin + "/" + vmake + "/" + vmodel + "/" + vwc + "/" + perc + "/";
+        let urlpost = "/api/v1/" + vin + "/" + partialvin + "/" + vmake + "/" + vmodel + "/" + vwc + "/" + perc + "/";
         requestpost.open("POST", urlpost);
         requestpost.send();
     }  

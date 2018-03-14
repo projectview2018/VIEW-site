@@ -6,6 +6,7 @@ from .models import Greeting, Vehicles
 from django.views.decorators.http import require_http_methods
 from django.core import serializers
 from .blindspotcalc import *
+import json
 # from rest_framework.test import APIClient
 # from rest_framework import status
 # from django.core.urlresolvers import reverse
@@ -69,9 +70,11 @@ def getmakes(request):
 
 @require_http_methods(["POST"])
 def getinterestarea(request):
-    angles = request.json['phis']
-    c = request.json['c']
-    d = request.json['d']
+    print(request)
+    json_data = json.loads(request.body.decode("utf-8"))
+    angles = json_data['phis']
+    c = json_data['c']
+    d = json_data['d']
     interest_area = find_total_truck_interest_area(angles, c, d)
     # q = serializers.serialize("json", interest_area)
     return JsonResponse({"data": interest_area})
