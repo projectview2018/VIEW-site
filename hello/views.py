@@ -68,7 +68,10 @@ def getmakes(request):
     return JsonResponse({"data": q})
 
 @require_http_methods(["POST"])
-def getinterestarea(request, angles, c, d):
+def getinterestarea(request):
+    angles = resqust.json['phis']
+    c = request.json['c']
+    d = request.json['d']
     interest_area = find_total_truck_interest_area(angles, c, d)
     return HttpResponse(interest_area)
 
