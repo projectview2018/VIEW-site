@@ -122,7 +122,7 @@ function displayTable(data){
 function getByVGVWR(){
 	var vgvwr = document.getElementById('vgvwr').value;
 	let request = new XMLHttpRequest();
-	let url = "https://findyourblindspots.herokuapp.com/api/v1/vgvwr/" + vgvwr + "/";
+	let url = "/api/v1/vgvwr/" + vgvwr + "/";
 
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
@@ -139,7 +139,7 @@ function getByVGVWR(){
 function getByPerc(){
 	var perc = document.getElementById('perc').value;
 	let request = new XMLHttpRequest();
-	let url = "https://findyourblindspots.herokuapp.com/api/v1/perc/" + perc + "/";
+	let url = "/api/v1/perc/" + perc + "/";
 
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
@@ -156,7 +156,7 @@ function getByPerc(){
 function getByFullVIN(){
 	var fullvin = document.getElementById('fullvin').value;
 	let request = new XMLHttpRequest();
-	let url = "https://findyourblindspots.herokuapp.com/api/v1/fullvin/" + fullvin + "/";
+	let url = "/api/v1/fullvin/" + fullvin + "/";
 
 	request.onreadystatechange = function() {
 	    let response = this.responseText;
@@ -174,7 +174,7 @@ function getByFullVIN(){
 function getByPartialVIN(){
 	var partialvin = document.getElementById('partialvin').value;
 	let request = new XMLHttpRequest();
-	let url = "https://findyourblindspots.herokuapp.com/api/v1/partialvin/" + partialvin + "/";
+	let url = "/api/v1/partialvin/" + partialvin + "/";
 
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
@@ -191,7 +191,7 @@ function getByPartialVIN(){
 
 function getMakes(){
 	let request = new XMLHttpRequest();
-	let url = "https://findyourblindspots.herokuapp.com/api/v1/getmakes/";
+	let url = "/api/v1/getmakes/";
 	done_once = false;
 
 	request.onreadystatechange = function() {
@@ -228,7 +228,7 @@ function getByVMake(){
 	console.log(strUser);
 
 	let request = new XMLHttpRequest();
-	let url = "https://findyourblindspots.herokuapp.com/api/v1/vmake/" + strUser + "/";
+	let url = "/api/v1/vmake/" + strUser + "/";
 
 	request.onreadystatechange = function() {
 	    let response = JSON.parse(this.responseText);
