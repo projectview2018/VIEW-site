@@ -413,7 +413,7 @@ function calcBlindVolume(ground_intersections, phis){
         calcTotalVolume(phis);
     }
 
-    request.open("GET", url, true);
+    request.open("GET", url);
     request.send();
 
 }
@@ -429,7 +429,7 @@ function calcTotalVolume(phis){
 
     }
 
-    request.open("GET", url, true);
+    request.open("GET", url);
     request.send();
 
 }
