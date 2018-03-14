@@ -6,18 +6,13 @@
 <html>
 <div class="jumbotron text-center">
   <div class="container">
-<!--     <a href="/" class="lang-logo">
-      <img src="{% static 'lang-logo.png'%}">
-    </a> -->
+
     <h1>VIEW</h1>
     <p>Blind Spot Calculator for Large Trucks</p>
   </div>
 </div>
 <div class="container">
-  <!-- <div class="alert alert-info text-center" role="alert">
-    To deploy your own copy, and learn the fundamentals of the Heroku platform, head over to the <a href="https://devcenter.heroku.com/articles/getting-started-with-python" class="alert-link">Getting Started with Python on Heroku</a> tutorial.
-  </div>
-  <hr> -->
+
   <div class="row">
     <div class="col-md-6">
       <h3><span class="glyphicon glyphicon-info-sign"></span> What this is/Instructions</h3>
@@ -28,24 +23,10 @@
     </div>
   </div>
   <hr>
-   <!-- row -->
-<!--    <div class="alert alert-info text-center" role="alert">
-    Please do work through the Getting Started guide, even if you do know how to build such an application.  The guide covers the basics of working with Heroku, and will familiarize you with all the concepts you need in order to build and deploy your own apps.
-  </div> -->
+
   <h3>
 <div id="instructiontxt">Chose field of view image to upload</div></h3>
     <br>
-<!-- <div id="steps" class="hidden">
-  <div class="form-group">
-  <label for="usr">Driver eye heigh above ground (inches):</label>
-  <input type="text" class="form-control" id="h">
-</div>
-<div class="form-group">
-  <label for="pwd">Radius from driver to measurement stick (inches):</label>
-  <input type="text" class="form-control" id="r">
-</div> -->
-
-
 <div id="steps" class="hidden">
 <div id="canvas">Click to draw<br/></div>
 <div id="dataentry" class="hidden">
@@ -59,7 +40,17 @@
     <input type="text" class="form-control" id="rd" placeholder="Enter distance eg: 94">
     <small id="radiusdescript" class="form-text text-muted">This is not the hypotenuse, but the distance along the ground.</small>
   </div>
-  <!-- <button class="btn btn-primary" onclick="submitForm()">Submit</button> -->
+  <div class="form-group">
+    <label for="c">Distance from drivers's eye/camera to passenger window in inches:</label>
+    <input type="text" class="form-control" id="c" placeholder="Enter distance eg: 45">
+    <small id="radiusdescript" class="form-text text-muted">Todo: say which measurement this is on corresponding diagram.</small>
+  </div>
+  <div class="form-group">
+    <label for="d">Distance from driver's eye/camera to front bumper of truck in inches:</label>
+    <input type="text" class="form-control" id="d" placeholder="Enter distance eg: 84">
+    <small id="radiusdescript" class="form-text text-muted">Todo: say which measurement this is on corresponding diagram.</small>
+  </div>
+
 </form>
 <hr>
 </div>
@@ -77,7 +68,6 @@
     <input type="text" class="form-control" id="vvin" placeholder="Eg: 1C3CCBBGXCN287756">
 <!--     <small id="radiusdescript" class="form-text text-muted">This is not the hypotenuse, but the distance along the ground.</small> -->
   </div>
-  <!-- <button class="btn btn-primary" onclick="submitForm()">Submit</button> -->
 </form>
 </div>
 
@@ -85,9 +75,6 @@
 <button class="btn btn-primary" onclick="nextPanel()">Next</button>
 <hr>
 </div>
-
-
-
 
  <input type="file" onchange="previewFile()"><br>
  <img src="" height="0" alt="">
@@ -103,14 +90,8 @@ function nextPanel() {
     ctx.addNext(my_image);
 }
 
-// function submitForm() {
-//     createHeightMap();
-//     calcGroundIntersection();
-// }
-
 var color_marks = [];
 var curr_step = 1;
-// var bottom_view = [];
 var bottom_view_front = [];
 var bottom_view_passenger = [];
 var height_map = {};
@@ -119,11 +100,11 @@ var zero;
 var angle_map = {};
 var driver_height; // will need to be user entered
 var marks_dist; 
-var HEIGHT_CUTOFF = 74; // 6'2" 95th percentile male US
-var RADIUS_CUTOFF = 180; // 15 feet
-var RIGHT_CUTOFF = -135;
+var c;
+var d;
 var total_volume;
 var blind_volume;
+var perc;
 
 function c(img) {
     // Creates a new canvas element and appends it as a child
@@ -230,6 +211,8 @@ function c(img) {
                 } else if (curr_step == 12) {
                     driver_height = document.getElementById('dh').value;
                     marks_dist = document.getElementById('rd').value;
+                    c = document.getElementById("c").value;
+                    d = document.getElementById("d").value;
                     createHeightMap();
                     calcGroundIntersection();
                     var item = document.getElementById('dataentry');
@@ -249,6 +232,7 @@ function c(img) {
                 } else {
                     var vin = document.getElementById('vvin').value;
                     truckInfoFromVIN(vin, perc);
+                    instructiontxt.innerHTML = "Truck added to database, you can access the database on the get existing truck info page";
 
                 }
                 ctx.drawImage(image, 0, 0, 800, 400);
@@ -410,7 +394,7 @@ function calcBlindVolume(ground_intersections, phis){
     }
 
     request.open("POST", url);
-    request.send(body=JSON.stringify({'NVPs': ground_intersections, 'phis' : phis, 'DH' : driver_height, 'c' : 40, 'd': 10}));
+    request.send(body=JSON.stringify({'NVPs': ground_intersections, 'phis' : phis, 'DH' : driver_height, 'c' : c, 'd': d}));
 
 }
 
@@ -428,8 +412,7 @@ function calcTotalVolume(phis){
     }
 
     request.open("POST", url);
-    //50 are a test for now
-    request.send(body=JSON.stringify({'phis': phis, 'c': 40, 'd': 10}), headers=headers);
+    request.send(body=JSON.stringify({'phis': phis, 'c': c, 'd': d}), headers=headers);
 
 }
 
@@ -437,8 +420,8 @@ function postRatio(){
     console.log(total_volume);
     console.log(blind_volume);
     var ratio = (total_volume - blind_volume)/total_volume;
-    var perc = ratio * 100;
-    var rounded_perc = Math.round(perc, 0);
+    var tperc = ratio * 100;
+    var rounded_perc = Math.round(tperc, 0);
     percentage.innerHTML = "Percent of area visible: " + rounded_perc + "%";
     console.log(ratio);
     perc = rounded_perc;
