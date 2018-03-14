@@ -429,7 +429,7 @@ function calcTotalVolume(phis){
         let response = this.responseText;
         console.log(response);
         total_volume = response;
-
+        postRatio();
     }
 
     request.open("GET", url);
