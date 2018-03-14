@@ -377,7 +377,7 @@ function calcGroundIntersection(){
         ground_intersections_front.push(Math.round(ground_intersection, 1)); 
 
         var phi = getPhi(bottom_view_front[i].x);
-        phis_front.push(Math.round(phi, 5));
+        phis_front.push(phi);
 
     }
     for (var i = 0; i < bottom_view_passenger.length; i++){
@@ -388,7 +388,7 @@ function calcGroundIntersection(){
         ground_intersections_passenger.push(Math.round(ground_intersection, 1)); 
 
         var phi = getPhi(bottom_view_passenger[i].x);
-        phis_passenger.push(Math.round(phi, 5));
+        phis_passenger.push(phi);
 
     }
     // console.log("gf", ground_intersections_front);
