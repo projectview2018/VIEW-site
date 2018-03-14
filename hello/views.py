@@ -67,7 +67,7 @@ def getmakes(request):
     q = list(Vehicles.objects.order_by().values_list('vmake', flat=True).distinct())
     return JsonResponse({"data": q})
 
-@require_http_methods(["GET"])
+@require_http_methods(["POST"])
 def getinterestarea(request, angles, c, d):
     interest_area = find_total_truck_interest_area(angles, c, d)
     return HttpResponse(interest_area)

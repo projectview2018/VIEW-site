@@ -373,10 +373,11 @@ function calcGroundIntersection(){
         var opposite_side = driver_height - bottom_view_inches;
         var fov_angle = getATanDeg(opposite_side/marks_dist);
         var ground_intersection = driver_height * getTanDeg(90-fov_angle);
-        ground_intersections_front.push(ground_intersection); 
+
+        ground_intersections_front.push(Math.round(ground_intersection, 1)); 
 
         var phi = getPhi(bottom_view_front[i].x);
-        phis_front.push(phi);
+        phis_front.push(Math.round(phi, 5));
 
     }
     for (var i = 0; i < bottom_view_passenger.length; i++){
@@ -384,10 +385,10 @@ function calcGroundIntersection(){
         var opposite_side = driver_height - bottom_view_inches;
         var fov_angle = getATanDeg(opposite_side/marks_dist);
         var ground_intersection = driver_height * getTanDeg(90-fov_angle);
-        ground_intersections_passenger.push(ground_intersection); 
+        ground_intersections_passenger.push(Math.round(ground_intersection, 1)); 
 
         var phi = getPhi(bottom_view_passenger[i].x);
-        phis_passenger.push(phi);
+        phis_passenger.push(Math.round(phi, 5));
 
     }
     // console.log("gf", ground_intersections_front);
@@ -429,7 +430,7 @@ function calcTotalVolume(phis){
         postRatio();
     }
 
-    request.open("GET", url);
+    request.open("POST", url);
     request.send();
 
 }
