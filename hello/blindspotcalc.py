@@ -52,6 +52,8 @@ def find_total_truck_blind_area(NVPs, angles, DH, c, d):
     blind = 0
     angles = angles.split(',')
     angles = list(map(float, angles))
+    NVPs = NVPs.split(',')
+    NVPs = list(map(float, NVPs))
     DH = float(DH)
     c = int(c)
     d = int(d)
