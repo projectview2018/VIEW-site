@@ -426,7 +426,7 @@ function calcTotalVolume(phis){
     let url = "https://findyourblindspots.herokuapp.com/api/v1/getinterestarea/";
     request.responseType = "json";
     request.onload = function() {
-        let response = this.responseText;
+        let response = JSON.parse(this.responseText);
         console.log(response);
         total_volume = response;
         postRatio();
