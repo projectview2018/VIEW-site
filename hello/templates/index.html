@@ -407,9 +407,9 @@ function calcBlindVolume(ground_intersections, phis){
     let url = "https://findyourblindspots.herokuapp.com/api/v1/getblindarea/" + ground_intersections + "/" + phis + "/" + driver_height + "/50/50/";
 
     request.onreadystatechange = function() {
-        let response = JSON.parse(this.responseText);
+        let response = this.responseText;
         console.log(response);
-        blind_volume = response['data'];
+        blind_volume = response;
         calcTotalVolume(phis);
     }
 
@@ -423,9 +423,9 @@ function calcTotalVolume(phis){
     //50 are a test for now
     let url = "https://findyourblindspots.herokuapp.com/api/v1/getinterestarea/" + phis + "/50/50/";
     request.onreadystatechange = function() {
-        let response = JSON.parse(this.responseText);
+        let response = this.responseText;
         console.log(response);
-        total_volume = response['data'];
+        total_volume = response;
 
     }
 

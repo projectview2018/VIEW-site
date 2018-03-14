@@ -70,11 +70,9 @@ def getmakes(request):
 @require_http_methods(["GET"])
 def getinterestarea(request, angles, c, d):
     interest_area = find_total_truck_interest_area(angles, c, d)
-    q = serializers.serialize("json", interest_area)
-    return JsonResponse({"data": q})
+    return HttpResponse(interest_area)
 
 @require_http_methods(["GET"])
 def getblindarea(request, NVPs, angles, DH, c, d):
     blind_area = find_total_truck_blind_area(NVPs, angles, DH, c, d)
-    q = serializers.serialize("json", blind_area)
-    return JsonResponse({"data": q})
+    return HttpResponse(blind_area)
