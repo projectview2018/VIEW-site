@@ -421,7 +421,6 @@ function calcBlindVolume(ground_intersections, phis){
 
 function calcTotalVolume(phis){
     let request = new XMLHttpRequest();
-    request.body = phis
     //50 are a test for now
     let url = "https://findyourblindspots.herokuapp.com/api/v1/getinterestarea/";
     request.onload = function() {
