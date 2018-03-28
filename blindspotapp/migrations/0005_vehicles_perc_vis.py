@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('hello', '0004_auto_20180225_0231'),
+        ('blindspotapp', '0004_auto_20180225_0231'),
     ]
 
     operations = [
