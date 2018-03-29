@@ -306,28 +306,43 @@ function previewFile() {
     }
 }
 
-// todo : fix this so it handles lower values
 function createHeightMap(){
+    console.log(color_marks);
     for (var i = 0; i < color_marks.length; i++){
         if (color_marks[i] & color_marks[i+1]){
+            console.log(color_marks[i], color_marks[i+1], i, i+1, "1")
             var diff = color_marks[i] - color_marks[i+1];
             var increment = 12 / diff;
+            console.log(i)
             var inches_val = i * 12;
             for (var j = color_marks[i]; j >= color_marks[i+1]; j--){
+                console.log(j);
                 height_map[j] = inches_val;
                 inches_val += increment;
             }
 
-        } else if (color_marks[i+1] & color_marks[i+2]){
+        } else if (color_marks[i+1] & color_marks[i+2]){ // beginning of list
+            console.log(color_marks[i+1], color_marks[i+2], i+1, i+2, "2")
             var diff = color_marks[i+1] - color_marks[i+2];
             var increment = 12 / diff;
             var inches_val = i * 12;
-            for (var j = color_marks[i + 1] + diff; j >= color_marks[i+1]; j--){
+            for (var j = color_marks[i + 1] + (diff*2); j >= color_marks[i+1]; j--){
+                height_map[j] = inches_val;
+                inches_val += increment;
+            }
+        } else if (color_marks[i]){ // end of the list
+            console.log(color_marks[i-1], color_marks[i], i-1, i, "-1")
+            var diff = color_marks[i-1] - color_marks[i];
+            var increment = 12 / diff;
+            var inches_val = i * 12;
+            for (var j = color_marks[i]; j >= color_marks[i] - (diff*2); j--){
+                console.log(j);
                 height_map[j] = inches_val;
                 inches_val += increment;
             }
         }
     }
+    console.log(height_map);
 }
 
 
@@ -357,7 +372,9 @@ function calcGroundIntersection(){
 
     // make lists of phis and nvps for frount and passenger
     for (var i = 0; i < bottom_view_front.length; i++){
+        console.log(Math.round(bottom_view_front[i].y), "B PX");
         var bottom_view_inches = height_map[Math.round(bottom_view_front[i].y)];
+        console.log(bottom_view_inches, "B I");
         var opposite_side = driver_height - bottom_view_inches;
         var fov_angle = getATanDeg(opposite_side/marks_dist);
         var ground_intersection = driver_height * getTanDeg(90-fov_angle);
@@ -370,7 +387,9 @@ function calcGroundIntersection(){
     }
 
     for (var i = 0; i < bottom_view_passenger.length; i++){
+        console.log(Math.round(bottom_view_front[i].y), "B PX");
         var bottom_view_inches = height_map[Math.round(bottom_view_passenger[i].y)];
+        console.log(bottom_view_inches, "B I");
         var opposite_side = driver_height - bottom_view_inches;
         var fov_angle = getATanDeg(opposite_side/marks_dist);
         var ground_intersection = driver_height * getTanDeg(90-fov_angle);
