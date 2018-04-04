@@ -104,7 +104,7 @@ var marks_dist;
 var c;
 var d;
 var total_volume;
-var blind_volume;
+var blind_volume = 0;
 var perc;
 
 function c(img) {
@@ -167,7 +167,12 @@ function c(img) {
         ctx.addBack(img);
 
         // todo : literally any error checking on user inputs would be nice
-        // step instruction block
+
+        /*
+            step instruction block, controls flow of user entered info
+            data collected in each step is stored in the next because this is what happens after the
+            user clicks next on that step
+        */
         ctx.addNext = function (img){
             var image = new Image()
             image.onload = function () {
@@ -179,19 +184,19 @@ function c(img) {
                     curr_step += 1;
                 } else if (curr_step == 7) {
                     var avg = getAverage(coords);
-                    color_marks.push(avg);
+                    color_marks.push(avg); // save color marks representing feet
                     coords = [];
                     instructiontxt.innerHTML = "Draw vertical line at 0 degrees (directly in front of the driver, should be where the measuring stick was placed).";
                     curr_step += 1;
                 } else if (curr_step == 8){
                     var avg = getAverage(coords);
-                    zero = avg;
+                    zero = avg; // save zero degree point
                     coords = [];
                     instructiontxt.innerHTML = "Draw vertical line at -90 degrees (directly to the right of the driver out of passenger window).";
                     curr_step += 1;
                 } else if (curr_step == 9) {
                     var avg = getAverage(coords);
-                    neg_90 = avg;
+                    neg_90 = avg; // save negative 90 degree point
                     coords = [];
                     instructiontxt.innerHTML = "Draw line along bottom of front field of view.";
                     curr_step += 1
@@ -231,10 +236,16 @@ function c(img) {
                     }
                     instructiontxt.innerHTML = "To add to the database for others to use please enter VIN number";
                     curr_step += 1;   
-                } else {
+                } else { // optional vin step
                     var vin = document.getElementById('vvin').value;
                     truckInfoFromVIN(vin, perc);
                     instructiontxt.innerHTML = "Truck added to database, you can access the database on the get existing truck info page";
+                    var item = document.getElementById('vinentry');
+                    if (item) {
+                      if(item.className =='unhidden'){
+                        item.className = 'hidden';
+                      }
+                    }
 
                 }
                 ctx.drawImage(image, 0, 0, 800, 400);
@@ -275,6 +286,9 @@ function c(img) {
     init(container, 800, 400, '#ddd', img);
 };
 
+/*
+previewFile displays the truck image
+*/
 function previewFile() {
     // Where you will display your image
     var item = document.getElementById('steps');
@@ -306,46 +320,51 @@ function previewFile() {
     }
 }
 
+/*
+createHeightMap creates a hashmap mapping pixel locations on the image to the height they
+correspond with at the radial distance the measurment stick is at
+
+*/
 function createHeightMap(){
-    console.log(color_marks);
     for (var i = 0; i < color_marks.length; i++){
         if (color_marks[i] & color_marks[i+1]){
-            console.log(color_marks[i], color_marks[i+1], i, i+1, "1")
             var diff = color_marks[i] - color_marks[i+1];
             var increment = 12 / diff;
-            console.log(i)
             var inches_val = i * 12;
             for (var j = color_marks[i]; j >= color_marks[i+1]; j--){
-                console.log(j);
                 height_map[j] = inches_val;
                 inches_val += increment;
             }
 
         } else if (color_marks[i+1] & color_marks[i+2]){ // beginning of list
-            console.log(color_marks[i+1], color_marks[i+2], i+1, i+2, "2")
             var diff = color_marks[i+1] - color_marks[i+2];
             var increment = 12 / diff;
-            var inches_val = i * 12;
-            for (var j = color_marks[i + 1] + (diff*2); j >= color_marks[i+1]; j--){
+            var inches_val = (i-9) * 12; // needed at the begining not the end because we increment up
+            // we extend downward to handle all trucks
+            for (var j = color_marks[i + 1] + (diff*10); j >= color_marks[i+1]; j--){
                 height_map[j] = inches_val;
                 inches_val += increment;
             }
         } else if (color_marks[i]){ // end of the list
-            console.log(color_marks[i-1], color_marks[i], i-1, i, "-1")
             var diff = color_marks[i-1] - color_marks[i];
             var increment = 12 / diff;
             var inches_val = i * 12;
-            for (var j = color_marks[i]; j >= color_marks[i] - (diff*2); j--){
-                console.log(j);
+            // we extend upward to handle all trucks
+            for (var j = color_marks[i]; j >= color_marks[i] - (diff*5); j--){
                 height_map[j] = inches_val;
                 inches_val += increment;
             }
         }
     }
-    console.log(height_map);
+    // console.log(height_map);
 }
 
+/*
+getPhi takes a x pixel location on the image and converts it to a radian value
+where 0 is directly in front of the driver as marked by the user
 
+px_x: the x pixel location
+*/
 function getPhi(px_x){
     var diff = zero - neg_90; // px difference between the angle marks
     var degree_v = diff/90; // number of px each angle, 90 is diff angle size
@@ -355,26 +374,35 @@ function getPhi(px_x){
     return radians;
 }
 
+/*
+todo check these
+*/
 function getTanDeg(deg) {
   var rad = deg * Math.PI/180;
   return Math.tan(rad);
 }
 
+/*
+todo check these
+*/
 function getATanDeg(deg) {
   return Math.atan(deg) * (180/Math.PI);
 } 
 
+/*
+Creates list of phis and nvps (ground intersection points) for both front and passenger views.
+Starts chain of requests initiated in each requests onload which
+end in the percentage visible area being displayed
+*/
 function calcGroundIntersection(){
     var ground_intersections_front = [];
     var ground_intersections_passenger = [];
     var phis_front = [];
     var phis_passenger = [];
 
-    // make lists of phis and nvps for frount and passenger
+    // make lists of phis and nvps for front and passenger
     for (var i = 0; i < bottom_view_front.length; i++){
-        console.log(Math.round(bottom_view_front[i].y), "B PX");
         var bottom_view_inches = height_map[Math.round(bottom_view_front[i].y)];
-        console.log(bottom_view_inches, "B I");
         var opposite_side = driver_height - bottom_view_inches;
         var fov_angle = getATanDeg(opposite_side/marks_dist);
         var ground_intersection = driver_height * getTanDeg(90-fov_angle);
@@ -387,9 +415,7 @@ function calcGroundIntersection(){
     }
 
     for (var i = 0; i < bottom_view_passenger.length; i++){
-        console.log(Math.round(bottom_view_front[i].y), "B PX");
         var bottom_view_inches = height_map[Math.round(bottom_view_passenger[i].y)];
-        console.log(bottom_view_inches, "B I");
         var opposite_side = driver_height - bottom_view_inches;
         var fov_angle = getATanDeg(opposite_side/marks_dist);
         var ground_intersection = driver_height * getTanDeg(90-fov_angle);
@@ -397,16 +423,27 @@ function calcGroundIntersection(){
 
         var phi = getPhi(bottom_view_passenger[i].x);
         phis_passenger.push(phi);
-
     }
-    // todo : I need to split this out so front and passenger are calculate seperatly to handle the middle bar... there was a reason these were seperate to begin with..
-    var phis = phis_front.concat(phis_passenger);
-    var ground_intersections = ground_intersections_front.concat(ground_intersections_passenger);
+
+    //remove any overlap in front and passenger window if it exists
+    while(phis_front[phis_front.length-1] <= phis_passenger[0]){
+        phis_front.pop()
+        ground_intersections_front.pop()
+    }
     
-    calcBlindVolume(ground_intersections, phis); 
+    calcBlindVolumeFront(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger); 
 }
 
-function calcBlindVolume(ground_intersections, phis){
+/*
+calcBlindVolumeFront makes a request to the getblindarea end point with the
+front window information, onload it calls calcBlindVolumePassenger
+
+ground_intersections_front: list(int), nearest visible points along the bottom of field of view from user drawn points along the front window
+ground_intersections_passenger: list(int), nearest visible points along the bottom of field of view from user drawn points along the passenger window
+phis_front: list(int), list of radians corresponding to ground_intersection_front
+phis_passenger: list(int), list of radians corresponding to ground_intersection_passenger
+*/
+function calcBlindVolumeFront(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger){
     let request = new XMLHttpRequest();
     let url = "/api/v1/getblindarea/";
     request.responseType = "json";
@@ -414,15 +451,72 @@ function calcBlindVolume(ground_intersections, phis){
     request.onload = function() {
         let response = this.response;
         console.log(response);
-        blind_volume = response['data'];
+        blind_volume += response['data'];
+        calcBlindVolumePassenger(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger);
+    }
+
+    request.open("POST", url);
+    request.send(body=JSON.stringify({'NVPs': ground_intersections_front, 'phis' : phis_front, 'DH' : driver_height, 'c' : c, 'd': d}));
+}
+
+/*
+calcBlindVolumePassenger makes a request to the getblindarea end point with the
+passenger window information, onload it calls calcBlindVolumeBetween
+
+ground_intersections_front: list(int), nearest visible points along the bottom of field of view from user drawn points along the front window
+ground_intersections_passenger: list(int), nearest visible points along the bottom of field of view from user drawn points along the passenger window
+phis_front: list(int), list of radians corresponding to ground_intersection_front
+phis_passenger: list(int), list of radians corresponding to ground_intersection_passenger
+*/
+function calcBlindVolumePassenger(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger){
+    let request = new XMLHttpRequest();
+    let url = "/api/v1/getblindarea/";
+    request.responseType = "json";
+    var headers = {'content-type': 'application/json'};
+    request.onload = function() {
+        let response = this.response;
+        console.log(response);
+        blind_volume += response['data'];
+        calcBlindVolumeBetween(phis_front, phis_passenger);
+    }
+
+    request.open("POST", url);
+    request.send(body=JSON.stringify({'NVPs': ground_intersections_passenger, 'phis' : phis_passenger, 'DH' : driver_height, 'c' : c, 'd': d}));
+}
+
+/*
+calcBlindVolumeBetween makes a request to the getinterestarea end point with the
+phi on either side of the barrier between the front and passenger window information, onload it calls calcTotalVolume
+
+phis_front: list(int), list of radians corresponding to ground_intersection_front
+phis_passenger: list(int), list of radians corresponding to ground_intersection_passenger
+*/
+function calcBlindVolumeBetween(phis_front, phis_passenger){
+    //bookend_phis is the phis which bookend the blind area between the front and passenger window 
+    var bookend_phis = [phis_front[phis_front.length - 1], phis_passenger[0]];
+    let request = new XMLHttpRequest();
+    // getinterestarea is instead of getblindarea because want the entire slice
+    // of area blocked
+    let url = "/api/v1/getinterestarea/";
+    request.responseType = "json";
+    var headers = {'content-type': 'application/json'};
+    request.onload = function() {
+        let response = this.response;
+        console.log(response);
+        blind_volume += response['data'];
+        var phis = phis_front.concat(phis_passenger);
         calcTotalVolume(phis);
     }
 
     request.open("POST", url);
-    request.send(body=JSON.stringify({'NVPs': ground_intersections, 'phis' : phis, 'DH' : driver_height, 'c' : c, 'd': d}));
-
+    request.send(body=JSON.stringify({'phis': bookend_phis, 'c': c, 'd': d}), headers=headers);
 }
 
+/*
+calcTotalVolume makes a request to the getinterestarea endpoint and onload calls postRatio()
+
+phis: list(int), list of all phis from both windows
+*/
 function calcTotalVolume(phis){
     let request = new XMLHttpRequest();
     let url = "/api/v1/getinterestarea/";
@@ -437,21 +531,30 @@ function calcTotalVolume(phis){
 
     request.open("POST", url);
     request.send(body=JSON.stringify({'phis': phis, 'c': c, 'd': d}), headers=headers);
-
 }
 
+/*
+Calculates the precentage visible volume and displays it
+*/
 function postRatio(){
     console.log(total_volume);
     console.log(blind_volume);
     var ratio = (total_volume - blind_volume)/total_volume;
     var tperc = ratio * 100;
-    var rounded_perc = Math.round(tperc, 0);
+    var rounded_perc = Math.round(tperc, 0); // at this point we don't feel confident providing more percision
     percentage.innerHTML = "Percent of area visible: " + rounded_perc + "%";
     console.log(ratio);
     perc = rounded_perc;
 }
 
-// todo : hide vin entry form after vin is entered
+/*
+If user enters vin, truckInfoFromVIN gets truck model info to store in the database
+Uses the National Highway Traffic Saftey Administrations Product Informaton Catalog's API
+
+vin: string, either a ful or partial vehicle vin
+perc: int, the percentage visible area
+
+*/
 function truckInfoFromVIN(vin, perc){
     // var vin = "5PVNC6JK562S10283"; // example
     let request = new XMLHttpRequest();
@@ -469,12 +572,12 @@ function truckInfoFromVIN(vin, perc){
     
     getElements = function(response){
         console.log(response);
+        //todo: fix this so it will work without a make/model/gvwr and will just send an empty string
         var vmake = response["Results"]["0"]["Make"];
         var vmodel = response["Results"]["0"]["Model"];
         var vgvwr = response["Results"]["0"]["GVWR"];
         var partialvin = vin.substring(0,10);
         var vwc = vgvwr.substring(0,7);
-        console.log(vmake, "*", vmodel, "*", vwc);
         let requestpost = new XMLHttpRequest();
         // todo : fix this and pass vars in body
         let urlpost = "/api/v1/" + vin + "/" + partialvin + "/" + vmake + "/" + vmodel + "/" + vwc + "/" + perc + "/";
