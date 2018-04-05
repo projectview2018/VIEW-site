@@ -14,38 +14,34 @@ import json
 
 # Create your views here.
 def index(request):
-    # return HttpResponse('Hello from Python!')
     return render(request, 'index.html')
 
 def getinfo(request):
-    # return HttpResponse('Hello from Python!')
     return render(request, 'getinfo.html')
 
-def db(request):
-
-    greeting = Greeting()
-    greeting.save()
-
-    greetings = Greeting.objects.all()
-
-    return render(request, 'db.html', {'greetings': greetings})
-
 @require_http_methods(["POST"])
-def addvehicle(request, fullvin, partialvin, vmake, vmodel, vgvwr, perc_vis):
-	v = Vehicles(fullvin=fullvin, partialvin=partialvin, vmake=vmake, vmodel=vmodel, vgvwr=vgvwr, perc_vis=perc_vis)
-	v.save()
-	return HttpResponse("thanks")
+def addvehicle(request):
+    json_data = json.loads(request.body.decode("utf-8"))
+    fullvin = json_data['vin']
+    partialvin = json_data['partialvin']
+    vmake = json_data['vmake']
+    vmodel = json_data['vmodel']
+    vgvwr = json_data['vwc']
+    perc_vis = json_data['perc']
+    v = Vehicles(fullvin=fullvin, partialvin=partialvin, vmake=vmake, vmodel=vmodel, vgvwr=vgvwr, perc_vis=perc_vis)
+    v.save()
+    return HttpResponse("thanks")
 
 @require_http_methods(["GET"])
 def getbyvgvwr(request, vgvwr):
-	vgvwr = "Class " + vgvwr 
-	q = serializers.serialize("json", Vehicles.objects.filter(vgvwr=vgvwr))
-	return JsonResponse({"data": q})
+    vgvwr = "Class " + vgvwr 
+    q = serializers.serialize("json", Vehicles.objects.filter(vgvwr=vgvwr))
+    return JsonResponse({"data": q})
 
 @require_http_methods(["GET"])
 def getbyperc(request, perc):
-	q = serializers.serialize("json", Vehicles.objects.filter(perc_vis__gte=perc))
-	return JsonResponse({"data": q})
+    q = serializers.serialize("json", Vehicles.objects.filter(perc_vis__gte=perc))
+    return JsonResponse({"data": q})
 
 @require_http_methods(["GET"])
 def getbyfullvin(request, fullvin):

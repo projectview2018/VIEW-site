@@ -23,21 +23,22 @@
   <div class="form-group">
     <label for="h">Driver eye heigh above ground in inches:</label>
     <input type="text" class="form-control" id="dh" placeholder="Enter height eg: 63">
+    <small id="radiusdescript" class="form-text text-muted">Measurement 'A' on worksheet.</small>
   </div>
   <div class="form-group">
     <label for="r">Radial distance from driver to measurement stick in inches:</label>
     <input type="text" class="form-control" id="rd" placeholder="Enter distance eg: 94">
-    <small id="radiusdescript" class="form-text text-muted">This is not the hypotenuse, but the distance along the ground.</small>
+    <small id="radiusdescript" class="form-text text-muted">Measurement 'C' on worksheet. This is not the hypotenuse, but the distance along the ground.</small>
   </div>
   <div class="form-group">
     <label for="c">Distance from drivers's eye/camera to passenger window in inches:</label>
     <input type="text" class="form-control" id="c" placeholder="Enter distance eg: 45">
-    <small id="radiusdescript" class="form-text text-muted">Todo: say which measurement this is on corresponding diagram.</small>
+    <small id="radiusdescript" class="form-text text-muted">Measurement 'B' on worksheet.</small>
   </div>
   <div class="form-group">
     <label for="d">Distance from driver's eye/camera to front bumper of truck in inches:</label>
     <input type="text" class="form-control" id="d" placeholder="Enter distance eg: 84">
-    <small id="radiusdescript" class="form-text text-muted">Todo: say which measurement this is on corresponding diagram.</small>
+    <small id="radiusdescript" class="form-text text-muted">Measurement 'D' on worksheet.</small>
   </div>
 
 </form>
@@ -71,10 +72,13 @@
 
   <div class="row">
     <div class="col-md-6">
-      <h3><span class="glyphicon glyphicon-info-sign"></span> What this is/Instructions</h3>
+      <h3><span class="glyphicon glyphicon-info-sign"></span> Instructions</h3>
       <ul>
-        <li>Todo: instructions here</li>
         <li> The image you upload will look warped, that's okay </li>
+        <li> You may want to consider cropping your image if the windows do not make up the majority of the photo </li>
+        <li> Try to be as accurate as possible </li>
+        <li> You will need the four measurements shown here: TODO </li>
+        <li> Please watch our video walkthrough of how to add a truck if you have not added one before: TODO </li>
       </ul>
     </div>
   </div>
@@ -261,9 +265,9 @@ function c(img) {
             }
             var x = e.pageX - this.offsetLeft;
             var y = e.pageY - this.offsetTop;
+            // todo : fix off screen issues 
             var radius = 5; // or whatever
             var fillColor = '#ff0000';
-            // var coords = [];
             if (curr_step <= 7) {
                 storeOneCord(y, coords);
             } else if (curr_step <= 9) {
@@ -572,22 +576,22 @@ function truckInfoFromVIN(vin, perc){
     
     getElements = function(response){
         console.log(response);
-        //todo: fix this so it will work without a make/model/gvwr and will just send an empty string
         var vmake = response["Results"]["0"]["Make"];
         var vmodel = response["Results"]["0"]["Model"];
         var vgvwr = response["Results"]["0"]["GVWR"];
         var partialvin = vin.substring(0,10);
         var vwc = vgvwr.substring(0,7);
-        let requestpost = new XMLHttpRequest();
-        // todo : fix this and pass vars in body
-        let urlpost = "/api/v1/" + vin + "/" + partialvin + "/" + vmake + "/" + vmodel + "/" + vwc + "/" + perc + "/";
-        requestpost.onload = function() {
+        let request = new XMLHttpRequest();
+        let url = "/api/v1/addtruck/";
+        request.responseType = "json";
+        var headers = {'content-type': 'application/json'};
+        request.onload = function() {
             let response = this.response;
             console.log(response);
         }
 
-        requestpost.open("POST", urlpost);
-        requestpost.send();
+        request.open("POST", url);
+        request.send(body=JSON.stringify({'vin': vin, 'partialvin': partialvin, 'vmake': vmake, 'vmodel': vmodel, 'vwc': vwc, 'perc': perc}), headers=headers);
     }  
 }
 

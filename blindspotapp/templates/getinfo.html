@@ -6,9 +6,6 @@
 <html>
 <div class="jumbotron text-center">
   <div class="container">
-<!--     <a href="/" class="lang-logo">
-      <img src="{% static 'lang-logo.png'%}">
-    </a> -->
     <h1>VIEW</h1>
     <p>Blind Spot Calculator for Large Trucks</p>
   </div>
@@ -42,7 +39,6 @@
 	    <input type="text" class="form-control" id="vgvwr" placeholder="Eg: 5">
 	    <small id="descript" class="form-text text-muted">Please enter weight class number, not lbs.</small>
 	  </div>
-	  <!-- <button class="btn btn-primary" onclick="getByFullVIN()">Submit</button> -->
 	</form>
 	<button class="btn btn-primary" onclick="getByVGVWR(5)">Class</button>
   <hr>
@@ -50,9 +46,8 @@
 	  <div class="form-group">
 	    <label for="perc">Look up by percentage of visible volume:</label>
 	    <input type="text" class="form-control" id="perc" placeholder="Eg: 60">
-	    <small id="descript" class="form-text text-muted">Returns trucks which have an equal of greater percentage of visible volume.</small>
+	    <small id="descript" class="form-text text-muted">Returns trucks which have an equal of greater percentage of visible volume, should be a number between 0 and 100.</small>
 	  </div>
-	  <!-- <button class="btn btn-primary" onclick="getByFullVIN()">Submit</button> -->
 	</form>
 
 	<button class="btn btn-primary" onclick="getByPerc()">Rating Limit</button>
@@ -63,7 +58,6 @@
 	    <input type="text" class="form-control" id="fullvin" placeholder="Eg: 1C3CCBBGXCN287756">
 	    <small id="descript" class="form-text text-muted">This will only return anything if the vehicle with this VIN is already in the database.</small>
 	  </div>
-	  <!-- <button class="btn btn-primary" onclick="getByFullVIN()">Submit</button> -->
 	</form>
 	<button class="btn btn-primary" onclick="getByFullVIN()">Full VIN</button>
   <hr>
@@ -74,7 +68,6 @@
 	    <input type="text" class="form-control" id="partialvin" placeholder="Eg: 1C3CCBBGXC">
 	    <small id="descript" class="form-text text-muted">Please enter a partial vin with at least 10 digits, this will return any vehicle where the first 10 digits of the VIN match.</small>
 	  </div>
-	  <!-- <button class="btn btn-primary" onclick="getByPartialVIN()">Submit</button> -->
 	</form>
 
 	<button class="btn btn-primary" onclick="getByPartialVIN()">Partial VIN</button>
@@ -164,7 +157,7 @@ function getByFullVIN(){
 	let url = "/api/v1/fullvin/" + fullvin + "/";
 
 	request.onreadystatechange = function() {
-	    let response = this.responseText;
+	    let response = JSON.parse(this.responseText);
 
 	    console.log(response['data']); 
 	    var data = response['data'];
