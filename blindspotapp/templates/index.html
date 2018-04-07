@@ -265,7 +265,10 @@ function c(img) {
             }
             var x = e.pageX - this.offsetLeft;
             var y = e.pageY - this.offsetTop;
-            // todo : fix off screen issues 
+            var threshold = 5;
+            if(y > height - threshold || x > width - threshold || x < threshold || y< threshold ){
+                canvas.isDrawing = false;
+            }
             var radius = 3; // or whatever
             var fillColor = '#ff0000';
             if (curr_step <= 7) {
