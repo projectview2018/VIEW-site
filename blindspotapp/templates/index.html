@@ -164,7 +164,7 @@ function c(img) {
           var image = new Image()
           image.onload = function () {
                 coords = [];
-            ctx.drawImage(image, 0, 0, 800, 400);
+            ctx.drawImage(image, 0, 0, width, height);
           }
           image.src = img
         }
@@ -252,7 +252,7 @@ function c(img) {
                     }
 
                 }
-                ctx.drawImage(image, 0, 0, 800, 400);
+                ctx.drawImage(image, 0, 0, width, height);
             }
             image.src = img;
         }
@@ -266,7 +266,7 @@ function c(img) {
             var x = e.pageX - this.offsetLeft;
             var y = e.pageY - this.offsetTop;
             // todo : fix off screen issues 
-            var radius = 5; // or whatever
+            var radius = 3; // or whatever
             var fillColor = '#ff0000';
             if (curr_step <= 7) {
                 storeOneCord(y, coords);
@@ -287,7 +287,10 @@ function c(img) {
     }
 
     var container = document.getElementById('canvas');
-    init(container, 800, 400, '#ddd', img);
+    var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    if(width < 1200) width = 1200;
+
+    init(container, width*.75, width*.4, '#ddd', img);
 };
 
 /*
