@@ -32,45 +32,50 @@
 
 	</table>
 	<hr>
-
+<!-- onkeydown="if (event.keyCode == 13) 
+	    {document.getElementById('vgvwrbutton').click(); event.returnValue=false; event.cancel=true;}" -->
 	<form>
 	  <div class="form-group">
 	    <label for="vgvwr">Look up by weight class:</label>
-	    <input type="text" class="form-control" id="vgvwr" placeholder="Eg: 5">
+	    <input type="text" class="form-control" autocomplete="off" id="vgvwr" placeholder="Eg: 5" onkeydown="if (event.keyCode == 13) 
+	    {document.getElementById('vgvwrbutton').click(); event.returnValue=false; event.cancel=true;}">
 	    <small id="descript" class="form-text text-muted">Please enter weight class number, not lbs.</small>
 	  </div>
 	</form>
-	<button class="btn btn-primary" onclick="getByVGVWR(5)">Class</button>
+	<button id="vgvwrbutton" class="btn btn-primary" onclick="getByVGVWR(5)">Class</button>
   <hr>
 	<form>
 	  <div class="form-group">
 	    <label for="perc">Look up by percentage of visible volume:</label>
-	    <input type="text" class="form-control" id="perc" placeholder="Eg: 60">
+	    <input type="text" class="form-control" autocomplete="off" id="perc" placeholder="Eg: 60" onkeydown="if (event.keyCode == 13) 
+	    {document.getElementById('percbutton').click(); event.returnValue=false; event.cancel=true;}">
 	    <small id="descript" class="form-text text-muted">Returns trucks which have an equal of greater percentage of visible volume, should be a number between 0 and 100.</small>
 	  </div>
 	</form>
 
-	<button class="btn btn-primary" onclick="getByPerc()">Rating Limit</button>
+	<button class="btn btn-primary" id="percbutton" onclick="getByPerc()">Rating Limit</button>
   <hr>
 	<form>
 	  <div class="form-group">
 	    <label for="fullvin">Look up by full VIN number:</label>
-	    <input type="text" class="form-control" id="fullvin" placeholder="Eg: 1C3CCBBGXCN287756">
+	    <input type="text" class="form-control" autocomplete="off" id="fullvin" placeholder="Eg: 1C3CCBBGXCN287756" onkeydown="if (event.keyCode == 13) 
+	    {document.getElementById('fullvinbutton').click(); event.returnValue=false; event.cancel=true;}">
 	    <small id="descript" class="form-text text-muted">This will only return anything if the vehicle with this VIN is already in the database.</small>
 	  </div>
 	</form>
-	<button class="btn btn-primary" onclick="getByFullVIN()">Full VIN</button>
+	<button class="btn btn-primary" id="fullvinbutton" onclick="getByFullVIN()">Full VIN</button>
   <hr>
 
 	<form>
 	  <div class="form-group">
 	    <label for="partialvin">Look up by partial VIN number:</label>
-	    <input type="text" class="form-control" id="partialvin" placeholder="Eg: 1C3CCBBGXC">
+	    <input type="text" class="form-control" autocomplete="off" id="partialvin" placeholder="Eg: 1C3CCBBGXC" onkeydown="if (event.keyCode == 13) 
+	    {document.getElementById('partialvinbutton').click(); event.returnValue=false; event.cancel=true;}">
 	    <small id="descript" class="form-text text-muted">Please enter a partial vin with at least 10 digits, this will return any vehicle where the first 10 digits of the VIN match.</small>
 	  </div>
 	</form>
 
-	<button class="btn btn-primary" onclick="getByPartialVIN()">Partial VIN</button>
+	<button class="btn btn-primary" id="partialvinbutton" onclick="getByPartialVIN()">Partial VIN</button>
 	  <hr>
 	<div id=makedropdown>
 		<select id=makedropdownselect>
@@ -116,39 +121,54 @@ function displayTable(data){
 }
 
 
-// todo : fix all these so args are passed in body
+// future work : fix all these so args are passed in body
 function getByVGVWR(){
 	var vgvwr = document.getElementById('vgvwr').value;
-	let request = new XMLHttpRequest();
-	let url = "/api/v1/vgvwr/" + vgvwr + "/";
+	if (isNaN(vgvwr)){
+		alert("Weight class must be a positive number, like 5");
+	} else if(vgvwr < 1 || vgvwr > 9){
+		alert("Weight class must be a valid vehicle weight class, between 1 and 9 inclusive");
+	} else {
+		let request = new XMLHttpRequest();
+		let url = "/api/v1/vgvwr/" + vgvwr + "/";
 
-	request.onreadystatechange = function() {
-	    let response = JSON.parse(this.responseText);
+		request.onreadystatechange = function() {
+		    let response = JSON.parse(this.responseText);
 
-	    console.log(response['data']); 
-	    var data = response['data'];
-	    displayTable(data);
+		    console.log(response['data']); 
+		    var data = response['data'];
+		    displayTable(data);
+		}
+
+		request.open("GET", url);
+		request.send();
 	}
-
-	request.open("GET", url);
-	request.send();
+	return false;
 }
 
 function getByPerc(){
-	var perc = document.getElementById('perc').value;
-	let request = new XMLHttpRequest();
-	let url = "/api/v1/perc/" + perc + "/";
+	var perc = Math.round(document.getElementById('perc').value, 0);
+	console.log(perc);
+	if (isNaN(perc)){
+		alert("Percentage visible volume must be a positive number, like 46");
+	} else if(perc < 0 || perc > 100){
+		alert("Percentage visible volume must be a valid percentage, between 0 and 100 inclusive");
+	} else {
 
-	request.onreadystatechange = function() {
-	    let response = JSON.parse(this.responseText);
+		let request = new XMLHttpRequest();
+		let url = "/api/v1/perc/" + perc + "/";
 
-	    console.log(response['data']);
-	    var data = response['data'];
-	    displayTable(data);
+		request.onreadystatechange = function() {
+		    let response = JSON.parse(this.responseText);
+
+		    console.log(response['data']);
+		    var data = response['data'];
+		    displayTable(data);
+		}
+
+		request.open("GET", url);
+		request.send();
 	}
-
-	request.open("GET", url);
-	request.send();
 }
 
 function getByFullVIN(){

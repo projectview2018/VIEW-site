@@ -220,10 +220,10 @@ function c(img) {
                     instructiontxt.innerHTML = "Enter the driver height and distance from driver to measurement stick";
                     curr_step += 1;
                 } else if (curr_step == 12) {
-                    driver_height = document.getElementById('dh').value;
-                    marks_dist = document.getElementById('rd').value;
-                    c = document.getElementById("c").value;
-                    d = document.getElementById("d").value;
+                    driver_height = Math.round(document.getElementById('dh').value, 0);
+                    marks_dist = Math.round(document.getElementById('rd').value, 0);
+                    c = Math.round(document.getElementById("c").value, 0);
+                    d = Math.round(document.getElementById("d").value, 0);
                     createHeightMap();
                     calcGroundIntersection();
                     var item = document.getElementById('dataentry');
@@ -551,7 +551,7 @@ function postRatio(){
     var ratio = (total_volume - blind_volume)/total_volume;
     var tperc = ratio * 100;
     var rounded_perc = Math.round(tperc, 0); // at this point we don't feel confident providing more percision
-    percentage.innerHTML = "Percent of area visible: " + rounded_perc + "%";
+    percentage.innerHTML = "Percent of volume visible: " + rounded_perc + "%";
     console.log(ratio);
     perc = rounded_perc;
 }
