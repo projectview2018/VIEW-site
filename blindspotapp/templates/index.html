@@ -78,6 +78,7 @@
         <li> You may want to consider cropping your image if the windows do not make up the majority of the photo </li>
         <li> Try to be as accurate as possible </li>
         <li> You will need the four measurements shown here: TODO </li>
+        <img src="static/bestphoto.png" width="300" height="200">
         <li> Please watch our video walkthrough of how to add a truck if you have not added one before: TODO </li>
       </ul>
     </div>
@@ -169,8 +170,6 @@ function c(img) {
           image.src = img
         }
         ctx.addBack(img);
-
-        // todo : literally any error checking on user inputs would be nice
 
         /*
             step instruction block, controls flow of user entered info
@@ -567,7 +566,8 @@ perc: int, the percentage visible area
 function truckInfoFromVIN(vin, perc){
     // var vin = "5PVNC6JK562S10283"; // example
     let request = new XMLHttpRequest();
-    let url = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValues/" + vin + "?format=json";
+    var uvin = vin.toUpperCase();
+    let url = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValues/" + uvin + "?format=json";
 
     request.onload = function() {
       if (this.readyState === 4 && this.status === 200) {
@@ -584,7 +584,7 @@ function truckInfoFromVIN(vin, perc){
         var vmake = response["Results"]["0"]["Make"];
         var vmodel = response["Results"]["0"]["Model"];
         var vgvwr = response["Results"]["0"]["GVWR"];
-        var partialvin = vin.substring(0,10);
+        var partialvin = uvin.substring(0,10);
         var vwc = vgvwr.substring(0,7);
         let request = new XMLHttpRequest();
         let url = "/api/v1/addtruck/";
@@ -596,7 +596,7 @@ function truckInfoFromVIN(vin, perc){
         }
 
         request.open("POST", url);
-        request.send(body=JSON.stringify({'vin': vin, 'partialvin': partialvin, 'vmake': vmake, 'vmodel': vmodel, 'vwc': vwc, 'perc': perc}), headers=headers);
+        request.send(body=JSON.stringify({'vin': uvin, 'partialvin': partialvin, 'vmake': vmake, 'vmodel': vmodel, 'vwc': vwc, 'perc': perc}), headers=headers);
     }  
 }
 
