@@ -77,8 +77,8 @@
         <li> The image you upload will look warped, that's okay </li>
         <li> You may want to consider cropping your image if the windows do not make up the majority of the photo </li>
         <li> Try to be as accurate as possible </li>
-        <li> You will need the four measurements shown here: TODO </li>
-        <img src="static/bestphoto.png" width="300" height="200">
+        <li> You will need the four measurements shown here: </li>
+        <img src="static/marks.jpg" width="1000">
         <li> Please watch our video walkthrough of how to add a truck if you have not added one before: TODO </li>
       </ul>
     </div>
@@ -383,19 +383,13 @@ function getPhi(px_x){
     return radians;
 }
 
-/*
-todo check these
-*/
 function getTanDeg(deg) {
-  var rad = deg * Math.PI/180;
-  return Math.tan(rad);
+    var rad = deg * Math.PI/180;
+    return Math.tan(rad);
 }
 
-/*
-todo check these
-*/
 function getATanDeg(deg) {
-  return Math.atan(deg) * (180/Math.PI);
+    return Math.atan(deg) * (180/Math.PI);
 } 
 
 /*
@@ -414,13 +408,11 @@ function calcGroundIntersection(){
         var bottom_view_inches = height_map[Math.round(bottom_view_front[i].y)];
         var opposite_side = driver_height - bottom_view_inches;
         var fov_angle = getATanDeg(opposite_side/marks_dist);
-        var ground_intersection = driver_height * getTanDeg(90-fov_angle);
-
+        var ground_intersection = driver_height * getTanDeg(90-fov_angle); 
         ground_intersections_front.push(ground_intersection); 
 
         var phi = getPhi(bottom_view_front[i].x);
         phis_front.push(phi);
-
     }
 
     for (var i = 0; i < bottom_view_passenger.length; i++){
