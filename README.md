@@ -1,6 +1,8 @@
-TODO: Description
+VIEW is a blind spot calculator made to enable purchases to make more informed decision which take direct vision into account, it is used as part of the panoramic method. Drivers have a significantly faster reaction time to direct vision versus vision through mirrors or screens. It also allows vulnerable road users like pedestrians and bicyclists to make eye contact with the driver which is useful for their navigation of traffic. These vulnerable road users made up 16% of all traffic fatalities in 2016.
 
-[LINK TO SITE]
+Find more on this topic and the panoramic method [here](TODO).
+
+You can find this site at [https://blindspotcalculator.herokuapp.com/](https://blindspotcalculator.herokuapp.com/).
 
 ______________________
 
