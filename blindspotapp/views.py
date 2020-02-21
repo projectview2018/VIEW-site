@@ -11,7 +11,7 @@ import json
 # from rest_framework import status
 # from django.core.urlresolvers import reverse
 
-
+# test comment 2/21/2020
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
