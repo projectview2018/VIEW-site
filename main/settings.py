@@ -29,6 +29,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SECURE_SSL_REDIRECT = True  # https needed for Airtable API
+# If True, the SecurityMiddleware redirects all non-HTTPS requests to HTTPS (except for those URLs matching 
+# a regular expression listed in SECURE_REDIRECT_EXEMPT).
 
 # Application definition
 
