@@ -1,293 +1,65 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load static %}
 
 {% block content %}
 
 <html>
+<div class="alert alert-info alert-dismissible" role="alert">
+  <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">×</span></button>
+  <p>Welcome to the Beta version of the VIEW Blind Spot Calculator for Vehicles. This is not yet a fully functioning
+    version of the site, however, it contains baseline features and functionality, including calculation of percent
+    visibility from the driver’s seat. This database currently contains test data and should not be interpreted as fully
+    accurate. Please contact alexander.epstein@dot.gov for percent visible percentages with test data removed or to
+    learn more about opportunities for improving this database.</p>
+</div>
 <div class="jumbotron text-center">
   <div class="container">
-    <h1>VIEW</h1>
-    <p>Blind Spot Calculator for Large Trucks</p>
+    <h2><a href="/" style="color:white">VIEW: Blind Spot Calculator for Vehicles</a></h2>
   </div>
+  <nav class="navbar navbar-default navbar-inverse">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li class="active">
+          <a href="/" style="font-size:20px">Home</a>
+        </li>
+        <li class="active">
+          <a href="/addvehicle" style="font-size:20px">Add Vehicle</a>
+        </li>
+        <li class="active">
+          <a href="/getinfo" style="font-size:20px">Vehicle Database</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </div>
-
 <div class="container">
-
-<h4>Result Table:</h4>
-
-	<table id="table" cellspacing="10">
-		<thead>
-	    <tr>
-	        <th>Full VIN</th>
-	        <th>Partial VIN</th>
-	        <th>Make</th>
-	        <th>Model</th>
-	        <th>GVWR</th>
-	        <th>Percentage Visible</th>
-	    </tr>
-		</thead>
-		<tbody id="tablebody">
-			
-		</tbody>
-
-	</table>
-	<h4>
-	<div id="nodata" class="hidden">Sorry, either no trucks fit your request or you made a bad request (check to make sure the weight class, percentage visible volume, or vin you entered is correct)</div></h4>
-	<hr>
-	<form>
-	  <div class="form-group">
-	    <label for="vgvwr">Look up by weight class:</label>
-	    <input type="text" class="form-control" autocomplete="off" id="vgvwr" placeholder="Eg: 5" onkeydown="if (event.keyCode == 13) 
-	    {document.getElementById('vgvwrbutton').click(); event.returnValue=false; event.cancel=true;}">
-	    <small id="descript" class="form-text text-muted">Please enter weight class number, not lbs.</small>
-	  </div>
-	</form>
-	<button id="vgvwrbutton" class="btn btn-primary" onclick="getByVGVWR(5)">Class</button>
+  {% if user_results %}
+  <h3 id="user-message">Thank you. Your vehicle has been added to the database.</h3>
+  <h2 id="user-results">{{ user_results }}</h2>
+  {% endif %}
+  <div id="histogram" style="display:block;">
+    {% autoescape off %}
+    {{ plot_div }}
+    {% endautoescape %}
+  </div>
+  <br />
+  <h2 id="airtable-title">Database of Vehicles</h2>
+  <h5>Filter, group, sort, search, or download database to compare vehicles:</h5>
+  <iframe class="airtable-embed"
+    src="https://airtable.com/embed/shrpAOauHRKx8WebW?backgroundColor=orange&viewControls=on" frameborder="0"
+    onmousewheel="" width="100%" height="533" style="background: transparent; border: 1px solid #ccc;"></iframe>
+  <br>
   <hr>
-	<form>
-	  <div class="form-group">
-	    <label for="perc">Look up by percentage of visible volume:</label>
-	    <input type="text" class="form-control" autocomplete="off" id="perc" placeholder="Eg: 60" onkeydown="if (event.keyCode == 13) 
-	    {document.getElementById('percbutton').click(); event.returnValue=false; event.cancel=true;}">
-	    <small id="descript" class="form-text text-muted">Returns trucks which have an equal of greater percentage of visible volume, should be a number between 0 and 100.</small>
-	  </div>
-	</form>
-
-	<button class="btn btn-primary" id="percbutton" onclick="getByPerc()">Rating Limit</button>
-  <hr>
-	<form>
-	  <div class="form-group">
-	    <label for="fullvin">Look up by full VIN number:</label>
-	    <input type="text" class="form-control" autocomplete="off" id="fullvin" placeholder="Eg: 1C3CCBBGXCN287756" onkeydown="if (event.keyCode == 13) 
-	    {document.getElementById('fullvinbutton').click(); event.returnValue=false; event.cancel=true;}">
-	    <small id="descript" class="form-text text-muted">This will only return anything if the vehicle with this VIN is already in the database.</small>
-	  </div>
-	</form>
-	<button class="btn btn-primary" id="fullvinbutton" onclick="getByFullVIN()">Full VIN</button>
-  <hr>
-
-	<form>
-	  <div class="form-group">
-	    <label for="partialvin">Look up by partial VIN number:</label>
-	    <input type="text" class="form-control" autocomplete="off" id="partialvin" placeholder="Eg: 1C3CCBBGXC" onkeydown="if (event.keyCode == 13) 
-	    {document.getElementById('partialvinbutton').click(); event.returnValue=false; event.cancel=true;}">
-	    <small id="descript" class="form-text text-muted">Please enter a partial vin with at least 10 digits, this will return any vehicle where the first 10 digits of the VIN match.</small>
-	  </div>
-	</form>
-
-	<button class="btn btn-primary" id="partialvinbutton" onclick="getByPartialVIN()">Partial VIN</button>
-	  <hr>
-	<div id=makedropdown>
-		<select id=makedropdownselect>
-		</select>
-	</div>
-	<br>
-	<button class="btn btn-primary" onclick="getByVMake()">Get By Make</button>
-	<hr>
-
+  <h4 style="font-style:italic;font-size:13px;">This document is funded by the Santos Family Foundation and disseminated under the
+    sponsorship of the Department of Transportation in the interest of information exchange. The United States
+    Government assumes no liability for the contents or use thereof. The United States Government does not
+    endorse products, manufacturers, or state or local policies or laws unless specifically indicated. Trade or
+    manufacturers’ names may appear herein solely because they are considered essential to the objective of this
+    document. Site contents represent the best technical judgement of U.S. DOT Volpe Center staff based on their
+    independent and objective technical analysis and expertise, and are not to be misconstrued as statements of
+    U.S. DOT policy or guidance.
+  </h4>
 </div>
-</html>
 
-<script type="text/javascript">
-	
-/*
-displayTable populates the truck data table with data from the database as requested
-data: list(json)
-*/
-function displayTable(data){
-	data = JSON.parse(data);
-
-	if (data){
-		var len = data.length;
-		var tablebody = document.getElementById("tablebody");
-		var newtablebody = document.createElement('tbody');
-      	var nodata = document.getElementById("nodata");
-		newtablebody.id = "tablebody";
-		var table = document.getElementById("table");	
-		var props = ["fullvin", "partialvin", "vmake", "vmodel", "vgvwr", "perc_vis"];
-		for (var i = 0; i < len; i++){
-			var row = document.createElement('tr');
-			for (var j = 0; j < props.length; j++){
-				var cell = document.createElement('td');
-				var text = document.createTextNode(data[i]["fields"][props[j]]);
-				cell.appendChild(text);
-				row.appendChild(cell);
-			}
-			newtablebody.appendChild(row);
-		}
-
-		tablebody.parentNode.replaceChild(newtablebody, tablebody);
-		if(table.className =='hidden'){
-      		table.className = 'unhidden';
-      	}
-      	if (len == 0){
-      		if(nodata.className='hidden'){
-      			nodata.className='unhidden';
-      		}
-		} else {
-      		if(nodata.className='unhidden'){
-      			nodata.className='hidden';
-      		}
-		}
-	}
-}
-
-/*
-getByVGVWR requests data from db based on weight class 
-*/
-function getByVGVWR(){
-	var vgvwr = document.getElementById('vgvwr').value;
-	if (isNaN(vgvwr)){
-		alert("Weight class must be a positive number, like 5");
-	} else if(vgvwr < 1 || vgvwr > 9){
-		alert("Weight class must be a valid vehicle weight class, between 1 and 9 inclusive");
-	} else {
-		let request = new XMLHttpRequest();
-		let url = "/api/v1/vgvwr/" + vgvwr + "/";
-
-		request.onreadystatechange = function() {
-		    let response = JSON.parse(this.responseText);
-
-		    console.log(response['data']); 
-		    var data = response['data'];
-		    displayTable(data);
-		}
-
-		request.open("GET", url);
-		request.send();
-	}
-	return false;
-}
-
-/*
-getByPerc requests data from db based on percentage visible volume 
-*/
-function getByPerc(){
-	var perc = Math.round(document.getElementById('perc').value, 0);
-	console.log(perc);
-	if (isNaN(perc)){
-		alert("Percentage visible volume must be a positive number, like 46");
-	} else if(perc < 0 || perc > 100){
-		alert("Percentage visible volume must be a valid percentage, between 0 and 100 inclusive");
-	} else {
-
-		let request = new XMLHttpRequest();
-		let url = "/api/v1/perc/" + perc + "/";
-
-		request.onreadystatechange = function() {
-		    let response = JSON.parse(this.responseText);
-
-		    console.log(response['data']);
-		    var data = response['data'];
-		    displayTable(data);
-		}
-
-		request.open("GET", url);
-		request.send();
-	}
-}
-
-/*
-getByFullVIN requests data from db based on full vin
-*/
-function getByFullVIN(){
-	var fullvin = document.getElementById('fullvin').value;
-	let request = new XMLHttpRequest();
-	let url = "/api/v1/fullvin/" + fullvin + "/";
-
-	request.onreadystatechange = function() {
-	    let response = JSON.parse(this.responseText);
-
-	    console.log(response['data']); 
-	    var data = response['data'];
-	    displayTable(data);
-	}
-
-	request.open("GET", url);
-	request.send();
-	return false;
-}	
-
-/*
-getByPartialVIN requests data from db based on partial vin 
-*/
-function getByPartialVIN(){
-	var partialvin = document.getElementById('partialvin').value;
-	let request = new XMLHttpRequest();
-	let url = "/api/v1/partialvin/" + partialvin + "/";
-
-	request.onreadystatechange = function() {
-	    let response = JSON.parse(this.responseText);
-
-	    console.log(response['data']); 
-	    var data = response['data'];
-	    displayTable(data);
-	}
-
-	request.open("GET", url);
-	request.send();
-	return false;
-}	
-
-/*
-getMakes gets all makes from the db to populate the drop down
-this runs when the page is opened
-*/
-function getMakes(){
-	let request = new XMLHttpRequest();
-	let url = "/api/v1/getmakes/";
-	done_once = false;
-
-	request.onreadystatechange = function() {
-	    let response = JSON.parse(this.responseText);
-		var res_data = response['data'];
-		console.log(res_data);
-		var div = document.querySelector("#makedropdown");
-		frag = document.createDocumentFragment();
-		select = document.getElementById("makedropdownselect");
-		if (done_once == false){ // honestly don't know why this function is being called twice
-			done_once = true;
-			for (var i = 0; i < res_data.length; i++){
-				if (i == 0) {
-					select.options.add( new Option(res_data[i], res_data[i], true, true));
-				} else {
-					select.options.add( new Option(res_data[i], res_data[i]));
-				}
-				frag.appendChild(select);
-				div.appendChild(frag);
-			}
-		}
-	}
-
-	request.open("GET", url);
-	request.send();
-}
-
-getMakes();
-
-/*
-getByMake requests data from db based on make
-*/
-function getByVMake(){
-	var e = document.getElementById("makedropdownselect");
-	var strUser = e.options[e.selectedIndex].value;
-	console.log(strUser);
-
-	let request = new XMLHttpRequest();
-	let url = "/api/v1/vmake/" + strUser + "/";
-
-	request.onreadystatechange = function() {
-	    let response = JSON.parse(this.responseText);
-
-	    console.log(response['data']); 
-	    var data = response['data'];
-	    displayTable(data);
-	}
-
-	request.open("GET", url);
-	request.send();
-}	
-
-</script>
 
 {% endblock %}

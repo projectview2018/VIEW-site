@@ -1,0 +1,196 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<html>
+<div class="alert alert-info alert-dismissible" role="alert">
+    <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span
+            aria-hidden="true">×</span></button>
+    <p>Welcome to the Beta version of the VIEW Blind Spot Calculator for Vehicles. This is not yet a fully functioning
+        version of the site, however, it contains baseline features and functionality, including calculation of percent
+        visibility from the driver’s seat. We look forward to receiving feedback about this version and look forward to
+        the opportunity to grow and expand this site. Please contact alexander.epstein@dot.gov if your organization is
+        interested in working with us.</p>
+</div>
+<div class="jumbotron text-center">
+    <div class="container">
+        <h2><a href="/" style="color:white">VIEW: Blind Spot Calculator
+                for Vehicles</a></h2>
+    </div>
+    <nav class="navbar navbar-default navbar-inverse">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <a href="/" style="font-size:20px">Home</a>
+                </li>
+                <li class="active">
+                    <a href="/addvehicle" style="font-size:20px">Add Vehicle</a>
+                </li>
+                <li class="active">
+                    <a href="/getinfo" style="font-size:20px">Vehicle Database</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>
+<div id=top_text>
+    <h3 style="text-align:center;font-weight:bold;">Our Free, Smartphone-Based Blind Spot Measurement Tool Enables:
+    </h3>
+</div>
+<hr>
+<div class="home_photos">
+    <section>
+        <div class="homephotos">
+            <header>
+                <a>
+                    <img src="static/part1_1.jpg" style="max-width:75%;max-height:75%;"></img>
+                    <span class="label">Icon</span></a>
+                <h3>Vehicle Buyers:</h3>
+            </header>
+            <p style="font-size:17px">To compare
+                and select the
+                best-in-class direct vision makes and models</p>
+        </div>
+    </section>
+    <section>
+        <div class="homephotos">
+            <header>
+                <a>
+                    <img src="static/part1_2.jpg" style="max-width:55%;max-height:55%;"></img>
+                    <span class="label">Icon</span></a>
+                <h3>Fleet Managers and Safety Inspectors:</h3>
+            </header>
+            <p style="font-size:17px">To measure and
+                address blind spots that aftermarket accessories create</p>
+        </div>
+    </section>
+    <section>
+        <div class="homephotos">
+            <header>
+                <a>
+                    <img src="static/part1_3.jpg" style="max-width:85%;max-height:85%;"></img>
+                    <span class="label">Icon</span></a>
+                <h3>Drivers:</h3>
+            </header>
+            <p style="font-size:17px;">To discover and
+                increase how much they can see given their unique body, posture and vehicle</p>
+        </div>
+    </section>
+</div>
+<div class="form-row text-center">
+    <div class="col-12">
+        <a href="/addvehicle" style="font-size:30px;margin:0.5em;" class="btn btn-primary">Add Vehicle</a>
+        <a href="/getinfo" style="font-size:30px;margin:0.5em;" class="btn btn-primary">Access Vehicle Database</a>
+    </div>
+</div>
+<hr>
+<div class="container">
+    <div id=homephotos2>
+        <h3 style="text-align:center;font-weight:bold;">Direct Vision: What a Driver can see with the Naked Eye</h3>
+        <div class="container">
+            <hr>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img src="static/part2_1.jpg" style="max-width:75%;max-height:75%;"
+                                        class="img-responsive" alt="">
+                                </div>
+                                <br></br>
+                                <div class="col-md-6">
+                                    <img src="static/part2_2.jpg" class="img-responsive" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <section>
+            <br>
+            <hr>
+            <br>
+            <h3 style="text-align:center;">Whether in a car or in a Class 8 truck, directly seeing others on the road
+                lets a driver react 50% faster than through a mirror or camera—and potentially stop a tragedy.</h3>
+            <br>
+            <hr>
+            <img src="static/part2_3.jpg" class="center" style="max-width:100%;max-height:100%;"></img>
+        </section>
+    </div>
+</div>
+<hr>
+<div class="container">
+    <div id="homephotos3">
+        <h3 style="text-align:center;font-weight:bold;">All you need is a smartphone, a tape measure, a pole, and 20
+            minutes:</h3>
+        <br>
+        <hr>
+        <br>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="card">
+                        <div class="card-block">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <img src="static/part3_1.jpg" style="max-width:85%;max-height:85%;"
+                                        class="img-responsive" alt="">
+                                </div>
+                                <div class="col-md-4">
+                                    <img src="static/part3_2.jpg" style="max-width:90%;max-height:90%;"
+                                        class="img-responsive" alt="">
+                                </div>
+                                <div class="col-md-4">
+                                    <img src="static/part3_3.jpg" style="max-width:100%;max-height:100%;"
+                                        class="img-responsive" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <h4 style="text-align:center;font-size:25px;">Measure vehicle, take panoramic photograph, and trace</h4>
+        <hr>
+        <div class="container">
+            <div id="homephotos4">
+                <section>
+                    <img src="static/part4_1.JPG" class="img-responsive"
+                        style="float:right;max-width:100%;max-height:100%;"></img>
+                    <hr>
+                </section>
+            </div>
+        </div>
+        <br>
+        <hr>
+        <h4 style="text-align:center;font-size:25px;">Upload to database and receive percent visibility results
+        </h4>
+        <hr>
+        <br>
+        <h3 style="text-align:center;font-weight:bold;">
+            Click <a href="/addvehicle">here</a> to test your vehicle's percent
+            visibility
+            and add it to the vehicle database
+        </h3>
+        <br>
+        <hr>
+        <h4 style="font-style:italic;font-size:13px;">This document is funded by the Santos Family Foundation and disseminated under the
+            sponsorship of the Department of Transportation in the interest of information exchange. The United States
+            Government assumes no liability for the contents or use thereof. The United States Government does not
+            endorse products, manufacturers, or state or local policies or laws unless specifically indicated. Trade or
+            manufacturers’ names may appear herein solely because they are considered essential to the objective of this
+            document. Site contents represent the best technical judgement of U.S. DOT Volpe Center staff based on their
+            independent and objective technical analysis and expertise, and are not to be misconstrued as statements of
+            U.S. DOT policy or guidance.
+        </h4>
+        <br>
+
+        </script>
+
+        {% endblock %}
