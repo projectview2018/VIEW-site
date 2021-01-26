@@ -24,7 +24,7 @@ import cloudinary.uploader
 
 def home(request):
     return render(request, "home.html")
-    
+
 def index(request):
     return render(request, "index.html")
 
@@ -36,6 +36,7 @@ def makehistogram(user_data=None):
     print("user_data: " + str(user_data))
     at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR')
     vehicles = at.get_all()
+    print(vehicles)
     perc_vis = [vehicle['fields']['Percent Visible Volume']
                 for vehicle in vehicles]
 
