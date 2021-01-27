@@ -37,7 +37,7 @@ def makehistogram(user_data=None):
     at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR')
     vehicles = at.get_all()
     print(vehicles)
-    console.log("test")
+    #console.log("test")
     perc_vis = [vehicle['fields']['Percent Visible Volume']
                 for vehicle in vehicles]
 
