@@ -129,7 +129,7 @@ def addvehicle(request):
         # add record to database
     record = {"Full VIN": fullvin, "Partial VIN": partialvin, "Make": vmake, "Model": vmodel, "Weight Class": vgvwr,
                   "Year": vyear, "Percent Visible Volume": perc_vis, "c": c, "d": d, "Radial Distance": radial_distance,
-                  "Driver Height": driver_height}
+                  "Camera height above ground": driver_height}
     print(record)
     at.insert(record)
     return "Thank you. This record has been added."
