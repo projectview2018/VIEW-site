@@ -100,25 +100,30 @@
     <div id="dataentry" class="hidden">
       <form>
         <div class="form-group">
+          <div id="vehiclemeasurements">
+            <p>Vehicle measurements are shown in the image below.</p>
+            <img src="static/vehiclemeasurements.jpg" style="vertical-align:middle;width:751px;height:547px" />
+            </div>
+            <br>
           <label for="h">Camera height (or driver's eye height) above ground in inches:</label>
           <input type="text" pattern="[0-9]*" class="form-control" id="dh" placeholder="Enter height eg: 63">
-          <small id="radiusdescript" class="form-text text-muted">Measurement 'A' on worksheet.</small>
+          <small id="radiusdescript" class="form-text text-muted">Measurement 'A' in reference image above.</small>
         </div>
         <div class="form-group">
           <label for="c">Distance from drivers's eye/camera to passenger window in inches:</label>
           <input type="text" pattern="[0-9]*" class="form-control" id="c" placeholder="Enter distance eg: 45">
-          <small id="radiusdescript" class="form-text text-muted">Measurement 'B' on worksheet.</small>
+          <small id="radiusdescript" class="form-text text-muted">Measurement 'B' in reference image above.</small>
         </div>
         <div class="form-group">
           <label for="r">Radial distance from driver to measurement stick in inches:</label>
           <input type="text" pattern="[0-9]*" class="form-control" id="rd" placeholder="Enter distance eg: 94">
-          <small id="radiusdescript" class="form-text text-muted">Measurement 'C' on worksheet. This is not the
+          <small id="radiusdescript" class="form-text text-muted">Measurement 'C' in reference image above. This is not the
             hypotenuse, but the distance along the ground.</small>
         </div>
         <div class="form-group">
           <label for="d">Distance from driver's eye/camera to front bumper of vehicle in inches:</label>
           <input type="text" pattern="[0-9]*" class="form-control" id="d" placeholder="Enter distance eg: 84">
-          <small id="radiusdescript" class="form-text text-muted">Measurement 'D' on worksheet.</small>
+          <small id="radiusdescript" class="form-text text-muted">Measurement 'D' in reference image above.</small>
         </div>
 
       </form>
@@ -257,6 +262,17 @@
         </div>
       </form>
     </div>
+
+    <div id="addcomments" class="hidden">
+      <form>
+        <div class="form-group">
+          <label for="comments">Add comments:</label>
+          <input type="text" class="form-control" id="comments" placeholder="Comments">
+        </div>
+
+      </form>
+    </div>
+
     <div id="buttons2" class="hidden">
       <button class="btn btn-primary" onclick="backPanel()">Back</button>
       <button class="btn btn-primary" onclick="clearPanel()">Clear</button>
@@ -330,6 +346,7 @@
   var blind_volume = 0;
   var perc;
   var fileName; // the name of the image
+  var comments; //any user-added comments
 
   function c(img) {
     // Creates a new canvas element and appends it as a child
@@ -396,8 +413,8 @@
         var image = new Image()
         var item = document.getElementById("uploadbutton");
         if (item) {
-          if (item.className == 'unhidden') {
-            item.className = 'hidden';
+          if (item.className == 'hidden') {
+            item.className = 'unhidden';
           }
         }
         image.onload = function () {
@@ -408,8 +425,8 @@
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): If the " + curr_step + " foot mark (M" + curr_step + ") is visible on the measurement pole, use your finger or your mouse to draw a small horizontal line on the mark. After making a line on the mark, hit next. If the mark is not visible, click next. Press clear if any errors are made.";
             var item = document.getElementById("canvastips");
             if (item) {
-              if (item.className == 'hidden') {
-                item.className = 'unhidden';
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
               }
             }
             curr_step += 1;
