@@ -265,7 +265,7 @@
     <div id="addcomments" class="hidden">
       <form>
         <div class="form-group">
-          <label for="comments">Add comments:</label>
+          <label for="comments">General comments:</label>
           <input type="text" class="form-control" id="comments" placeholder="Comments">
         </div>
 
@@ -345,7 +345,7 @@
   var blind_volume = 0;
   var perc;
   var fileName; // the name of the image
-  var comments; //any user-added comments
+  var comments = "NA"; //any user-added comments
 
   function c(img) {
     // Creates a new canvas element and appends it as a child
@@ -408,95 +408,121 @@
       ctx.addClear(img);
 
       ctx.addBack = function (img) {
-        curr_step = curr_step-1;
         var image = new Image()
-        var item = document.getElementById("uploadbutton");
-        if (item) {
-          if (item.className == 'hidden') {
-            item.className = 'unhidden';
-          }
-        }
+//        var item = document.getElementById("uploadbutton");
+//        if (item) {
+//          if (item.className == 'unhidden') {
+//            item.className = 'hidden';
+//          }
+//        }
         image.onload = function () {
+          console.log("before function: ", curr_step);
+          if (curr_step >2) {
+            curr_step = curr_step-2;
+            console.log("subtract one: ", curr_step);
+          }
+//          if (curr_step >3) {
+//            curr_step = curr_step-2;
+//            console.log("subtract one: ", curr_step);
+//
+//          }
           if (curr_step <= 5) { // right now we are accepting marks up to 6 feet
             var avg = getAverage(coords);
             color_marks.push(avg);
             coords = [];
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): If the " + curr_step + " foot mark (M" + curr_step + ") is visible on the measurement pole, use your finger or your mouse to draw a small horizontal line on the mark. After making a line on the mark, hit next. If the mark is not visible, click next. Press clear if any errors are made.";
-            var item = document.getElementById("canvastips");
-            if (item) {
-              if (item.className == 'unhidden') {
-                item.className = 'hidden';
-              }
-            }
             curr_step += 1;
+            console.log("after if statement: ", curr_step);
           } else if (curr_step == 6) {
             var avg = getAverage(coords);
             color_marks.push(avg); // save color marks representing feet
             coords = [];
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw a vertical line at 0 degrees (directly in front of the driver where the measuring stick was placed).";
             curr_step += 1;
+            console.log("after if statement: ", curr_step);
           } else if (curr_step == 7) {
             var avg = getAverage(coords);
             zero = avg; // save zero degree point
             coords = [];
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw vertical line at -90 degrees (directly to the right of the driver out of passenger window).";
             curr_step += 1;
+            console.log("after if statement: ", curr_step);
           } else if (curr_step == 8) {
             var avg = getAverage(coords);
             neg_90 = avg; // save negative 90 degree point
             coords = [];
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw line along the bottom of the front field of view.";
             curr_step += 1
+            console.log("after if statement: ", curr_step);
           } else if (curr_step == 9) {
             bottom_view_front = coords;
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw line along the bottom of the passenger side field of view.";
-            coords = [];
-            curr_step += 1;
-          } else if (curr_step == 10) {
-            bottom_view_passenger = coords;
             var item = document.getElementById('buttons');
-            if (item) {
-              if (item.className == 'unhidden') {
-                item.className = 'hidden';
-              }
-            }
-            var item = document.getElementById('buttons2');
             if (item) {
               if (item.className == 'hidden') {
                 item.className = 'unhidden';
               }
             }
+            var item = document.getElementById('buttons2');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById('dataentry');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById("canvas");
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById("measurementpole");
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById("canvastips");
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById("choosepano");
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById("loadmessage");
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw line along the bottom of the passenger side field of view.";
+            coords = [];
+            curr_step += 1;
+            console.log("after if statement: ", curr_step);
+          } else if (curr_step == 10) {
+            bottom_view_passenger = coords;
             var item = document.getElementById('dataentry');
             if (item) {
               if (item.className == 'hidden') {
                 item.className = 'unhidden';
               }
             }
-            var item = document.getElementById("canvas");
+            var item = document.getElementById('vinfoentry');
             if (item) {
               if (item.className == 'unhidden') {
                 item.className = 'hidden';
               }
             }
-            var item = document.getElementById("measurementpole");
-            if (item) {
-              if (item.className == 'unhidden') {
-                item.className = 'hidden';
-              }
-            }
-            var item = document.getElementById("canvastips");
-            if (item) {
-              if (item.className == 'unhidden') {
-                item.className = 'hidden';
-              }
-            }
-            var item = document.getElementById("choosepano");
-            if (item) {
-              if (item.className == 'unhidden') {
-                item.className = 'hidden';
-              }
-            }
-            var item = document.getElementById("loadmessage");
+            var item = document.getElementById('addcomments');
             if (item) {
               if (item.className == 'unhidden') {
                 item.className = 'hidden';
@@ -504,8 +530,10 @@
             }
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Enter vehicle measurements A, B, C, and D:";
             curr_step += 1;
+            console.log("after if statement: ", curr_step);
           }
         }
+
         image.src = img
       }
       ctx.addBack(img);
@@ -524,6 +552,7 @@
           }
         }
         image.onload = function () {
+          console.log("starting next statement: ", curr_step);
           if (curr_step <= 5) { // right now we are accepting marks up to 6 feet
             var avg = getAverage(coords);
             color_marks.push(avg);
@@ -536,29 +565,34 @@
               }
             }
             curr_step += 1;
+            console.log("after next if statement: ", curr_step);
           } else if (curr_step == 6) {
             var avg = getAverage(coords);
             color_marks.push(avg); // save color marks representing feet
             coords = [];
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw a vertical line at 0 degrees (directly in front of the driver where the measuring stick was placed).";
             curr_step += 1;
+            console.log("after next if statement: ", curr_step);
           } else if (curr_step == 7) {
             var avg = getAverage(coords);
             zero = avg; // save zero degree point
             coords = [];
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw vertical line at -90 degrees (directly to the right of the driver out of passenger window).";
             curr_step += 1;
+            console.log("after next if statement: ", curr_step);
           } else if (curr_step == 8) {
             var avg = getAverage(coords);
             neg_90 = avg; // save negative 90 degree point
             coords = [];
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw line along the bottom of the front field of view.";
             curr_step += 1
+            console.log("after next if statement: ", curr_step);
           } else if (curr_step == 9) {
             bottom_view_front = coords;
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw line along the bottom of the passenger side field of view.";
             coords = [];
             curr_step += 1;
+            console.log("after next if statement: ", curr_step);
           } else if (curr_step == 10) {
             bottom_view_passenger = coords;
             var item = document.getElementById('buttons');
@@ -611,6 +645,7 @@
             }
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Enter vehicle measurements A, B, C, and D:";
             curr_step += 1;
+            console.log("after next if statement: ", curr_step);
           } else if (curr_step == 11) {
             driver_height = Math.round(document.getElementById('dh').value, 0);
             marks_dist = Math.round(document.getElementById('rd').value, 0);
@@ -630,10 +665,19 @@
                 item.className = 'unhidden';
               }
             }
+            var item = document.getElementById('addcomments');
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): In order to add to the vehicle database, would you like to add your vehicle using the VIN number, or the vehicle make, model, year, and weight class? (Choose one):";
             curr_step += 1;
+            console.log("after next if statement: ", curr_step);
           } else {//enter vin or vehicle info:
             var vin = document.getElementById('vin').value;
+            var comments = document.getElementById('comments').value;
+            console.log(comments)
             if (vin.length == 0) {
               var vin = "NA";
               var partialvin = "NA";
@@ -641,12 +685,18 @@
               var vmodel = document.getElementById('vmodel').value;
               var vyear = document.getElementById('vyear').value;
               var vwc = document.getElementById('vwc').value;
-              truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, c, d, marks_dist, driver_height);
+              truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, c, d, marks_dist, driver_height, comments);
             } else {
-              truckInfoFromVIN(vin, perc, c, d, marks_dist, driver_height);
+              truckInfoFromVIN(vin, perc, c, d, marks_dist, driver_height, comments);
             }
             instructiontxt.innerHTML = "Thank you. Your vehicle was added to the vehicle database. You can access the database on the 'Vehicle Database' page.";
             var item = document.getElementById('vinfoentry');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById('addcomments');
             if (item) {
               if (item.className == 'unhidden') {
                 item.className = 'hidden';
@@ -971,7 +1021,7 @@
   }
   //Enter vehicle w/o vin # :
 
-  function truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, c, d, marks_dist, driver_height) {
+  function truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, c, d, marks_dist, driver_height, comments) {
     let request = new XMLHttpRequest();
     let url = "/api/v1/addvehicle/";
     var uvin = vin.toUpperCase();
@@ -986,7 +1036,7 @@
       location.href = '/getinfo/' + perc;
     }
     request.open("POST", url, true);
-    request.send(body = JSON.stringify({ 'vin': uvin, 'partialvin': partialvin, 'vmake': vmake, 'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear, 'perc': perc, 'c': c, 'd': d, 'radial_distance': marks_dist, 'driver_height': driver_height, 'image_name': fileName }), headers = headers);
+    request.send(body = JSON.stringify({ 'vin': uvin, 'partialvin': partialvin, 'vmake': vmake, 'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear, 'perc': perc, 'c': c, 'd': d, 'radial_distance': marks_dist, 'driver_height': driver_height, 'image_name': fileName, "comments":comments }), headers = headers);
   }
   /*
   If user enters vin, truckInfoFromVIN gets truck model info to store in the database
@@ -996,7 +1046,7 @@
   perc: int, the percentage visible area
 
   */
-  function truckInfoFromVIN(vin, perc, c, d, marks_dist, driver_height) {
+  function truckInfoFromVIN(vin, perc, c, d, marks_dist, driver_height, comments) {
     // var vin = "5PVNC6JK562S10283"; // example
     let request = new XMLHttpRequest();
     var uvin = vin.toUpperCase();
@@ -1038,7 +1088,7 @@
         'vin': uvin, 'partialvin': partialvin, 'vmake': vmake,
         'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear, 'perc': perc, 'c': c, 'd': d,
         'radial_distance': marks_dist, 'driver_height': driver_height,
-        'image_name': fileName
+        'image_name': fileName, "comments":comments
       }), headers = headers);
 
     }

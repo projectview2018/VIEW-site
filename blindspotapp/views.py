@@ -110,6 +110,7 @@ def addvehicle(request):
     d = json_data['d']
     radial_distance = json_data['radial_distance']
     driver_height = json_data['driver_height']
+    comments = json_data['comments']
     # image_name = json_data['image_name']
     # print(image_name)
 
@@ -127,7 +128,7 @@ def addvehicle(request):
         # add record to database
     record = {"Full VIN": fullvin, "Partial VIN": partialvin, "Make": vmake, "Model": vmodel, "Weight Class": vgvwr,
                   "Year": vyear, "Percent Visible Volume": perc_vis, "c": c, "d": d, "Radial Distance": radial_distance,
-                  "Camera height above ground": driver_height}
+                  "Camera height above ground": driver_height, "Comments":comments}
     print(record)
     at.insert(record)
     return "Thank you. This record has been added."
