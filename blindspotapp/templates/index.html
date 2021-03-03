@@ -105,7 +105,7 @@
             </div>
             <br>
           <label for="h">Camera height (or driver's eye height) above ground in inches:</label>
-          <input type="text" pattern="[0-9]*" class="form-control" id="dh" placeholder="Enter height eg: 63">
+          <input type="text" pattern="[0-9]*" class="form-control" id="dh" placeholder="Enter height eg: 63" autofocus>
           <small id="radiusdescript" class="form-text text-muted">Measurement 'A' in reference image above.</small>
         </div>
         <div class="form-group">
@@ -139,7 +139,7 @@
       <form>
         <div class="form-group">
           <label for="selectvin" onclick="check1('selectvin')">VIN Number</label>
-          <input type="radio" name="vinORnoVIN" id="selectvin" onclick="check1('selectvin')" />
+          <input type="radio" name="vinORnoVIN" id="selectvin" onclick="check1('selectvin')">
         </div>
         <div class="form-group">
           <label for="selectnovin" onclick="check1('selectnovin')">Make, Model, Year, Weight Class</label>
@@ -417,6 +417,7 @@
 //        }
         image.onload = function () {
           console.log("before function: ", curr_step);
+          prev_step = curr_step
           if (curr_step >2) {
             curr_step = curr_step-2;
             console.log("subtract one: ", curr_step);
@@ -431,7 +432,9 @@
             color_marks.push(avg);
             coords = [];
             instructiontxt.innerHTML = "(Step " + curr_step + " of 11): If the " + curr_step + " foot mark (M" + curr_step + ") is visible on the measurement pole, use your finger or your mouse to draw a small horizontal line on the mark. After making a line on the mark, hit next. If the mark is not visible, click next. Press clear if any errors are made.";
-            curr_step += 1;
+            if (prev_step >2){
+              curr_step += 1;
+            }
             console.log("after if statement: ", curr_step);
           } else if (curr_step == 6) {
             var avg = getAverage(coords);
