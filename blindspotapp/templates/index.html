@@ -6,7 +6,7 @@
 <html>
 <div class="alert alert-info alert-dismissible" role="alert">
   <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span aria-hidden="true">×</span></button>
-  <p>Welcome to the Beta version of the VIEW Blind Spot Calculator for Vehicles. This is not yet a fully functioning
+  <p>Welcome to the Beta version of the VIEW Blind Zone Calculator for Vehicles. This is not yet a fully functioning
     version of the site, however, it contains baseline features and functionality, including calculation of percent
     visibility from the driver’s seat. We look forward to receiving feedback about this version and look forward to
     the opportunity to grow and expand this site. Please contact alexander.epstein@dot.gov if your organization is
@@ -14,7 +14,7 @@
 </div>
 <div class="jumbotron text-center">
   <div class="container">
-    <h2><a href="/" style="color:white">VIEW: Blind Spot Calculator for
+    <h2><a href="/" style="color:white">VIEW: Blind Zone Calculator for
         Vehicles</a></h2>
   </div>
   <nav class="navbar navbar-default navbar-inverse">
@@ -109,8 +109,8 @@
           <small id="radiusdescript" class="form-text text-muted">Measurement 'A' in reference image above.</small>
         </div>
         <div class="form-group">
-          <label for="c">Distance from drivers's eye/camera to passenger window in inches:</label>
-          <input type="text" pattern="[0-9]*" class="form-control" id="c" placeholder="Enter distance eg: 45">
+          <label for="b">Distance from drivers's eye/camera to passenger window in inches:</label>
+          <input type="text" pattern="[0-9]*" class="form-control" id="b" placeholder="Enter distance eg: 45">
           <small id="radiusdescript" class="form-text text-muted">Measurement 'B' in reference image above.</small>
         </div>
         <div class="form-group">
@@ -339,13 +339,20 @@
   var angle_map = {};
   var driver_height; // the first val in the form
   var marks_dist; // the second val in the form
-  var c; // the third val in the form
+  var b; // the third val in the form
   var d; // the fourth val in the form
   var total_volume;
   var blind_volume = 0;
   var perc;
   var fileName; // the name of the image
   var comments = "NA"; //any user-added comments
+  var blind_volume_front = 0;
+  var blind_volume_between = 0;
+  var blind_volume_passenger = 0;
+  var total_volume_front;
+  var total_volume_between;
+  var total_volume_passenger;
+
 
   function c(img) {
     // Creates a new canvas element and appends it as a child
@@ -580,7 +587,7 @@
             var avg = getAverage(coords);
             zero = avg; // save zero degree point
             coords = [];
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw vertical line at -90 degrees (directly to the right of the driver out of passenger window).";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw vertical line at 90 degrees (directly to the right of the driver out of passenger window).";
             curr_step += 1;
             console.log("after next if statement: ", curr_step);
           } else if (curr_step == 8) {
@@ -652,7 +659,7 @@
           } else if (curr_step == 11) {
             driver_height = Math.round(document.getElementById('dh').value, 0);
             marks_dist = Math.round(document.getElementById('rd').value, 0);
-            c = Math.round(document.getElementById("c").value, 0);
+            b = Math.round(document.getElementById("b").value, 0);
             d = Math.round(document.getElementById("d").value, 0);
             createHeightMap();
             calcGroundIntersection();
@@ -688,9 +695,9 @@
               var vmodel = document.getElementById('vmodel').value;
               var vyear = document.getElementById('vyear').value;
               var vwc = document.getElementById('vwc').value;
-              truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, c, d, marks_dist, driver_height, comments);
+              truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, b, d, marks_dist, driver_height, comments);
             } else {
-              truckInfoFromVIN(vin, perc, c, d, marks_dist, driver_height, comments);
+              truckInfoFromVIN(vin, perc, b, d, marks_dist, driver_height, comments);
             }
             instructiontxt.innerHTML = "Thank you. Your vehicle was added to the vehicle database. You can access the database on the 'Vehicle Database' page.";
             var item = document.getElementById('vinfoentry');
@@ -706,6 +713,8 @@
               }
             }
             console.log("redirecting to getinfo page");
+            setTimeout(() => {  console.log("Timeout!"); }, 30);
+
             location.href = '/getinfo';
 
           }
@@ -742,6 +751,7 @@
       };
       canvas.node.onpointerdown = function (e) {
         canvas.isDrawing = true;
+        console.log("canvas")
         console.log(canvas);
       };
       canvas.node.onpointerup = function (e) {
@@ -782,6 +792,7 @@
     var preview = document.querySelector('img');
     // The button where the user chooses the local image to display
     var file = document.querySelector('input[type=file]').files[0];
+    console.log("file and file[name]")
     console.log(file);
     console.log(file["name"]);
     fileName = file["name"];
@@ -841,7 +852,8 @@
         }
       }
     }
-    // console.log(height_map);
+    console.log("Height Map:");
+    console.log(height_map);
   }
 
   /*
@@ -926,13 +938,20 @@
     var headers = { 'content-type': 'application/json' };
     request.onload = function () {
       let response = this.response;
+      console.log("calcBlindVolumeFront");
       console.log(response);
       blind_volume += response['data'];
+      blind_volume_front = response['data'];
+      total_volume_front = response['total_volume'];
+      console.log(blind_volume);
+      console.log(blind_volume_front);
+      console.log(total_volume_front);
+      console.log(1-(blind_volume_front/total_volume_front));
       calcBlindVolumePassenger(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger);
     }
 
     request.open("POST", url);
-    request.send(body = JSON.stringify({ 'NVPs': ground_intersections_front, 'phis': phis_front, 'DH': driver_height, 'c': c, 'd': d }));
+    request.send(body = JSON.stringify({ 'NVPs': ground_intersections_front, 'phis': phis_front, 'DH': driver_height, 'b': b, 'd': d }));
   }
 
   /*
@@ -951,13 +970,20 @@
     var headers = { 'content-type': 'application/json' };
     request.onload = function () {
       let response = this.response;
+      console.log("calcBlindVolumePassenger")
       console.log(response);
       blind_volume += response['data'];
+      blind_volume_passenger = response['data'];
+      total_volume_passenger = response['total_volume'];
+      console.log(blind_volume);
+      console.log(blind_volume_passenger);
+      console.log(total_volume_passenger);
+      console.log(1-(blind_volume_passenger/total_volume_passenger));
       calcBlindVolumeBetween(phis_front, phis_passenger);
     }
 
     request.open("POST", url);
-    request.send(body = JSON.stringify({ 'NVPs': ground_intersections_passenger, 'phis': phis_passenger, 'DH': driver_height, 'c': c, 'd': d }));
+    request.send(body = JSON.stringify({ 'NVPs': ground_intersections_passenger, 'phis': phis_passenger, 'DH': driver_height, 'b': b, 'd': d }));
   }
 
   /*
@@ -970,6 +996,14 @@
   function calcBlindVolumeBetween(phis_front, phis_passenger) {
     //bookend_phis is the phis which bookend the blind area between the front and passenger window
     var bookend_phis = [phis_front[phis_front.length - 1], phis_passenger[0]];
+    console.log("phis_front")
+    console.log(phis_front)
+    console.log("phis_passenger")
+    console.log(phis_passenger)
+    console.log("bookend_phis")
+    console.log(bookend_phis)
+
+
     let request = new XMLHttpRequest();
     // getinterestarea is instead of getblindarea because want the entire slice
     // of area blocked
@@ -978,14 +1012,22 @@
     var headers = { 'content-type': 'application/json' };
     request.onload = function () {
       let response = this.response;
+      console.log("calcBlindVolumeBetween")
       console.log(response);
       blind_volume += response['data'];
+      blind_volume_between = response['data'];
+      total_volume_between = response['data'];
+      console.log(blind_volume);
+      console.log(blind_volume_between);
+      console.log(total_volume_between);
+      console.log(1-(blind_volume_between/total_volume_between));
       var phis = phis_front.concat(phis_passenger);
       calcTotalVolume(phis);
     }
 
     request.open("POST", url);
-    request.send(body = JSON.stringify({ 'phis': bookend_phis, 'c': c, 'd': d }), headers = headers);
+    request.send(body = JSON.stringify({ 'phis': bookend_phis, 'b': b, 'd': d, 'DH':driver_height,
+                                          'c':marks_dist}), headers = headers);
   }
 
   /*
@@ -1000,13 +1042,26 @@
     var headers = { 'content-type': 'application/json' };
     request.onload = function () {
       let response = this.response;
+      console.log("calcTotalVolume")
       console.log(response);
       total_volume = response['data'];
+      preschool_children = response['preschool_children'];
+      grade_school_children = response['grade_school_children'];
+      grade_school_bicyclists = response['grade_school_bicyclists'];
+      wheelchair_users = response['wheelchair_users'];
+      adult_bicyclists = response['adult_bicyclists'];
+      adults = response['adults'];
+      console.log(total_volume);
+      console.log('adults:');
+      console.log(adults);
+      console.log("preschool_children");
+      console.log(preschool_children);
       postRatio();
     }
 
     request.open("POST", url);
-    request.send(body = JSON.stringify({ 'phis': phis, 'c': c, 'd': d }), headers = headers);
+    request.send(body = JSON.stringify({ 'phis': phis, 'b': b, 'd': d, 'DH':driver_height,
+                                          'c':marks_dist}), headers = headers);
   }
 
   /*
@@ -1018,13 +1073,25 @@
     var ratio = (total_volume - blind_volume) / total_volume;
     var tperc = ratio * 100;
     var rounded_perc = Math.round(tperc, 0); // at this point we don't feel confident providing more percision
-    percentage.innerHTML = "Percent of volume visible: " + rounded_perc + "%";
+    console.log(ratio);
+    //front
+    var ratio_front = (total_volume_front - blind_volume_front) / total_volume_front;
+    var tperc_front = ratio_front * 100;
+    var rounded_perc_front = Math.round(tperc_front, 0); // at this point we don't feel confident providing more percision
+    console.log(ratio_front);
+    var ratio_passenger = (total_volume_passenger - blind_volume_passenger) / total_volume_passenger;
+    var tperc_passenger = ratio_passenger * 100;
+    var rounded_perc_passenger = Math.round(tperc_passenger, 0); // at this point we don't feel confident providing more percision
+    percentage.innerHTML = "Percent of volume visible: " + rounded_perc + "%, front: " + rounded_perc_front + "%, passenger: " + rounded_perc_passenger + "%";
     console.log(ratio);
     perc = rounded_perc;
+    perc_front = rounded_perc_front;
+    perc_passenger = rounded_perc_passenger;
+
   }
   //Enter vehicle w/o vin # :
 
-  function truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, c, d, marks_dist, driver_height, comments) {
+  function truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, b, d, marks_dist, driver_height, comments) {
     let request = new XMLHttpRequest();
     let url = "/api/v1/addvehicle/";
     var uvin = vin.toUpperCase();
@@ -1039,7 +1106,20 @@
       location.href = '/getinfo/' + perc;
     }
     request.open("POST", url, true);
-    request.send(body = JSON.stringify({ 'vin': uvin, 'partialvin': partialvin, 'vmake': vmake, 'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear, 'perc': perc, 'c': c, 'd': d, 'radial_distance': marks_dist, 'driver_height': driver_height, 'image_name': fileName, "comments":comments }), headers = headers);
+    console.log("posting data to addvehicles")
+    request.send(body = JSON.stringify({ 'vin': uvin, 'partialvin': partialvin,
+                      'vmake': vmake, 'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear,
+                      'perc': perc, 'b': b, 'd': d, 'radial_distance': marks_dist,
+                      'driver_height': driver_height, 'image_name': fileName, "comments":comments,
+                      'a': driver_height, 'c': marks_dist,
+                      'perc_front': perc_front, 'perc_passenger': perc_passenger,
+                      'preschool_children':preschool_children,
+                      'grade_school_children':grade_school_children, 'grade_school_bicyclists':grade_school_bicyclists,
+                      'wheelchair_users':wheelchair_users, 'adult_bicyclists':adult_bicyclists,
+                      'adults':adults,
+                      'total_volume_front':total_volume_front,'total_volume_passenger':total_volume_passenger,
+                      'total_volume_between':total_volume_between
+                    }), headers = headers);
   }
   /*
   If user enters vin, truckInfoFromVIN gets truck model info to store in the database
@@ -1049,7 +1129,7 @@
   perc: int, the percentage visible area
 
   */
-  function truckInfoFromVIN(vin, perc, c, d, marks_dist, driver_height, comments) {
+  function truckInfoFromVIN(vin, perc, b, d, marks_dist, driver_height, comments) {
     // var vin = "5PVNC6JK562S10283"; // example
     let request = new XMLHttpRequest();
     var uvin = vin.toUpperCase();
@@ -1089,9 +1169,17 @@
       request.open("POST", url);
       request.send(body = JSON.stringify({
         'vin': uvin, 'partialvin': partialvin, 'vmake': vmake,
-        'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear, 'perc': perc, 'c': c, 'd': d,
+        'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear, 'perc': perc, 'b': b, 'd': d,
         'radial_distance': marks_dist, 'driver_height': driver_height,
-        'image_name': fileName, "comments":comments
+        'image_name': fileName, "comments":comments,
+        'a': driver_height, 'c': marks_dist,
+        'perc_front': perc_front, 'perc_passenger': perc_passenger,
+        'preschool_children':preschool_children,
+        'grade_school_children':grade_school_children, 'grade_school_bicyclists':grade_school_bicyclists,
+        'wheelchair_users':wheelchair_users, 'adult_bicyclists':adult_bicyclists,
+        'adults':adults,
+        'total_volume_front':total_volume_front,'total_volume_passenger':total_volume_passenger,
+        'total_volume_between':total_volume_between
       }), headers = headers);
 
     }

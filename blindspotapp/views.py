@@ -97,6 +97,7 @@ def getinfo(request, user_data=None):
 @require_http_methods(["POST"])
 def addvehicle(request):
     # set up Airtable base and unpack data
+    print("running addvehicle function")
     at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR')
     json_data = json.loads(request.body.decode("utf-8"))
     fullvin = json_data['vin']
@@ -106,65 +107,119 @@ def addvehicle(request):
     vgvwr = json_data['vwc']
     vyear = json_data['vyear']
     perc_vis = json_data['perc']
-    c = json_data['c']
+    b = json_data['b']
     d = json_data['d']
     radial_distance = json_data['radial_distance']
     driver_height = json_data['driver_height']
     comments = json_data['comments']
-    # image_name = json_data['image_name']
-    # print(image_name)
+    image_name = json_data['image_name']
+    a = json_data['a']
+    c = json_data['c']
+    perc_front = json_data['perc_front']
+    perc_passenger = json_data['perc_passenger']
+    preschool_children = json_data['preschool_children']
+    grade_school_children = json_data['grade_school_children']
+    grade_school_bicyclists = json_data['grade_school_bicyclists']
+    wheelchair_users = json_data['wheelchair_users']
+    adult_bicyclists = json_data['adult_bicyclists']
+    adults = json_data['adults']
+    total_volume_front = json_data['total_volume_front']
+    total_volume_passenger = json_data['total_volume_passenger']
+    total_volume_between = json_data['total_volume_between']
 
-    # try:
-    #     # upload image and get url
-    #     url = uploadimage(image_name)
-    #     image = {"url": url}
+    print(image_name)
+
+    try:
+     # upload image and get url
+        url = uploadimage(image_name)
+        print(url)
+        image = {"url": url}
 
     #     # add record to database
-    #     record = {"Full VIN": fullvin, "Partial VIN": partialvin, "Make": vmake, "Model": vmodel, "Weight Class": vgvwr,
-    #               "Year": vyear, "Percent Visible Volume": perc_vis, "c": c, "d": d, "Radial Distance": radial_distance,
-    #               "Driver Height": driver_height, "Image": [image]}
-    # except:
-    #     print("failed to upload image; adding truck to db without image")
+        record = {"Full VIN": fullvin, "Partial VIN": partialvin, "Make": vmake, "Model": vmodel, "Weight Class": vgvwr,
+               "Year": vyear, "Percent Visible Volume": perc_vis, 'a':a, "b": b,'c':c, "d": d, "Radial Distance": radial_distance,
+               "Driver Height": driver_height, "Comments":comments,
+               'Percent Visible Volume in Front': perc_front,
+               'Percent Visible Volume in Passenger Side': perc_passenger,
+               'Preschool Children in Blindzone':preschool_children,
+               'Grade School Children in Blindzone':grade_school_children, 'Grade School Child Bicyclists in Blindzone':grade_school_bicyclists,
+               'Wheelchair Users in Blindzone':wheelchair_users, 'Bicyclists in Blindzone':adult_bicyclists,
+               'Adults in Blindzone':adults,
+               'Total Front Volume':total_volume_front,'Total Passenger Volume':total_volume_passenger,
+               'Total A Pillar Volume':total_volume_between,
+               "Image": [image]}
+        print(record)
+        at.insert(record)
+    except:
+        print("failed to upload image; adding truck to db without image")
         # add record to database
-    record = {"Full VIN": fullvin, "Partial VIN": partialvin, "Make": vmake, "Model": vmodel, "Weight Class": vgvwr,
-                  "Year": vyear, "Percent Visible Volume": perc_vis, "c": c, "d": d, "Radial Distance": radial_distance,
-                  "Camera height above ground": driver_height, "Comments":comments}
-    print(record)
-    at.insert(record)
+        record = {"Full VIN": fullvin, "Partial VIN": partialvin, "Make": vmake, "Model": vmodel, "Weight Class": vgvwr,
+                      "Year": vyear, "Percent Visible Volume": perc_vis, 'a':a, "b": b,'c':c, "d": d, "Radial Distance": radial_distance,
+                      "Camera height above ground": driver_height, "Comments":comments,
+                    'Percent Visible Volume in Front': perc_front,
+                    'Percent Visible Volume in Passenger Side': perc_passenger,
+                    'Preschool Children in Blindzone':preschool_children,
+                    'Grade School Children in Blindzone':grade_school_children, 'Grade School Child Bicyclists in Blindzone':grade_school_bicyclists,
+                    'Wheelchair Users in Blindzone':wheelchair_users, 'Bicyclists in Blindzone':adult_bicyclists,
+                    'Adults in Blindzone':adults,
+                    'Total Front Volume':total_volume_front,'Total Passenger Volume':total_volume_passenger,
+                    'Total A Pillar Volume':total_volume_between
+                      }
+
+        print(record)
+        at.insert(record)
     return "Thank you. This record has been added."
 
 # this method should upload an image to Cloudinary and return the URL of where it is stored
 
 
-# def uploadimage(image):
-#     # configure cloudinary
-#     cloudinary.config(
-#         cloud_name="dkrq49vzq",
-#         api_key="733231156826462",
-#         api_secret="tf4ebuGXPE1AS5ZlGqG6WkQWTXU"
-#     )
+def uploadimage(image):
+    # configure cloudinary
+    print("starting uploadimage function")
+    cloudinary.config(
+         cloud_name="dkrq49vzq",
+         api_key="733231156826462",
+         api_secret="tf4ebuGXPE1AS5ZlGqG6WkQWTXU"
+    )
 
-#     upload image to cloudinary
+    print('successfully connected to cloudinary')
+    #     upload image to cloudinary
 
-#     response = cloudinary.uploader.upload(image, folder="blindspot-app")
-#     response = cloudinary.uploader.upload("..\Peterbilt_stand_iphone_michael_2.JPG", folder="blindspot-app")
+    response = cloudinary.uploader.upload(image, folder="blindspot-app")
+    print(response)
+#    response = cloudinary.uploader.upload("..\Peterbilt_stand_iphone_michael_2.JPG", folder="blindspot-app")
+    image_url = response['url']
 
-#     image_url = response['url']
-
-#     returns temporary url for testing purposes
-#     return image_url
+    #     returns temporary url for testing purposes
+    return image_url
 #     returns test image of flower
-#     return "https://res.cloudinary.com/dkrq49vzq/image/upload/v1591716313/sample.jpg"
+#    return "https://res.cloudinary.com/dkrq49vzq/image/upload/v1591716313/sample.jpg"
 
 
 @require_http_methods(["POST"])
 def getinterestarea(request):
+    print("starting getinterestarea")
     json_data = json.loads(request.body.decode("utf-8"))
     angles = json_data['phis']
-    c = json_data['c']
+    b = json_data['b']
     d = json_data['d']
-    interest_area = find_total_truck_interest_area(angles, c, d)
-    return JsonResponse({"data": interest_area})
+    a = json_data['DH']
+    c = json_data['c']
+    print("c: ", c)
+    print("b: ", b)
+    print("a: ", a)
+    print("d: ", d)
+    print("starting find_total_truck_interest_area")
+    interest_area = find_total_truck_interest_area(angles, b, d)
+    print("starting stick figure")
+    preschool_children, grade_school_children, grade_school_bicyclists, wheelchair_users,adult_bicyclists, adults = do_stick_figure_analyses(a,c,d)
+    print("finished stick figure")
+    return JsonResponse({"data": interest_area,
+                        "preschool_children": preschool_children,
+                        "grade_school_children": grade_school_children,
+                        "grade_school_bicyclists": grade_school_bicyclists,
+                        "wheelchair_users": wheelchair_users,
+                        "adult_bicyclists": adult_bicyclists, "adults": adults})
 
 
 @require_http_methods(["POST"])
@@ -173,7 +228,8 @@ def getblindarea(request):
     NVPs = json_data['NVPs']
     angles = json_data['phis']
     DH = json_data['DH']
-    c = json_data['c']
+    b = json_data['b']
     d = json_data['d']
-    blind_area = find_total_truck_blind_area(NVPs, angles, DH, c, d)
-    return JsonResponse({"data": blind_area})
+    blind_area = find_total_truck_blind_area(NVPs, angles, DH, b, d)
+    interest_area = find_total_truck_interest_area(angles, b, d)
+    return JsonResponse({"data": blind_area, "total_volume":interest_area})

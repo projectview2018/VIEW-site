@@ -4,6 +4,34 @@ ceiling = 74 # 6'2" which is the 95th percentile male
 e = 180 # 15 feet
 f = 180
 
+def find_number_in_blind_zone(a,c,d, height, width):
+    count = ((c-d-(height*c/a))/width)
+    if count <0:
+        count = 0
+    return count
+
+def do_stick_figure_analyses(a,c,d):
+    # finds theoretical number of people that fit into forward blind Zone
+    # Categories of people:
+        # Preschool age children
+        # Grade school age children
+        # Grade school age bicyclists
+        # Wheelchair users
+        # Bicyclists
+        # Adults
+    # Uses initial measurements a, c, and d
+
+    preschool_children = find_number_in_blind_zone(a,c,d, 28,9)
+    grade_school_children = find_number_in_blind_zone(a,c,d, 35,12)
+    grade_school_bicyclists = find_number_in_blind_zone(a,c,d, 37, 12)
+    wheelchair_users = find_number_in_blind_zone(a,c,d, 39,26)
+    adult_bicyclists = find_number_in_blind_zone(a,c,d, 47,16)
+    adults = find_number_in_blind_zone(a,c,d, 49,16)
+
+    return preschool_children, grade_school_children, grade_school_bicyclists, wheelchair_users,adult_bicyclists, adults
+
+
+
 def find_total_truck_interest_area(angles, c, d):
     # finds the total interest volume for a truck
 
