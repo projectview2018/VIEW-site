@@ -22,8 +22,8 @@ def do_stick_figure_analyses(a,c,d):
     # Uses initial measurements a, c, and d
 
     preschool_children = find_number_in_blind_zone(a,c,d, 28,9)
-    grade_school_children = find_number_in_blind_zone(a,c,d, 35,12)
-    grade_school_bicyclists = find_number_in_blind_zone(a,c,d, 37, 12)
+    grade_school_children = find_number_in_blind_zone(a,c,d, 37,12)
+    grade_school_bicyclists = find_number_in_blind_zone(a,c,d, 35, 12)
     wheelchair_users = find_number_in_blind_zone(a,c,d, 39,26)
     adult_bicyclists = find_number_in_blind_zone(a,c,d, 47,16)
     adults = find_number_in_blind_zone(a,c,d, 49,16)
