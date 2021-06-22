@@ -1,8 +1,12 @@
 from math import *
 
-ceiling = 74 # 6'2" which is the 95th percentile male
-e = 180 # 15 feet
-f = 180
+# Each of the variables has two fields. The first value is the US standard values in inches. The second value is the metric standard value in inches.
+# In the rest of the document, region 0 is the US, and region 1 is metric.
+# In the future, if more standards need to be added, they can be referred to by ceiling[region].
+# This style will be applied to all units of length throughout this document.
+ceiling = [74, 160.2] # 95th males in each region
+e = [180, 450] # 15 feet, 4.5 meters
+f = [180, 200] # 15 feet, 2 meters
 
 def find_number_in_blind_zone(a,c,d, height, width):
     count = ((c-d-(height*c/a))/width)
@@ -32,7 +36,7 @@ def do_stick_figure_analyses(a,c,d):
 
 
 
-def find_total_truck_interest_area(angles, c, d):
+def find_total_truck_interest_area(angles, c, d, r = 0):
     # finds the total interest volume for a truck
 
     # NVPs is a list of the nearest visible points
@@ -44,27 +48,30 @@ def find_total_truck_interest_area(angles, c, d):
     # e is the horizontal length of the area of interest to the right of the passenger side wall
     # f is the horizontal length of the area of interest forward of the bumper
 
+    # r is the region, 0 for US, 1 for metric
+
     # initialize total volume counter:
     interest = 0
     # angles = angles.split(',')
     angles = list(map(float, angles))
-    c = int(c)
-    d = int(d)
+    c = [int(c), int(c * 2.54)]
+    d = [int(d), int(d * 2.54)]
     # Iterate through the list of slices
+
     for i in range(0, len(angles) - 1):
         # determine angle
         # currently using the difference between a measurement and the next one
         # ignoring the last slice
         # probably go back and refine this, maybe.
         theta = 0.5 * abs(-angles[i + 1] + angles[i])  # width of slice, divided in half for right angle math
-        hood = find_rectangular_coordinate(c, d, angles[i])  # distance of edge of truck
-        boundary = find_rectangular_coordinate(c + e, d + f, angles[i])  # distance of edge of interest
-        slicevolume = 2 * find_total_slice_volume(hood, boundary, ceiling, theta)  # total volume in slice
+        hood = find_rectangular_coordinate(c[r], d[r], angles[i])  # distance of edge of truck
+        boundary = find_rectangular_coordinate(c[r] + e[r], d[r] + f[r], angles[i])  # distance of edge of interest
+        slicevolume = 2 * find_total_slice_volume(hood, boundary, ceiling[r], theta)  # total volume in slice
         interest += slicevolume
 
     return interest
 
-def find_total_truck_blind_area(NVPs, angles, DH, c, d):
+def find_total_truck_blind_area(NVPs, angles, DH, c, d, r = 0):
     # finds the total blind volume for a truck dataset
 
     # NVPs is a list of the nearest visible points
@@ -80,9 +87,9 @@ def find_total_truck_blind_area(NVPs, angles, DH, c, d):
     blind = 0
     angles = list(map(float, angles))
     NVPs = list(map(float, NVPs))
-    DH = float(DH)
-    c = int(c)
-    d = int(d)
+    DH = [float(DH), float(DH) * 2.54]
+    c = [int(c), int(c * 2.54)]
+    d = [int(d), int(d * 2.54)]
 
     # Iterate through the list of slices
     for i in range(0, len(NVPs) - 1):
@@ -91,9 +98,9 @@ def find_total_truck_blind_area(NVPs, angles, DH, c, d):
         # ignoring the last slice
         # probably go back and refine this, maybe.
         theta = 0.5 * abs(-angles[i + 1] + angles[i])  # width of slice, divided in half for right angle math
-        hood = find_rectangular_coordinate(c, d, angles[i])  # distance of edge of truck
-        boundary = find_rectangular_coordinate(c + e, d + f, angles[i])  # distance of edge of interest
-        blindvolume = 2 * find_blind_volume(NVPs[i], DH, hood, boundary, ceiling, theta)  # blind volume in slice
+        hood = find_rectangular_coordinate(c[r], d[r], angles[i])  # distance of edge of truck
+        boundary = find_rectangular_coordinate(c[r] + e[r], d[r] + f[r], angles[i])  # distance of edge of interest
+        blindvolume = 2 * find_blind_volume(NVPs[i], DH[r], hood, boundary, ceiling[r], theta)  # blind volume in slice
         blind += blindvolume
 
     return blind

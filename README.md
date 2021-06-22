@@ -10,11 +10,11 @@ To run this site on your own Heroku instance follow the [Heroku’s instructions
 
 To summarize this document you must have:
 A Heroku account - it’s free
-Python 3.6 installed locally
-Pipenv installed locally
-Postgres installed locally, if running the app locally
+Python 3.6 installed locally <br>
+Pipenv installed locally <br>
+Postgres installed locally, if running the app locally <br>
 
-Next, login to heroku in your shell using the command: 
+Next, login to heroku in your shell using the command:
 ```console
 $ heroku login
 ```

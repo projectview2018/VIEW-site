@@ -130,4 +130,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Increase max upload memory size from 2.5MB (default) to 5MB
+# Allows upload of base64 string from views.py to cloudinary
+
+DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880
+
 django_heroku.settings(locals())
