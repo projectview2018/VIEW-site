@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<base href="/">
 
 <html>
 <div class="alert alert-info alert-dismissible" role="alert">
@@ -27,7 +28,10 @@
           <a href="/addvehicle" style="font-size:20px">Add Vehicle</a>
         </li>
         <li class="active">
-          <a href="/getinfo" style="font-size:20px">Vehicle Database</a>
+          <a href="/getinfo" style="font-size:20px">Vehicle Information</a>
+        </li>
+        <li class="active">
+          <a href="/visualize" style="font-size:20px">Visualize</a>
         </li>
       </ul>
     </div>
@@ -170,16 +174,16 @@
       <form>
         <div class="form-group">
           <label for="vmake">Vehicle Make:</label>
-          <input type="text" list = "json_makes" class="form-control" id="vmake" placeholder="Eg: Ford" onchange = "check_model_info('selectnovin-make')" required />
+          <input type="text" list = "json_makes" class="form-control" id="vmake" placeholder="Eg: Ford" onchange = "mm_changed('make')" required />
 		  <datalist id = "json_makes"></datalist>
         </div>
         <div class="form-group">
           <label for="vmodel">Vehicle Model:</label>
-          <input type="text" list = "json_models" class="form-control" id="vmodel" placeholder="Eg: F-150" required>
+          <input type="text" list = "json_models" class="form-control" id="vmodel" placeholder="Eg: F-150" onchange = "mm_changed('model')" required>
 		  <datalist id = "json_models"></datalist>
         </div>
         <!-- To select year from dropdown list: -->
-        <div>
+        <div class="form-group">
           <label for="vyear">Vehicle Year:</label>
           <select class="form-control chosen" id="vyear">
             <option selected>Please select a year</option>
@@ -258,18 +262,18 @@
           </select>
         </div>
         <!-- To select weight class from dropdown list: -->
-        <div>
+        <div class="form-group">
           <label for="vwc">Vehicle Weight Class:</label>
           <select class="form-control chosen" id="vwc">
             <option selected>Please select a class</option>
-            <option value="Class 1">Class 1: &lt;6,000 lbs</option>
-            <option value="Class 2">Class 2: 6,001-10,000 lbs</option>
-            <option value="Class 3">Class 3: 10,001-14,000 lbs</option>
-            <option value="Class 4">Class 4: 14,001-16,000 lbs</option>
-            <option value="Class 5">Class 5: 16,001-19,500 lbs</option>
-            <option value="Class 6">Class 6: 19,501-26,000 lbs</option>
-            <option value="Class 7">Class 7: 26,001-33,000 lbs</option>
-            <option value="Class 8">Class 8: &gt;33,001 lbs</option>
+            <option value="Class 1">Class 1: &lt;6,000 lbs (Ex: Most Passenger Cars)</option>
+            <option value="Class 2">Class 2: 6,001-10,000 lbs (Ex: Full-Size Pickup Trucks)</option>
+            <option value="Class 3">Class 3: 10,001-14,000 lbs (Ex: Walk-In Trucks) </option>
+            <option value="Class 4">Class 4: 14,001-16,000 lbs (Ex: City Delivery Trucks)</option>
+            <option value="Class 5">Class 5: 16,001-19,500 lbs (Ex: Bucket Trucks)</option>
+            <option value="Class 6">Class 6: 19,501-26,000 lbs (Ex: School Bus)</option>
+            <option value="Class 7">Class 7: 26,001-33,000 lbs (Ex: Garbage Trucks)</option>
+            <option value="Class 8">Class 8: &gt;33,001 lbs (Ex: Dump Trucks)</option>
           </select>
         </div>
       </form>
@@ -278,12 +282,19 @@
     <div id="addcomments" class="hidden">
       <form>
         <div class="form-group">
-          <label for="comments">General comments:</label>
+          <label for="comments">General Comments:</label>
           <input type="text" class="form-control" id="comments" placeholder="Comments">
         </div>
-
+      </form>
+      <form>
+        <div class="form-group">
+          <label for="agency">Agency:</label>
+          <input type="text" class="form-control" id="agency" placeholder="Agency">
+        <small id="radiusdescript" class="form-text text-muted">Optional field, for agencies to keep track of their vehicle entries.</small>
+        </div>
       </form>
     </div>
+
 
     <div id="buttons2" class="hidden">
       <button class="btn btn-primary" onclick="backPanel()">Back</button>
@@ -294,9 +305,6 @@
   <div id="uploadbutton" class="unhidden">
     <input type="file" accept= "image/*" style="font-size:15px" class="unhidden" onchange="previewFile()"><br>
   </div>
-  <!-- loads axios javascript library, to upload image to cloudinary -->
-  <script src="https://unpkg.com/axios/dist/axios.min.js"</script>
-  <script src="/public/scripts/app.js"></script>
   <img src="" height="0" alt="">
   <hr>
   <h4 style="font-style:italic;font-size:13px;">This document is funded by the Santos Family Foundation and disseminated under the
@@ -307,15 +315,19 @@
     document. Site contents represent the best technical judgement of U.S. DOT Volpe Center staff based on their
     independent and objective technical analysis and expertise, and are not to be misconstrued as statements of
     U.S. DOT policy or guidance.
-</h4>
+	</h4>
 
 
 </div>
 <!-- <div id="bottom"></div> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 
 </html>
 
+
+
 <script type="text/javascript">
+
 
 
   function clearPanel() {
@@ -325,8 +337,6 @@
   function backPanel() {
     ctx.addBack(my_image);
   }
-
-
 
   function check1(vinOrNoVIN) {
     if (vinOrNoVIN == "selectvin") {
@@ -339,6 +349,7 @@
       if (document.getElementById('novinchoice').className == 'hidden') {
         document.getElementById('novinchoice').className = "unhidden";
         document.getElementById('vinchoice').className = "hidden";
+		load_makes();
       }
     }
 	check_model_info(vinOrNoVIN);
@@ -354,8 +365,8 @@
   var zero;
   var angle_map = {};
   var driver_height; // the first val in the form
-  var marks_dist; // the second val in the form
-  var b; // the third val in the form
+  var marks_dist; // the third val in the form
+  var b; // the second val in the form
   var d; // the fourth val in the form
   var total_volume = [];
   var blind_volume = [0, 0];
@@ -364,6 +375,7 @@
   var perc_passenger = [];
   var fileName; // the name of the image
   var comments = "NA"; //any user-added comments
+  var agency = "NA"; // optional, name of agency adding vehicle
   var blind_volume_front = [0, 0];
   var blind_volume_between = [0, 0];
   var blind_volume_passenger = [0, 0];
@@ -372,12 +384,19 @@
   var total_volume_passenger = [];
   var CLOUDINARY_URL =  'https://api.cloudinary.com/v1_1/dkrq49vzq/upload';
   var CLOUDINARY_UPLOAD_PRESET = 'ifmh0adn';
-  var fileURL = "https://res.cloudinary.com/dkrq49vzq/image/upload/v1591716313/sample.jpg";
+  var fileURL = "";
   var drawingURL = "https://res.cloudinary.com/dkrq49vzq/image/upload/v1591716313/sample.jpg";
   var step8_coords = [];
   var unit = "inch";
   var upload_done = [0,0];
+  var json_string = "";
+  var top_string = "NA";
+  var stick_c = 0;
 
+  var no_models_for_make = false;
+  var models = [];
+  var valid_make = false;
+  var valid_model = false;
   function nextPanel() {
     ctx.addNext(my_image);
   }
@@ -420,7 +439,8 @@
     function saveCanvas(canvas, curr_step) {
       console.log('preparing to save canvas to cloudinary');
       canvas_img = canvas.node.toDataURL();
-      //console.log(canvas_img);
+
+
 
       var formData = new FormData();
       formData.append('file', canvas_img);
@@ -886,6 +906,7 @@
           } else {//enter vin or vehicle info:
             var vin = document.getElementById('vin').value;
             var comments = document.getElementById('comments').value;
+            var agency = document.getElementById('agency').value;
             console.log(comments)
             if (vin.length == 0) {
               var vin = "NA";
@@ -894,9 +915,9 @@
               var vmodel = document.getElementById('vmodel').value;
               var vyear = document.getElementById('vyear').value;
               var vwc = document.getElementById('vwc').value;
-              truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, b, d, marks_dist, driver_height, comments);
+              truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, b, d, marks_dist, driver_height, comments, agency);
             } else {
-              truckInfoFromVIN(vin, perc, b, d, marks_dist, driver_height, comments);
+              truckInfoFromVIN(vin, perc, b, d, marks_dist, driver_height, comments, agency);
             }
             instructiontxt.innerHTML = "Thank you. Your vehicle was added to the vehicle database. You can access the database on the 'Vehicle Database' page.";
             var item = document.getElementById('vinfoentry');
@@ -911,11 +932,11 @@
                 item.className = 'hidden';
               }
             }
-            console.log("redirecting to getinfo page");
-            setTimeout(() => {  console.log("Timeout!"); }, 30);
-
+            console.log("redirecting to getinfo page from timeout");
+            /*
+			setTimeout(() => {  console.log("TIMEOUT!"); }, 6000);
             location.href = '/getinfo';
-
+			*/
           }
           ctx.drawImage(image, 0, 0, width, height); // this line clears the drawings every step, or rather, adds the car image
           // on top of the existing image each time, creating a blank image
@@ -1111,9 +1132,9 @@
   end in the percentage visible area being displayed
   */
   function calcGroundIntersection() {
-    var ground_intersections_front = [];
+    var ground_intersections_front = []; // distance from the driver for that particular dot
     var ground_intersections_passenger = [];
-    var phis_front = [];
+    var phis_front = []; // angle of that particular dot
     var phis_passenger = [];
 
     // make lists of phis and nvps for front and passenger
@@ -1144,9 +1165,10 @@
       phis_front.pop()
       ground_intersections_front.pop()
     }
-	console.log("about to call calcblindvolumefront");
-    calcBlindVolumeFront(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger);
 
+
+	calcBlindVolumeFront(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger);
+	make_json_string(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger);
   }
 
   /*
@@ -1213,7 +1235,9 @@
   phis_passenger: list(int), list of radians corresponding to ground_intersection_passenger
   */
   function calcBlindVolumePassenger(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger) {
-    let request = new XMLHttpRequest();
+
+
+	let request = new XMLHttpRequest();
     let url = "/api/v1/getblindarea/";
     request.responseType = "json";
     var headers = { 'content-type': 'application/json' };
@@ -1242,6 +1266,7 @@
 
     request.open("POST", url);
     request.send(body = JSON.stringify({ 'NVPs': ground_intersections_passenger, 'phis': phis_passenger, 'DH': driver_height, 'b': b, 'd': d }));
+	get_stick_c(ground_intersections_front, phis_front);
   }
 
   /*
@@ -1254,13 +1279,14 @@
   function calcBlindVolumeBetween(phis_front, phis_passenger) {
     //bookend_phis is the phis which bookend the blind area between the front and passenger window
     var bookend_phis = [phis_front[phis_front.length - 1], phis_passenger[0]];
-    console.log("phis_front")
+    /*
+	console.log("phis_front")
     console.log(phis_front)
     console.log("phis_passenger")
     console.log(phis_passenger)
     console.log("bookend_phis")
     console.log(bookend_phis)
-
+	*/
 
     let request = new XMLHttpRequest();
     // getinterestarea is instead of getblindarea because want the entire slice
@@ -1325,10 +1351,10 @@
       postRatio(0);
 	  postRatio(1);
     }
-
+	var c = -1 * marks_dist / ( 12/driver_height - 1);
+	console.log("c values " + c + " " + stick_c);
     request.open("POST", url);
-    request.send(body = JSON.stringify({ 'phis': phis, 'b': b, 'd': d, 'DH':driver_height,
-                                          'c':marks_dist}), headers = headers);
+    request.send(body = JSON.stringify({ 'phis': phis, 'b': b, 'd': d, 'DH':driver_height, 'c':Math.max(stick_c, c)}), headers = headers);
   }
 
   /*
@@ -1362,9 +1388,63 @@
     perc_passenger[r] = rounded_perc_passenger;
 
   }
+
+  function make_json_string(ground_front, ground_passenger, phis_front, phis_passenger ) {
+	var a = Math.round(document.getElementById('dh').value, 0);
+    var c = Math.round(document.getElementById('rd').value, 0);
+    var b = Math.round(document.getElementById("b").value, 0);
+    var d = Math.round(document.getElementById("d").value, 0);
+	var i = 0;
+	//console.log("phis_front rounded");
+	p_f = []
+	for (i = 0; i < phis_front.length; i ++ ) {
+		//console.log( parseInt(phis_front[i].toFixed(3)) );
+		curr_phi = phis_front[i] * 60 + 90
+		p_f.push( parseFloat( curr_phi.toFixed(1) ));
+	}
+	g_f = []
+	for (i = 0; i < ground_front.length; i ++ ) {
+		g_f.push( parseFloat(  ground_front[i].toFixed(1)) );
+	}
+	p_p = [];
+	for (i = 0; i < phis_passenger.length; i ++ ) {
+		curr_phi = phis_passenger[i] * 60 + 90
+		p_p.push( parseFloat( curr_phi.toFixed(1) ));
+	}
+	g_p = [];
+	for (i = 0; i < ground_passenger.length; i ++ ) {
+		g_p.push( parseFloat( ground_passenger[i].toFixed(1) ));
+	}
+
+	json_string = JSON.stringify( {'pf': p_f, 'gf': g_f, 'pp': p_p, 'gp': g_p });
+
+	full_json_string = JSON.stringify( {'pf': p_f, 'gf': g_f, 'pp': p_p, 'gp': g_p, 'a': a, 'b': b, 'c':c, 'd': d });
+	/*
+	let request = new XMLHttpRequest();
+    let url = "/api/v1/getspecificimage/";
+    request.responseType = "json";
+    var headers = { 'content-type': 'application/json' };
+
+	request.onload = function(){
+		let response = this.response;
+		console.log("got string");
+
+		top_string = response['data'];
+		//console.log(top_string);
+	}
+
+	request.open("POST", url);
+	request.send(body = JSON.stringify( {"json_string": full_json_string, "index" : 3, 'mode':0}));
+
+    //console.log(json_string);
+	//, 'Full VIN': "NA"
+
+	*/
+  }
+
   //Enter vehicle w/o vin # :
 
-  function truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, b, d, marks_dist, driver_height, comments) {
+  function truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, b, d, marks_dist, driver_height, comments, agency) {
     let request = new XMLHttpRequest();
     let url = "/api/v1/addvehicle/";
     var uvin = vin.toUpperCase();
@@ -1374,18 +1454,21 @@
     request.onload = function () {
       let response = this.response;
       console.log(response);
-      console.log("redirecting to getinfo page");
-      // concat the user's perc_vis with the getinfo url to return custom getinfo page
-      location.href = '/getinfo/' + perc[0];
+	  var redirect = response["redirect"];
+	  console.log(redirect);
+      console.log("redirecting to getinfo page from novin");
+
+	  // concat the user's perc_vis with the getinfo url to return custom getinfo page
+      location.href = '/getinfo/' + redirect;
     }
     request.open("POST", url, true);
     console.log("posting data to addvehicles");
-	console.log("fileurl " + fileURL);
+	  console.log("fileurl " + fileURL);
     request.send(body = JSON.stringify({ 'vin': uvin, 'partialvin': partialvin,
                       'vmake': vmake, 'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear,
                       'perc': perc, 'b': b, 'd': d, 'radial_distance': marks_dist,
                       'driver_height': driver_height, 'image_name': fileName, 'image_URL': fileURL, 'drawing_URL': drawingURL,
-                      "comments":comments,
+                      "comments": comments, "agency": agency,
                       'a': driver_height, 'c': marks_dist,
                       'perc_front': perc_front, 'perc_passenger': perc_passenger,
                       'preschool_children':preschool_children,
@@ -1393,9 +1476,23 @@
                       'wheelchair_users':wheelchair_users, 'adult_bicyclists':adult_bicyclists,
                       'adults':adults,
                       'total_volume_front':total_volume_front[0],'total_volume_passenger':total_volume_passenger[0],
-					  'total_volume_between':total_volume_between[0]
+					  'total_volume_between':total_volume_between[0], 'phis_and_nvps':json_string, 'top_string': top_string
 
                     }), headers = headers);
+  }
+
+  function get_stick_c(ground_front, phis_front){
+	closest_phi = 0;
+	closest_i = 0;
+	for (i = 0; i < phis_front.length; i ++ ) {
+		if (Math.abs(phis_front[i] - 90) < .5){
+			closest_i = i;
+			break;
+		} else if (Math.abs(closest_phi - 90) >  Math.abs(phis_front[i] - 90) ){
+			closest_i = i;
+		}
+	}
+	stick_c = ground_front[closest_i]
   }
   /*
   If user enters vin, truckInfoFromVIN gets truck model info to store in the database
@@ -1405,7 +1502,7 @@
   perc: int, the percentage visible area
 
   */
-  function truckInfoFromVIN(vin, perc, b, d, marks_dist, driver_height, comments) {
+  function truckInfoFromVIN(vin, perc, b, d, marks_dist, driver_height, comments, agency) {
     // var vin = "5PVNC6JK562S10283"; // example
     let request = new XMLHttpRequest();
     var uvin = vin.toUpperCase();
@@ -1433,21 +1530,22 @@
       let url = "/api/v1/addvehicle/";
       request.responseType = "json";
       var headers = { 'content-type': 'application/json' };
-      request.onload = function () {
-        let response = this.response;
-        console.log(response);
-        console.log("redirecting to getinfo page");
-        console.log(perc);
-        // concat the user's perc_vis with the getinfo url to return custom getinfo page
-        location.href = '/getinfo/' + perc[0];
-      }
+       request.onload = function () {
+		  let response = this.response;
+		  console.log(response);
+		  var redirect = response["redirect"];
+		  console.log("redirecting to getinfo page from vin");
+
+		  // concat the user's perc_vis with the getinfo url to return custom getinfo page
+		  location.href = '/getinfo/' + redirect;
+		}
 
       request.open("POST", url);
       request.send(body = JSON.stringify({
         'vin': uvin, 'partialvin': partialvin, 'vmake': vmake,
         'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear, 'perc': perc, 'b': b, 'd': d,
         'radial_distance': marks_dist, 'driver_height': driver_height,
-        'image_name': fileName, 'image_URL': fileURL, 'drawing_URL': drawingURL, "comments":comments,
+        'image_name': fileName, 'image_URL': fileURL, 'drawing_URL': drawingURL, "comments":comments, "agency": agency,
         'a': driver_height, 'c': marks_dist,
         'perc_front': perc_front, 'perc_passenger': perc_passenger,
         'preschool_children':preschool_children,
@@ -1455,7 +1553,7 @@
         'wheelchair_users':wheelchair_users, 'adult_bicyclists':adult_bicyclists,
         'adults':adults,
         'total_volume_front':total_volume_front[0],'total_volume_passenger':total_volume_passenger[0],
-        'total_volume_between':total_volume_between[0]
+        'total_volume_between':total_volume_between[0], 'phis_and_nvps':json_string, 'top_string': top_string
 
       }), headers = headers);
 
@@ -1506,6 +1604,37 @@
 	}
   }
 
+  function mm_changed(makeormodel){
+	if (makeormodel == "make"){
+		var vmake_value = document.getElementById('vmake').value;
+		var list = document.getElementById("json_makes").options;
+		document.getElementById("json_models").innerHTML = "";
+		if (! (vmake_value.trim() === "")){
+			for (i = 0; i < list.length; i ++) {
+				if (vmake_value.toUpperCase() === list[i].value ) {
+					valid_make = true;
+					load_models(vmake_value);
+					break;
+				}
+			}
+		} else {
+			list.innerHTML = "";
+			valid_make = false;
+			valid_model = false;
+			no_models_for_make = false;
+			document.getElementById('vmodel').value = "";
+		}
+
+
+
+	} else if (makeormodel == "model"){
+		var vmodel_value = document.getElementById('vmodel').value;
+		valid_model = models.includes(vmodel_value);
+
+	}
+	check_model_info("selectnovin");
+  }
+
   function check_model_info(vinOrNoVIN) {
 	var valid = false;
 	//console.log("check model info");
@@ -1551,47 +1680,25 @@
 		edit_button();
     }
     else if (vinOrNoVIN.includes("selectnovin")) {
-      var vmake_value = document.getElementById('vmake').value;
 	  //var vmodel_value = document.getElementById('vmodel').value;
-	  if (! (vmake_value.trim() === "" )) {
 		if ( unit === "centi" ) {
 			valid = true;
 		} else {
-			valid = false;
-			var list = document.getElementById('json_makes').options;
-			for (i = 0; i < list.length; i ++) {
-				if (vmake_value.toUpperCase() === list[i].value ) {
-					valid = true;
-					load_models(vmake_value);
-					break;
-
-				}
-			}
-			if ( ! valid) {
-				var list = document.getElementById("json_models");
-				list.innerHTML = '';
-				document.getElementById("vmodel").value = "";
-			}
+			console.log(valid_make, valid_model, no_models_for_make);
+			valid = valid_make && (valid_model || no_models_for_make);
 		}
 
-
-      } else {
-
-		var list = document.getElementById("json_models");
-		list.innerHTML = '';
-		document.getElementById("vmodel").value = "";
-	  }
-	  edit_button();
+		edit_button();
     }
 
-		function edit_button() {
-			//console.log("check valid");
-			if (valid) {
-				$(document.getElementById('btn_next2')).removeClass("disabled");
-			} else {
-				$(document.getElementById('btn_next2')).addClass("disabled");
-			}
+	function edit_button() {
+		//console.log("check valid");
+		if (valid) {
+			$(document.getElementById('btn_next2')).removeClass("disabled");
+		} else {
+			$(document.getElementById('btn_next2')).addClass("disabled");
 		}
+	}
   }
 	function edit_unit(cur_unit){
 		if (cur_unit == "centi" ){
@@ -1603,6 +1710,7 @@
 	}
 
 	function load_makes(){
+		console.log("loading makes")
 		var list = document.getElementById("json_makes");
 		let request = new XMLHttpRequest();
 
@@ -1619,7 +1727,9 @@
 		request.send();
 
 		getElements = function (response) {
-			console.log(response);
+			//console.log(response);
+
+			no_models_for_make = (response["Results"].length == 0);
 
 			response["Results"].forEach(function(item) {
 				var option = document.createElement('option');
@@ -1631,8 +1741,9 @@
 	}
 
 	function load_models(vmake) {
+		console.log("loading models for " + vmake);
 		var list = document.getElementById("json_models");
-		list.innerHTML = '';
+
 		var vmodel = document.getElementById("vmodel").value;
 
 		let request = new XMLHttpRequest();
@@ -1662,10 +1773,14 @@
 					valid_model = true;
 				}
 				list.appendChild(option);
+				models.push(item['Model_Name']);
 			});
 
 			if (!valid_model) {
 				document.getElementById("vmodel").value = "";
+				list.text = '';
+
+				no_models_for_make = false;
 			}
 
 		}

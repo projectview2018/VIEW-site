@@ -9,6 +9,9 @@ django-heroku = "*"
 requests = "*"
 plotly = "*"
 cloudinary = "*"
+Pillow = "*"
+sympy = "*"
+kaleido = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.9"

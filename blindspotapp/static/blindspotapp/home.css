@@ -1,0 +1,22 @@
+#img_border {
+	padding: 5px 5px 5px 5px;
+	border: 1px solid #dddddd;
+}
+
+#img_border_height {
+	padding: 5px 5px 5px 5px;
+	border: 1px solid #dddddd;
+	width: auto;
+    height: 370px;
+    max-height: 370px;
+}
+
+#homephotos4_2 {
+	display: block;
+	margin: auto;
+}
+
+.container {
+	display: block;
+	margin: auto;
+}

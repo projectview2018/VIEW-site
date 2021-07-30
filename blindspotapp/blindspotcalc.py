@@ -121,38 +121,38 @@ def find_blind_volume(NVP, DH, hood, boundary, ceiling, theta):
     if NVP <= hood:
         # slice has 100% visibility
         # Case A and B
-        print('100% visibility')
+        #print('100% visibility')
         volume = find_total_slice_volume(hood, boundary, ceiling, theta)
     elif DH < ceiling and NVP <= boundary:
         # Case D
-        print('Case D')
+        #print('Case D')
         volume = tetra_donut(hood, NVP, DH, theta)
     elif DH < ceiling and NVP > boundary:
         # Case F
-        print('Case F')
+        #print('Case F')
         volume = trap_donut(hood, boundary, NVP, DH, theta)
     elif DH > ceiling:
         # find where sight line intersects area of interest
         T = radius(NVP, DH, ceiling)
         if T > boundary:
             # Case J
-            print("0% visibility")
+            #print("0% visibility")
             volume = 0
         elif T < hood and NVP < boundary:
             # Case C
-            print('Case C')
+            #print('Case C')
             volume = tetra_donut(hood, NVP, DH, theta)
         elif T < hood and NVP > boundary:
             # Case E
-            print('Case E')
+            #print('Case E')
             volume = trap_donut(hood, boundary, NVP, DH, theta)
         elif hood < T < NVP < boundary:  # T always < NVP, just checking if both are between
             # Case G
-            print('Case G')
+            #print('Case G')
             volume = capped_tetra_donut(hood, NVP, ceiling, DH, theta)
         elif hood < T < boundary < NVP:  # T always < NVP, just checking if both are between
             # Case H
-            print('Case H')
+            #print('Case H')
             volume = capped_trap_donut(hood, boundary, NVP, ceiling, DH, theta)
     else:
         volume = None
