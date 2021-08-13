@@ -2,11 +2,12 @@ from math import *
 
 # Each of the variables has two fields. The first value is the US standard values in inches. The second value is the metric standard value in inches.
 # In the rest of the document, region 0 is the US, and region 1 is metric.
+# 2 and 3 are the heights with elementary school shoulder height and adult height
 # In the future, if more standards need to be added, they can be referred to by ceiling[region].
 # This style will be applied to all units of length throughout this document.
-ceiling = [74, 160.2] # 95th males in each region
-e = [180, 450] # 15 feet, 4.5 meters
-f = [180, 200] # 15 feet, 2 meters
+ceiling = [74, 160.2, 37, 49] # 95th males in each region, then 5th female for vrus
+e = [180, 450, 180, 180] # 15 feet, 4.5 meters
+f = [180, 200, 180, 180] # 15 feet, 2 meters
 
 def find_number_in_blind_zone(a,c,d, height, width):
     count = ((c-d-(height*c/a))/width)
@@ -54,8 +55,8 @@ def find_total_truck_interest_area(angles, c, d, r = 0):
     interest = 0
     # angles = angles.split(',')
     angles = list(map(float, angles))
-    c = [int(c), int(c * 2.54)]
-    d = [int(d), int(d * 2.54)]
+    c = [int(c), int(c * 2.54), int(c), int(c)]
+    d = [int(d), int(d * 2.54), int(d), int(d)]
     # Iterate through the list of slices
 
     for i in range(0, len(angles) - 1):
@@ -87,9 +88,9 @@ def find_total_truck_blind_area(NVPs, angles, DH, c, d, r = 0):
     blind = 0
     angles = list(map(float, angles))
     NVPs = list(map(float, NVPs))
-    DH = [float(DH), float(DH) * 2.54]
-    c = [int(c), int(c * 2.54)]
-    d = [int(d), int(d * 2.54)]
+    DH = [float(DH), float(DH) * 2.54, float(DH), float(DH)]
+    c = [int(c), int(c * 2.54), int(c), int(c)]
+    d = [int(d), int(d * 2.54), int(d), int(d)]
 
     # Iterate through the list of slices
     for i in range(0, len(NVPs) - 1):

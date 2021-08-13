@@ -21,6 +21,7 @@ urlpatterns = [
     path('getinfo/<int:user_data>', blindspotapp.views.getinfo, name='getinfo'),
     url(r'^getinfo', blindspotapp.views.getinfo, name='getinfo'),
     url(r'^visualize', blindspotapp.views.visualize, name='visualize'),
+    url(r'^FAQs', blindspotapp.views.FAQs, name='FAQs'),
     url(r'^', blindspotapp.views.home, name='home'),
     path('admin/', admin.site.urls),
 

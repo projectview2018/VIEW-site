@@ -34,6 +34,10 @@ def index(request):
 def visualize(request):
     return render(request, "visualize.html")
 
+
+def FAQs(request):
+    return render(request, "faq.html")
+
 # Generates a histogram of truck data, including user's own data if applicable
 # if included, user_data should be an int, the perc_vis of the user's truck
 
@@ -61,10 +65,19 @@ def makehistogram(user_data=None):
                              opacity=0.8, marker_color="#2196F3")
     fig.add_trace(histogram)
     # if applicable, add user's truck as a dotted line on top of histogram
+    perc_front = None;
+    perc_side = None;
     if user_data is not None:
         perc_data = at.match('ID', user_data)
         if perc_data != {}:
+            if "Percent Visible Volume in Front" in perc_data["fields"].keys():
+                perc_front = perc_data["fields"]["Percent Visible Volume in Front"]
+            if "Percent Visible Volume in Passenger Side" in perc_data["fields"].keys():
+                perc_side = perc_data["fields"]["Percent Visible Volume in Passenger Side"]
+
             perc_data = perc_data['fields']['Percent Visible Volume']
+
+
             print("record " + str(perc_data))
             user_data = perc_data
             fig.add_shape(
@@ -91,7 +104,7 @@ def makehistogram(user_data=None):
 
     # update layout with title and labels
     fig.update_layout(
-        title="Histogram of Vehicle Percent Visible Volumes",
+        title="Histogram of Overall Vehicle Percent Visible Volumes",
         yaxis_title="Number of Entries",
         xaxis_title="Percent Visible",
         showlegend=False,
@@ -105,7 +118,7 @@ def makehistogram(user_data=None):
     plt_div = plot(fig, output_type='div', include_plotlyjs=False, config=config)
     # return HttpResponse(plt_div)
     #print(plt_div)
-    return (plt_div, user_data)
+    return (plt_div, user_data, perc_front, perc_side)
 
 
 def get_images_from_airtable(id_num):
@@ -136,7 +149,7 @@ def get_images_from_airtable(id_num):
 
     return( panor_img, front_img, side_img, top_img )
 def getinfo(request, user_data=None):
-    plot_div, percen = makehistogram(user_data)
+    plot_div, percen, front_percen, side_percen = makehistogram(user_data)
 
     """
     img = Image.new('RGB', (10, 10), (255, 0, 0) )
@@ -146,10 +159,19 @@ def getinfo(request, user_data=None):
     """
     #iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAAEklEQVR4nGP8z4APMOGVHbHSAEEsAROxCnMTAAAAAElFTkSuQmCC
     if user_data is not None and percen is not None:
-        user_results = "Your vehicle's percent visible volume is {}%.".format(percen)
 
+        user_results = "Your vehicle has an overall percent visible volume of {}%".format(percen)
+        if front_percen and side_percen:
+            user_results += ", a front visibility score of {}%".format(front_percen)
+            user_results += ", and a side visibility score of {}%".format(side_percen)
+        elif side_percen:
+            user_results += " and a side visibility score of {}%".format(side_percen)
+        elif front_percen:
+            user_results += " and a front visibility score of {}%".format(front_percen)
+
+        user_results += "."
         panor_img, front_img, side_img, top_img = get_images_from_airtable(user_data)
-        return render(request, "getinfo.html", context={'plot_div': plot_div, 'user_results': user_results, 'id_num':user_data, 'panor_img': panor_img, 'front_img':front_img, 'side_img': side_img, 'top_img':top_img, 'percen': percen })
+        return render(request, "getinfo.html", context={'plot_div': plot_div, 'user_results': user_results, 'id_num':user_data, 'panor_img': panor_img, 'front_img':front_img, 'side_img': side_img, 'top_img':top_img, 'percen': percen})
 
     else:
 
@@ -216,16 +238,20 @@ def addvehicle(request):
                 'Percent Visible Volume in Front (Metric Standard)': perc_front[1],
                 'Percent Visible Volume in Passenger Side (Metric Standard)': perc_passenger[1],
                 'a (cm)': int(a * 2.54), 'b (cm)': int(b * 2.54), 'c (cm)': int(c * 2.54), 'd (cm)': int(d * 2.54),
-                'Image':[image], 'Image URL':image_URL, 'Drawing':[drawing], 'Phis and NVPS json':phis_and_nvps, 'Overhead Image String':overhead_string}
+                'Image':[image], 'Image URL':image_URL, 'Drawing':[drawing], 'Phis and NVPS json':phis_and_nvps, 'Overhead Image String':overhead_string,
+                "Overall Vis Elem":perc_vis[2], "Front Vis Elem":perc_front[2], "Side Vis Elem":perc_passenger[2],
+                "Overall Vis Adult":perc_vis[3], "Front Vis Adult":perc_front[3], "Side Vis Adult":perc_passenger[3]}
     # print(record)
     inserted_record = at.insert(record)
 
     id_num = inserted_record['fields']['ID']
     if perc_vis[0] < 60 :
         strs = getvehicleimages(id_num, 5)
+
     else:
         strs = getvehicleimages(id_num, 1)
-
+    strs[0] = upload_to_cloudinary(strs[0], id_num, "Front")
+    strs[1] = upload_to_cloudinary(strs[1], id_num, "Side")
 
     #print( inserted_record['id'] )
     at.update(  inserted_record['id'], {'Front Image String':strs[0]} )
@@ -249,12 +275,13 @@ def getinterestarea(request):
     print("a: ", a)
     print("d: ", d)
     print("starting find_total_truck_interest_area")
-    interest_area = find_total_truck_interest_area(angles, b, d)
-    interest_area_1 = find_total_truck_interest_area(angles, b, d, 1)
+    interest_area = [0, 0, 0, 0]
+    for i in range(4):
+        interest_area[i] = find_total_truck_interest_area(angles, b, d, i)
     print("starting stick figure")
     preschool_children, grade_school_children, grade_school_bicyclists, wheelchair_users,adult_bicyclists, adults = do_stick_figure_analyses(a,c,d)
     print("finished stick figure")
-    return JsonResponse({"data": interest_area, "data_1": interest_area_1,
+    return JsonResponse({"data": interest_area,
                         "preschool_children": preschool_children,
                         "grade_school_children": grade_school_children,
                         "grade_school_bicyclists": grade_school_bicyclists,
@@ -269,11 +296,12 @@ def getblindarea(request):
     DH = json_data['DH']
     b = json_data['b']
     d = json_data['d']
-    blind_area = find_total_truck_blind_area(NVPs, angles, DH, b, d)
-    interest_area = find_total_truck_interest_area(angles, b, d)
-    blind_area_1 = find_total_truck_blind_area(NVPs, angles, DH, b, d, 1)
-    interest_area_1 = find_total_truck_interest_area(angles, b, d, 1)
-    return JsonResponse({"data": blind_area, "total_volume":interest_area, "data_1": blind_area_1, "total_volume_1": interest_area_1})
+    blind_area = [0, 0, 0, 0]
+    interest_area = [0, 0, 0, 0]
+    for i in range(4):
+        blind_area[i] = find_total_truck_blind_area(NVPs, angles, DH, b, d, i)
+        interest_area[i] = find_total_truck_interest_area(angles, b, d, i)
+    return JsonResponse({"data": blind_area, "total_volume":interest_area})
 
 #
 @require_http_methods(["POST"])
@@ -390,7 +418,7 @@ def getvehicles(request):
 
 def getvehicleimages(index, vru = 1):
 
-    strs = create_easy_images(index, 2, vru)
+    strs = create_easy_images(index, 5, vru)
     #print(strs)
     #return JsonResponse({"front":strs[0], "side":strs[1], "top":strs[2] })
     return strs
@@ -401,9 +429,10 @@ def getvehicleimages_vruchanged(request):
         json_data = json.loads(request.body.decode("utf-8"))
         index = int(json_data['id_num'])
         vru = int(json_data['vru'])
+
         print("the vru is " + str(vru) )
 
-        if vru == 1:
+        if vru == json_data['default']:
             at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR')
             vehicle = at.match('ID', index)['fields']
             #print(vehicle)
@@ -418,7 +447,9 @@ def getvehicleimages_vruchanged(request):
                     strs = getvehicleimages(index, vru)
                 else:
                     strs = list( create_all_images(index, 2, vru) );
+
             except Exception as e:
+                print( str(e))
                 return JsonResponse( {'data': [str(e)] } )
 
         return JsonResponse( {'data': strs, 'vru': vru} )
@@ -439,11 +470,13 @@ def getspecificimage(request):
         image_string = create_specific_image(json_string, 2, vru, index)
         image_string = image_string.decode()
     elif mode == 1:
-        try:
-            image_string = create_overhead_only(json_string, 2, vru)
+        #try:
+        image_string = create_overhead_only(json_string, 2, vru)
+        """
         except Exception as e:
+            print(str(e))
             return JsonResponse( {'data': str(e) } )
-
+        """
     return JsonResponse({"data": image_string, "vru": vru})
 @require_http_methods(["POST"])
 def uploadimages(request):
@@ -462,3 +495,20 @@ def uploadimages(request):
 
 
     return HttpResponse("Done")
+
+def upload_to_cloudinary(img_string, i, image_index):
+    cloudinary.config(
+      cloud_name = "dkrq49vzq",
+      api_key = "733231156826462",
+      api_secret = "tf4ebuGXPE1AS5ZlGqG6WkQWTXU",
+      secure = True
+    )
+
+    uploaded = cloudinary.uploader.upload("data:image/png;base64," + img_string,
+        folder = "generated-images",
+        public_id = str(i) + "-" + image_index,
+        overwrite = True,
+        notification_url = "https://mysite.example.com/notify_endpoint")
+
+    if 'url' in uploaded.keys():
+        return uploaded['url']
