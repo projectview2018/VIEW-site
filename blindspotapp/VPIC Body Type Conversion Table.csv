@@ -1,0 +1,46 @@
+VPIC ID Number,VPIC Label,Blindzone Site Label
+1,Convertible/Cabriolet,Passenger Car
+2,Minivan,Minivan
+3,Coupe,Passenger Car
+4,Low Speed Vehicle (LSV) / Neighborhood Electric Vehicle (NEV),Possible error
+5,Hatchback/Liftback/Notchback,Passenger Car
+6,Motorcycle - Standard,Possible error
+7,Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV),SUV
+8,Crossover Utility Vehicle (CUV),SUV
+9,Van,Van
+10, Roadster,Passenger Car
+11, Truck,Commercial Truck
+12, Motorcycle - Scooter,Possible error
+13, Sedan/Saloon,Passenger Car
+15, Wagon,Passenger Car
+16, Bus,Bus
+60, Pickup,Pickup Truck
+61, Trailer,Commercial Truck
+62, Incomplete - Cutaway,Possible error
+63, Incomplete - Chassis Cab (Single Cab),Possible error
+66, Truck-Tractor,Commercial Truck
+67, Incomplete - Stripped Chassis,Possible error
+68, Streetcar / Trolley,Possible error
+69, Off-road Vehicle - All Terrain Vehicle (ATV) (Motorcycle-style),Possible error
+71, Incomplete - School Bus Chassis,Possible error
+72, Incomplete - Commercial Bus Chassis,Possible error
+73, Bus - School Bus,Bus
+74, Incomplete - Chassis Cab (Number of Cab Unknown),Possible error
+75, Incomplete - Transit Bus Chassis,Possible error
+76, Incomplete - Motor Coach Chassis,Possible error
+77, Incomplete - Shuttle Bus Chassis,Possible error
+78, Incomplete - Motor Home Chassis,Possible error
+80, Motorcycle - Sport,Possible error
+81, Motorcycle - Touring / Sport Touring,Possible error
+82, Motorcycle - Cruiser,Possible error
+83, Motorcycle - Trike,Possible error
+84, Off-road Vehicle - Dirt Bike / Off-Road,Possible error
+85, Motorcycle - Dual Sport / Adventure / Supermoto / On/Off-Road,Possible error
+86, Off-road Vehicle - Enduro (Off-road long distance racing),Possible error
+94, Motorcycle - Custom,Possible error
+95, Cargo Van,Van
+97,Off-road Vehicle - Snowmobile,Possible error
+98,Motorcycle - Street,Possible error
+100,Motorcycle - Enclosed Three Wheeled / Enclosed Autocycle,Possible error
+103,Motorcycle - Unenclosed Three Wheeled / Open Autocycle,Possible error
+124,Off-road Vehicle - Golf Cart,Possible error

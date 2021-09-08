@@ -90,7 +90,7 @@ def makehistogram(user_data=None):
                     y=27,
                     xref="x",
                     yref="y",
-                    text='<b>Your Vehicle</b>',
+                    text='<b>This Vehicle</b>',
                     showarrow=True,
                     align="center",
                     arrowhead=2,
@@ -104,9 +104,9 @@ def makehistogram(user_data=None):
 
     # update layout with title and labels
     fig.update_layout(
-        title="Histogram of Overall Vehicle Percent Visible Volumes",
-        yaxis_title="Number of Entries",
-        xaxis_title="Percent Visible",
+        title_text="Histogram of Overall Vehicle Percent Visible Volumes", title_x=0.5,
+        yaxis_title="Number of Entries in Database",
+        xaxis_title="Overall Visibility (%)",
         showlegend=False,
         font=dict(
             family="Helvetica",
@@ -145,9 +145,8 @@ def get_images_from_airtable(id_num):
     if 'Overhead Image String' in vehicle['fields']:
         top_img = vehicle['fields']['Overhead Image String']
         #print (top_img)
-
-
     return( panor_img, front_img, side_img, top_img )
+
 def getinfo(request, user_data=None):
     plot_div, percen, front_percen, side_percen = makehistogram(user_data)
 
@@ -160,7 +159,7 @@ def getinfo(request, user_data=None):
     #iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAAEklEQVR4nGP8z4APMOGVHbHSAEEsAROxCnMTAAAAAElFTkSuQmCC
     if user_data is not None and percen is not None:
 
-        user_results = "Your vehicle has an overall percent visible volume of {}%".format(percen)
+        user_results = "This vehicle has an overall percent visible volume of {}%".format(percen)
         if front_percen and side_percen:
             user_results += ", a front visibility score of {}%".format(front_percen)
             user_results += ", and a side visibility score of {}%".format(side_percen)
@@ -189,6 +188,7 @@ def addvehicle(request):
     vmodel = json_data['vmodel']
     vgvwr = json_data['vwc']
     vyear = json_data['vyear']
+    bodyclass = json_data['bodyclass']
     perc_vis = json_data['perc']
     b = json_data['b']
     d = json_data['d']
@@ -224,7 +224,7 @@ def addvehicle(request):
 
     # add record to database
     record = {"Full VIN": fullvin, "Partial VIN": partialvin, "Make": vmake, "Model": vmodel, "Weight Class": vgvwr,
-                "Year": vyear, "Percent Visible Volume": perc_vis[0], 'a':a, "b": b,'c':c, "d": d, "Radial Distance": radial_distance,
+                "Year": vyear, "Body Class": bodyclass, "Percent Visible Volume": perc_vis[0], 'a':a, "b": b,'c':c, "d": d, "Radial Distance": radial_distance,
                 "Camera height above ground": driver_height, "Comments": comments, "Agency": agency,
                 'Percent Visible Volume in Front': perc_front[0],
                 'Percent Visible Volume in Passenger Side': perc_passenger[0],
@@ -312,7 +312,7 @@ def getddata(request):
 
     #return JsonResponse({"data": vehicles})
 
-    # each element in scores is a dictionary of [percent visible, front visibility, side visibility, make, model, year, weight class]
+    # each element in scores is a dictionary of [overall visibility, front visibility, side visibility, make, model, year, body class, weight class, image, front, side, overhead, ID]
     scores = []
     # this is the weight class the user chooses
     weight = json_data["weight"]
@@ -325,14 +325,17 @@ def getddata(request):
                 side_visible = getsidevisible(vehicle)
                 model = getmodel(vehicle)
                 year = getyear(vehicle)
+                bodyclass = getbodyclass(vehicle)
                 weight_class = getweightclass(vehicle)
                 image = getimage(vehicle)
                 front = getfront(vehicle)
                 side = getside(vehicle)
                 overhead = getoverhead(vehicle)
+
                 value = { 'Overall Visibility': vehicle['fields']['Percent Visible Volume'], 'Front Visibility': front_visible,
                 'Side Visibility': side_visible, 'Make': vehicle['fields']['Make'], 'Model': model,
-                'Year': year, 'Weight Class': weight_class, 'Image': image, 'Front': front, 'Side': side, 'Overhead': overhead }
+                'Year': year, 'Body Class': bodyclass, 'Weight Class': weight_class, 'Image': image, 'Front': front, 'Side': side,
+                'Overhead': overhead, 'ID': vehicle['fields']['ID']}
                 # print(value)
                 scores.append( value )
             else:
@@ -353,13 +356,13 @@ def getddata(request):
 
 def getfrontvisible(vehicle):
     if ('Percent Visible Volume in Front' not in vehicle['fields']):
-        return "N/A"
+        return 0
     else:
         return vehicle['fields']['Percent Visible Volume in Front']
 
 def getsidevisible(vehicle):
     if ('Percent Visible Volume in Passenger Side' not in vehicle['fields']):
-        return "N/A"
+        return 0
     else:
         return vehicle['fields']['Percent Visible Volume in Passenger Side']
 
@@ -369,12 +372,41 @@ def getmodel(vehicle):
     else:
         return vehicle['fields']['Model']
 
-
 def getyear(vehicle):
     if ('Year' not in vehicle['fields'] or vehicle['fields']['Year'] == "Please select a year"):
         return "N/A"
     else:
         return vehicle['fields']['Year']
+
+# gets vPIC body class and classifies it into one of our seven labels (N/A, passenger, SUV, minivan, van, pickup, commercial truck, or bus)
+def getbodyclass(vehicle):
+    # for vehicles with no vin, though we could manually add the body class for these vehicles
+    if ('Body Class' not in vehicle['fields']):
+        return 'N/A'
+    # passenger
+    elif (vehicle['fields']['Body Class'] in ['Convertible/Cabriolet', 'Coupe', 'Hatchback/Liftback/Notchback', 'Roadster', 'Sedan/Saloon', 'Wagon']):
+        return 'Passenger'
+    # SUV
+    elif (vehicle['fields']['Body Class'] in ['Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)', 'Crossover Utility Vehicle (CUV)']):
+        return 'SUV'
+    # minivan
+    elif (vehicle['fields']['Body Class'] in ['Minivan']):
+        return 'Minivan'
+    # van
+    elif (vehicle['fields']['Body Class'] in ['Van', 'Cargo Van']):
+        return 'Van'
+    # pickup truck
+    elif (vehicle['fields']['Body Class'] in ['Pickup']):
+        return 'Pickup Truck'
+    # commercial truck
+    elif (vehicle['fields']['Body Class'] in ['Truck', 'Trailor', 'Truck-Tractor']):
+        return 'Commercial Truck'
+    # bus
+    elif (vehicle['fields']['Body Class'] in ['Bus', ' Bus - School Bus']):
+        return 'Bus'
+    # all other categories
+    else:
+        return 'N/A'
 
 # if vehicle doesn't have weight class, assign weight class as "N/A", otherwise return weight class value
 def getweightclass(vehicle):
