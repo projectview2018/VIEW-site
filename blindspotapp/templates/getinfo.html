@@ -10,18 +10,12 @@
 </head>
 {% include 'header.html' %}
 <div class="container">
-  <!--h2>About the Visibility Score:</h2>
-  <h5>The visibility score calculates the amount of space that is directly visible in the 15 feet around the front
-    and front-passenger side of the vehicle, from ground level to six feet above ground. The visibility score is the percent
-    of volume that is directly visible to the driver. Note that the visibility score will vary across drivers with different
-    heights or drivers positioned differently in their seats.</h5>
+  <h2>Vehicle Information</h2>
     <br>
-  <h5>Although the visibility score was originally a single number, the VIEW app team has recently divided it into front and
-    passenger-side visibility scores to allow for more precision and understanding of vehicle blind zones.</h5-->
   <br>
   {% if user_results %}
   <!--h3 id="user-message">Your vehicle has been added to the database.</h3-->
-  <h2 style="text-align: center;" id="user-results">{{ user_results }}</h2>
+  <h4 style="text-align: center;" id="user-results">{{ user_results }}</h4>
   {% endif %}
 
   <div id="histogram" style="display:block;">
