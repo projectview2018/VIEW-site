@@ -33,9 +33,9 @@
 
 <br>
 <div class="container">
-    <h5 style="text-align:center;">By default, the table is sorted by overall visibility in decreasing order. Use the range slider
-    to filter through overall visibility scores, and use the search bar to filter by other metrics. You can also click on the column name
-    to sort by that variable as well.
+    <h5 style="text-align:center;">By default, the table is sorted by overall visibility in decreasing order. Use the search bar to filter by any metric,
+    and use the range slider to filter by percentile rank. Each vehicle's percentile rank is calculated relative to all other vehicles in the same
+    body class. You can also click on the column name to sort by that variable as well.
     </h5>
 </div>
 
@@ -45,7 +45,7 @@
 
 <div class="margintable">
     <p>
-        <label for="amount">Overall Visibility Range:</label>
+        <label for="amount">Overall Visibility Percentile Range:</label>
         <input type="text" id="amount" readonly style="border:0; color:#2196F3; font-weight:bold;">
     </p>
     <div id="slider-range"></div>
@@ -61,7 +61,7 @@
         max: 100,
         values: [ 0, 100 ],
         slide: function( event, ui ) {
-            $( "#amount" ).val( ui.values[ 0 ] + "% - " + ui.values[ 1 ] + "%");
+            $( "#amount" ).val( ui.values[ 0 ] + "th - " + ui.values[ 1 ] + "th Percentile");
         },
         change: function( event, ui ) {
             rangeSearch(ui);
@@ -70,7 +70,7 @@
         }
         });
         $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
-        "% - " + $( "#slider-range" ).slider( "values", 1 ) + "%" );
+        "th - " + $( "#slider-range" ).slider( "values", 1 ) + "th Percentile" );
     } );
     </script>
 
@@ -137,12 +137,12 @@
                 // gets the actual data, removes filler info
                 for (i = 0; i < table_data.length; i ++) {
                     filtered_table_data.push(table_data[i])
-                    //console.log(filtered_table_data);
+                    console.log(filtered_table_data);
                 }
 
                 // turns each vehicle entry into dictionary
                 dictionary = Object.assign({}, filtered_table_data.map((x) => ({"Overall Visibility": parseInt(x[0]), "Front Visibility": parseInt(x[1]),
-                "Side Visibility": parseInt(x[2]), "Make": x[3], "Model": x[4], "Year": x[5], "Body Class": x[6]})));
+                "Side Visibility": parseInt(x[2]), "Percentile": x[3], "Make": x[4], "Model": x[5], "Year": x[6], "Body Class": x[7]})));
                 //console.log(typeof(dictionary))
                 final_var = []
 
@@ -167,7 +167,8 @@
             var min = parseInt( ui.values[0], 10 );
             var max = parseInt( ui.values[1], 10 );
             console.log(min, max)
-            var age = parseFloat( data[0] ) || 0; // use data for the age column
+            console.log(data)
+            var age = parseFloat( data[3] ) || 0; // data[3] corresponds to percentile, data[0] corresponds to overall visibility
 
             if ( ( isNaN( min ) && isNaN( max ) ) ||
                 ( isNaN( min ) && age <= max ) ||
@@ -210,7 +211,7 @@
         // data is an array where each element is [percent visible, front visibility, side visibility, make, model, year, weight class]
 		data = response['data'];
         console.log(data);
-        tabulate(data, ["Overall Visibility", "Front Visibility", "Side Visibility", "Make", "Model", "Year", "Body Class",
+        tabulate(data, ["Overall Visibility", "Front Visibility", "Side Visibility", "Percentile", "Make", "Model", "Year", "Body Class",
         "Weight Class", "Image", "Front", "Side", "Overhead", "ID"]);
         prepareDataTable();
 		makeViolin(data, variable);
@@ -322,7 +323,7 @@
                 .style("opacity", 1)
             tooltip
                 .html("Make: " + d['Make'] + "<br>Model: " + d['Model'] + "<br>Year: " + d['Year'] + "<br>Body: " + d['Body Class'] + "<br>Overall: " + d['Overall Visibility']
-                + "%<br>Front: " + d['Front Visibility'] + "%<br>Side: " + d['Side Visibility'] + "%")
+                + "%<br>Front: " + d['Front Visibility'] + "%<br>Side: " + d['Side Visibility'] + "%<br>Percentile: " + d['Percentile'])
                 .style("left", (d3.mouse(this)[0]) + 300 + "px")
                 .style("top", (d3.mouse(this)[1]) + 300 + "px")
             }
@@ -330,7 +331,7 @@
         var mousemove = function(d) {
             tooltip
                 .html("Make: " + d['Make'] + "<br>Model: " + d['Model'] + "<br>Year: " + d['Year'] + "<br>Body: " + d['Body Class'] + "<br>Overall: " + d['Overall Visibility']
-                + "%<br>Front: " + d['Front Visibility'] + "%<br>Side: " + d['Side Visibility'] + "%")
+                + "%<br>Front: " + d['Front Visibility'] + "%<br>Side: " + d['Side Visibility'] + "%<br>Percentile: " + d['Percentile'])
                 .style("left", (d3.mouse(this)[0]) + 300 + "px")
                 .style("top", (d3.mouse(this)[1]) + 300 + "px")
         }
@@ -480,7 +481,7 @@
                 }
 
                 // if the cell's value is a number, make it a percentage
-                else if (typeof(d.value) == "number") {
+                else if (typeof(d.value) == "number" && d.column != "Percentile") {
                     return d.value + "%"
                 }
                 // if the cell is neither of the above, just add the value

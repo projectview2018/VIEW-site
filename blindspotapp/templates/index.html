@@ -7,6 +7,7 @@
 <html>
 {% include 'header.html' %}
 <div class="container">
+  <br>
   <div id="description" style="font-size:20px;">The Visibility in Elevated Wide vehicles (VIEW) app measures vehicles'
     percent visibility from the driver's seat.
     <!-- If webpage length is extended, use this to send user to the bottom of page when clicked:-->
@@ -37,15 +38,59 @@
     </div>
     <div class="content">
       <a target="_blank" rel="noopener noreferrer"
-        href="https://share.icloud.com/photos/0PxtAGF41K61Wbg9ap4NCLfyg#Somerville_-_Spring_Hill">
+        href="https://res.cloudinary.com/dkrq49vzq/video/upload/v1632095383/instructions/IMG_0099_ulsr9y.mp4">
         <img src="static/video.jpg" style="max-width:45%;max-height:45%;" />
         <h3 target="_blank" rel="noopener noreferrer"
-          href="https://share.icloud.com/photos/0PxtAGF41K61Wbg9ap4NCLfyg#Somerville_-_Spring_Hill">
+          href="https://res.cloudinary.com/dkrq49vzq/video/upload/v1632095383/instructions/IMG_0099_ulsr9y.mp4">
           Adding a Vehicle <img src="static/new_tab.png" style="max-width:5%;max-height:5%;" />
     </a></h3>
     <p style="font-size:15px">First time user video walkthrough of how to add a vehicle.</p>
     </div>
   </div>
+  <br>
+  <!-- condensed instructions -->
+  <div class="accordion accordion-flush" id="accordionExample">
+		<div class="accordion-item"  style = "border: 1px solid #dddddd;">
+			<h2 class="accordion-header" id="headinginstructions">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#instructions" aria-expanded="false" aria-controls="instructions" id = "button_text">
+        For a condensed version of the measurement instructions, click here.
+				</button>
+			</h2>
+			<div id="instructions" class="accordion-collapse collapse" aria-labelledby="heading">
+				<div class="accordion-body">
+					<div class="accordion accordion-flush" id="accordionExample">
+						<p>Please refer to this <a target="_blank" href="https://drive.google.com/file/d/1dBKWV4FKDzOAZ1XBk_M11k31cXpctE2_/view?usp=sharing" style="font-size:14px;color:blue">
+              document</a> for more comprehensive instructions.</p>
+
+            <p>Materials:</p>
+            <li>5-foot pole with one-foot interval markings</li>
+            <li>Smartphone camera</li>
+            <li>Tape measure</li>
+            <br>
+
+            <ol>
+              <li>Park the vehicle on level ground and place the 5-foot pole on the ground directly in front of the driver’s seat.
+                The first foot mark on the pole should barely be visible from the driver’s perspective.
+              </li>
+              <li>Using this <a target="_blank" href="https://drive.google.com/file/d/14HpL7bXwLZ-ja1Lthe0eZT7BdDs8vo4Y/view?usp=sharing" style="font-size:14px;color:blue">
+                recording sheet</a>, use the tape measure to calculate the A-D measurements. Each measurement should start from the camera lens and be vertical or horizontal.
+              </li>
+              <li>
+                Sit upright in the driver’s seat as you normally would when driving and open the panorama option on your phone. Hold the phone in portrait mode.
+              </li>
+              <li>
+                Position the phone directly in front of your face and take a panorama from the left-side of the front windshield to the right-side of the passenger window.
+                Slowly swivel the phone in place along its axis as demonstrated in this <a target="_blank" href="https://res.cloudinary.com/dkrq49vzq/video/upload/v1632095383/instructions/IMG_0099_ulsr9y.mp4" style="font-size:14px;color:blue">video</a>.
+              </li>
+              <li>
+                Upload this panoramic below, inputting the A-D measurements and your vehicle’s VIN number.
+              </li>
+            </ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
   <hr>
   <div id=choosepano class="unhidden" style="font-size:20px">Choose field of view panoramic image to upload:</div>
   <p id=loadmessage class="unhidden" style="font-size:15px">(Photo may take up to 10 seconds to load)</p>
@@ -1440,6 +1485,7 @@
     let request = new XMLHttpRequest();
     let url = "/api/v1/addvehicle/";
     var uvin = vin.toUpperCase();
+    var bodyclass = "No VIN"
     request.responseType = "json";
     var headers = { 'content-type': 'application/json' };
 
@@ -1457,7 +1503,7 @@
     console.log("posting data to addvehicles");
 	  console.log("fileurl " + fileURL);
     request.send(body = JSON.stringify({ 'vin': uvin, 'partialvin': partialvin,
-      'vmake': vmake, 'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear,
+      'vmake': vmake, 'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear,'bodyclass':bodyclass,
       'perc': perc, 'b': b, 'd': d, 'radial_distance': marks_dist,
       'driver_height': driver_height, 'image_name': fileName, 'image_URL': fileURL, 'drawing_URL': drawingURL,
       "comments": comments, "agency": agency,

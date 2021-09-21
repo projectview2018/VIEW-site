@@ -24,8 +24,4 @@ urlpatterns = [
     url(r'^FAQs', blindspotapp.views.FAQs, name='FAQs'),
     url(r'^', blindspotapp.views.home, name='home'),
     path('admin/', admin.site.urls),
-
-
-
-
 ]

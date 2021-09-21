@@ -34,7 +34,6 @@ def index(request):
 def visualize(request):
     return render(request, "visualize.html")
 
-
 def FAQs(request):
     return render(request, "faq.html")
 
@@ -75,8 +74,8 @@ def makehistogram(user_data=None):
             if "Percent Visible Volume in Passenger Side" in perc_data["fields"].keys():
                 perc_side = perc_data["fields"]["Percent Visible Volume in Passenger Side"]
 
+            percentile = getpercentile(perc_data, vehicles)
             perc_data = perc_data['fields']['Percent Visible Volume']
-
 
             print("record " + str(perc_data))
             user_data = perc_data
@@ -118,7 +117,7 @@ def makehistogram(user_data=None):
     plt_div = plot(fig, output_type='div', include_plotlyjs=False, config=config)
     # return HttpResponse(plt_div)
     #print(plt_div)
-    return (plt_div, user_data, perc_front, perc_side)
+    return (plt_div, user_data, perc_front, perc_side, percentile)
 
 
 def get_images_from_airtable(id_num):
@@ -147,8 +146,9 @@ def get_images_from_airtable(id_num):
         #print (top_img)
     return( panor_img, front_img, side_img, top_img )
 
+# generates two sentences at the top of the getinfo page describing the vehicle, and generates the vehicle images
 def getinfo(request, user_data=None):
-    plot_div, percen, front_percen, side_percen = makehistogram(user_data)
+    plot_div, percen, front_percen, side_percen, percentile = makehistogram(user_data)
 
     """
     img = Image.new('RGB', (10, 10), (255, 0, 0) )
@@ -167,8 +167,18 @@ def getinfo(request, user_data=None):
             user_results += " and a side visibility score of {}%".format(side_percen)
         elif front_percen:
             user_results += " and a front visibility score of {}%".format(front_percen)
+        user_results += ". "
 
-        user_results += "."
+        # percentile ends in 1
+        if (percentile % 10 == 1):
+            user_results += "This vehicle's overall visibility sits at the {}st percentile relative to all other vehicles in the same body class.".format(percentile)
+        # percentile ends in 2
+        elif (percentile % 10 == 2):
+            user_results += "This vehicle's overall visibility sits at the {}nd percentile relative to all other vehicles in the same body class.".format(percentile)
+        # all other cases
+        else:
+            user_results += "This vehicle's overall visibility sits at the {}th percentile relative to all other vehicles in the same body class.".format(percentile)
+
         panor_img, front_img, side_img, top_img = get_images_from_airtable(user_data)
         return render(request, "getinfo.html", context={'plot_div': plot_div, 'user_results': user_results, 'id_num':user_data, 'panor_img': panor_img, 'front_img':front_img, 'side_img': side_img, 'top_img':top_img, 'percen': percen})
 
@@ -331,11 +341,12 @@ def getddata(request):
                 front = getfront(vehicle)
                 side = getside(vehicle)
                 overhead = getoverhead(vehicle)
+                percentile = getpercentile(vehicle, vehicles)
 
                 value = { 'Overall Visibility': vehicle['fields']['Percent Visible Volume'], 'Front Visibility': front_visible,
                 'Side Visibility': side_visible, 'Make': vehicle['fields']['Make'], 'Model': model,
                 'Year': year, 'Body Class': bodyclass, 'Weight Class': weight_class, 'Image': image, 'Front': front, 'Side': side,
-                'Overhead': overhead, 'ID': vehicle['fields']['ID']}
+                'Overhead': overhead, 'ID': vehicle['fields']['ID'], 'Percentile': percentile}
                 # print(value)
                 scores.append( value )
             else:
@@ -439,6 +450,19 @@ def getoverhead(vehicle):
         return ""
     else:
         return vehicle['fields']['Overhead Image String']
+
+# gets vehicle's overall visibility percentile relative to all other vehicles in its body class
+def getpercentile(vehicle, vehicles):
+    allScores = []
+    vehicle_bc = getbodyclass(vehicle)
+    # allScores has overall visibility scores for all vehicles with the same body class
+    for entry in vehicles:
+        if getbodyclass(entry) == vehicle_bc:
+            allScores.append(entry['fields']['Percent Visible Volume'])
+    count_below = len([i for i in allScores if i < vehicle['fields']['Percent Visible Volume']])
+    percentile = round(count_below / len(allScores) * 100)
+    #print(percentile, vehicle['fields']['ID'])
+    return percentile
 
 # not used at the moment, but returns array with key and value mappings as opposed to just values, like getddata()
 @require_http_methods(["POST"])

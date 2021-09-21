@@ -11,8 +11,6 @@
 {% include 'header.html' %}
 <div class="container">
   <h2 style="text-align: center;">Vehicle Information</h2>
-    <br>
-  <br>
   {% if user_results %}
   <!--h3 id="user-message">Your vehicle has been added to the database.</h3-->
   <h4 style="text-align: center;" id="user-results">{{ user_results }}</h4>
@@ -20,7 +18,6 @@
 
   <div id="histogram" style="display:block;">
     {% autoescape off %}
-    {{ plot_div }}
 
     {% endautoescape %}
   </div>
