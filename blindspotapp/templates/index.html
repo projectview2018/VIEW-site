@@ -103,7 +103,7 @@
   <div id="steps" class="hidden">
     <div id="buttons" class="unhidden">
       <button class="btn btn-primary" id = "btn_back1" onclick="backPanel()">Back</button>
-      <button class="btn btn-primary" onclick="clearPanel()">Clear</button>
+      <button class="btn btn-primary" id = "btn_clear2" onclick="clearPanel()">Clear</button>
       <button class="btn btn-primary" id="btn_next1" onclick="nextPanel()">Next</button>
     </div>
     <div id="instructiontxt"></div>
@@ -542,7 +542,9 @@
       };
 
       ctx.addClear = function (img) {
-        if (curr_step <= 9 ) {
+        // <= 10 instead of = 9 because the below if statements are done so that curr_step is always one step ahead
+        // so curr_step = 10 corresponds to step 9 on the website
+        if (curr_step <= 10 ) {
           var image = new Image()
           image.onload = function () {
             coords = [];
@@ -1408,9 +1410,16 @@
 		//p_p = [];
 		for (i = 0; i < phis_passenger.length; i ++ ) {
 		  curr_phi = Math.round( phis_passenger[i] * 60 + 90, 0);
-		  //p_p.push( parseFloat( curr_phi.toFixed(0) ));
-		  nvps[ curr_phi  ] += ground_passenger[i];
-		  counts[ curr_phi] += 1;
+
+      if (curr_phi < 0) {
+        nvps[curr_phi + 360] += ground_passenger[i];
+        counts[curr_phi + 360] += 1
+      }
+      else {
+        //p_p.push( parseFloat( curr_phi.toFixed(0) ));
+		    nvps[ curr_phi  ] += ground_passenger[i];
+		    counts[ curr_phi] += 1;
+      }
 		  phis_min = Math.min(phis_min, curr_phi);
 		}
 		var front_max = ground_front.reduce(function(a, b) {
