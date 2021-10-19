@@ -60,6 +60,7 @@
         min: 0,
         max: 100,
         values: [ 0, 100 ],
+        step: 10,
         slide: function( event, ui ) {
             $( "#amount" ).val( ui.values[ 0 ] + "th - " + ui.values[ 1 ] + "th Percentile");
         },
@@ -71,9 +72,15 @@
         });
         $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
         "th - " + $( "#slider-range" ).slider( "values", 1 ) + "th Percentile" );
+        // referenced from stack overflow and http://jsfiddle.net/6zqFq/305/
+        for (var i = 0; i <= 10; i++) {
+            var el = $('<label>' + (0 + 10 * i) + '</label>').css({'left': (i/10*100) + '%', "position" : "absolute", "width" : "20px", "margin-top" : "15px", "margin-left" : "-10px", "text-align": "center"});
+            $("#slider-range").append(el);
+        }
     } );
     </script>
 
+    <br>
     <br>
     <!-- Create a div where the table will take place -->
     <table id="my_table" class="display" align="center"></table>
@@ -222,6 +229,27 @@
     // creates the violin plot, variable is the y-axis variable that'll be displayed
     // some of the comments are taken from https://www.d3-graph-gallery.com/graph/violin_jitter.html
     function makeViolin(data, variable) {
+        // consolidate duplicate vehicles in data
+        unique = [...new Set(data.map(a => a.Make + a.Model + a.Year))]; // have to account for capitalization/spacing in the future
+
+        uniqueDict = Object.assign({}, ...data.map((x) => ({[x.Make + x.Model + x.Year]: x[ 'Overall Visibility' ]})));
+        //console.log(unique);
+        //console.log(uniqueDict)
+
+        //total = sum(item.get(key,0) for item in data) / len(data);
+
+        // taken from https://stackoverflow.com/questions/67334218/how-to-calculate-average-of-values-with-duplicate-key-in-array-of-objects-with-e
+        // and https://stackoverflow.com/questions/39885893/how-to-find-duplicate-values-in-a-javascript-array-of-objects-and-output-only-u
+        const averages = [...data
+        // get list of month/values
+        .reduce((map, { Make, Year }) => map.set(Make, [...(map.get(Make) || []), Year]), new Map) ]
+        // get list of month/average
+        //.map(([x, y]) => ({ x, y: y.reduce((sum, val) => sum + val, 0) / y.length }));
+        console.log(averages);
+
+
+
+
         // set the dimensions and margins of the graph
         var margin = {top: 10, right: 30, bottom: 30, left: 70},
             width = 1200 - margin.left - margin.right,

@@ -74,7 +74,13 @@ def makehistogram(user_data=None):
             if "Percent Visible Volume in Passenger Side" in perc_data["fields"].keys():
                 perc_side = perc_data["fields"]["Percent Visible Volume in Passenger Side"]
 
+            make = perc_data["fields"]["Make"]
+            model = getmodel(perc_data)
+            year = getyear(perc_data)
+
+            # perc_data is analagous to vehicle
             percentile = getpercentile(perc_data, vehicles)
+            # changing perc_data to be percent visible volume instead of a dictionary
             perc_data = perc_data['fields']['Percent Visible Volume']
 
             print("record " + str(perc_data))
@@ -117,7 +123,7 @@ def makehistogram(user_data=None):
     plt_div = plot(fig, output_type='div', include_plotlyjs=False, config=config)
     # return HttpResponse(plt_div)
     #print(plt_div)
-    return (plt_div, user_data, perc_front, perc_side, percentile)
+    return (plt_div, user_data, perc_front, perc_side, percentile, make, model, year)
 
 
 def get_images_from_airtable(id_num):
@@ -148,7 +154,7 @@ def get_images_from_airtable(id_num):
 
 # generates two sentences at the top of the getinfo page describing the vehicle, and generates the vehicle images
 def getinfo(request, user_data=None):
-    plot_div, percen, front_percen, side_percen, percentile = makehistogram(user_data)
+    plot_div, percen, front_percen, side_percen, percentile, make, model, year = makehistogram(user_data)
 
     """
     img = Image.new('RGB', (10, 10), (255, 0, 0) )
@@ -159,7 +165,14 @@ def getinfo(request, user_data=None):
     #iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAAEklEQVR4nGP8z4APMOGVHbHSAEEsAROxCnMTAAAAAElFTkSuQmCC
     if user_data is not None and percen is not None:
 
-        user_results = "This vehicle has an overall percent visible volume of {}%".format(percen)
+        user_results = ""
+        # add vehicle identifier information for make/model/year
+        # check if year exists or not, otherwise page will error
+        if year == "N/A":
+            user_results += "This is a {} {}. This vehicle has an overall percent visible volume of {}%".format(make, model, percen)
+        else:
+            user_results += "This is a {} {} {}. This vehicle has an overall percent visible volume of {}%".format(year, make, model, percen)
+
         if front_percen and side_percen:
             user_results += ", a front visibility score of {}%".format(front_percen)
             user_results += ", and a side visibility score of {}%".format(side_percen)
@@ -362,7 +375,8 @@ def getddata(request):
             pass
             #print(vehicle['fields'])
 
-    #print(scores)
+    #print(type(scores))
+    #print(type(scores[0]))
     return JsonResponse({"data": scores})
 
 def getfrontvisible(vehicle):
