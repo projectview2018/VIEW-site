@@ -1,5 +1,5 @@
-from django.conf.urls import include, re_path
-from django.urls import register_converter, path
+from django.conf.urls import include, url
+from django.urls import register_converter, path, re_path
 
 from django.contrib import admin
 admin.autodiscover()
