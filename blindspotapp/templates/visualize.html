@@ -26,6 +26,10 @@
         <option value="Front Visibility">Front Visibility</option>
         <option value="Side Visibility">Side Visibility</option>
     </select>
+
+    <div style="text-align: center">
+        <button class="btn btn-primary" id="duplicateButton" onclick = toggleDuplicates()>Add/Remove Duplicate Entries</button>
+    </div>
 </div>
 
 <!-- Create a div where the graph will take place -->
@@ -33,7 +37,7 @@
 
 <br>
 <div class="container">
-    <h5 style="text-align:center;">By default, the table is sorted by overall visibility in decreasing order. Use the search bar to filter by any metric,
+    <h5 style="text-align:center;">By default, the table is sorted by overall visibility in decreasing order. Use the search bar to filter by any metric, 
     and use the range slider to filter by percentile rank. Each vehicle's percentile rank is calculated relative to all other vehicles in the same
     body class. You can also click on the column name to sort by that variable as well.
     </h5>
@@ -122,6 +126,10 @@
 <script type="text/javascript">
     // global data variable
     var data;
+    // global median/grouped_data variable
+    var median_data;
+    // boolean that toggles each time the toggle duplicate button is pushed
+    var toggle = false;
 
     // variable displayed on y-axis; default is "Overall Visibility"
     var variable = "Overall Visibility";
@@ -189,24 +197,6 @@
     );
     }
 
-    /*
-    // potentially add VPIC vehicle type info in the future
-    var vin = 'WBA8A9C55GK616123';
-    let request = new XMLHttpRequest();
-    var uvin = vin.toUpperCase();
-    let url = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValues/" + uvin + "?format=json";
-
-    request.onload = function () {
-      if (this.readyState === 4 && this.status === 200) {
-        let response = JSON.parse(this.responseText);
-        console.log(response);
-      }
-    }
-
-    request.open("GET", url, true);
-    request.send();
-    */
-
     // retrieves Airtable data from getddata method in views.py
     let request = new XMLHttpRequest();
 	let url = "/api/v1/getddata/"; //this causes the POST
@@ -216,40 +206,36 @@
 		let response = this.response;
 
         // data is an array where each element is [percent visible, front visibility, side visibility, make, model, year, weight class]
+        console.log(response)
 		data = response['data'];
-        console.log(data);
-        tabulate(data, ["Overall Visibility", "Front Visibility", "Side Visibility", "Percentile", "Make", "Model", "Year", "Body Class",
-        "Weight Class", "Image", "Front", "Side", "Overhead", "ID"]);
+        //median_data = response['data'][(response['index'] + 1):];
+        console.log(median_data)
+      //  tabulate(data, ["Overall Visibility", "Front Visibility", "Side Visibility", "Percentile", "Make", "Model", "Year", "Body Class",
+      //  "Weight Class", "Image", "Front", "Side", "Overhead", "ID"]);
+        tabulate(data, ["Date Added", "Overall Visibility", "Front Visibility", "Side Visibility", "Percentile", "Make", "Model", "Year", "Body Class",
+        "Weight Class", "Image", "ID"]);
         prepareDataTable();
 		makeViolin(data, variable);
 	}
     request.open("POST", url);
 	request.send(body = JSON.stringify({'weight': '0'}));
 
+    // retrieves grouped_data and stores it in median_data, similar process as above
+    let request_2 = new XMLHttpRequest();
+	let url_2 = "/api/v1/getunduplicateddata/"; //this causes the POST
+	request_2.responseType = "json";
+	var headers = { 'content-type': 'application/json' };
+	request_2.onload = function () {
+		let response = this.response;
+		median_data = response['grouped_data'];
+	}
+    request_2.open("POST", url_2);
+	request_2.send(body = JSON.stringify({'weight': '0'}));
+
+
     // creates the violin plot, variable is the y-axis variable that'll be displayed
     // some of the comments are taken from https://www.d3-graph-gallery.com/graph/violin_jitter.html
     function makeViolin(data, variable) {
-        // consolidate duplicate vehicles in data
-        unique = [...new Set(data.map(a => a.Make + a.Model + a.Year))]; // have to account for capitalization/spacing in the future
-
-        uniqueDict = Object.assign({}, ...data.map((x) => ({[x.Make + x.Model + x.Year]: x[ 'Overall Visibility' ]})));
-        //console.log(unique);
-        //console.log(uniqueDict)
-
-        //total = sum(item.get(key,0) for item in data) / len(data);
-
-        // taken from https://stackoverflow.com/questions/67334218/how-to-calculate-average-of-values-with-duplicate-key-in-array-of-objects-with-e
-        // and https://stackoverflow.com/questions/39885893/how-to-find-duplicate-values-in-a-javascript-array-of-objects-and-output-only-u
-        const averages = [...data
-        // get list of month/values
-        .reduce((map, { Make, Year }) => map.set(Make, [...(map.get(Make) || []), Year]), new Map) ]
-        // get list of month/average
-        //.map(([x, y]) => ({ x, y: y.reduce((sum, val) => sum + val, 0) / y.length }));
-        console.log(averages);
-
-
-
-
         // set the dimensions and margins of the graph
         var margin = {top: 10, right: 30, bottom: 30, left: 70},
             width = 1200 - margin.left - margin.right,
@@ -498,7 +484,10 @@
                 // if the cell is an image and the value is a nonempty string with "cloudinary" in it, add embedded URL link
                 if (d.value != "" && (d.column == "Image" || d.column == "Front" || d.column == "Side" || d.column == "Overhead")) {
                     var url = d.value;
-                    if (url.includes("cloudinary")) {
+                    if (url == null) {
+                        return
+                    }
+                    else if (url.includes("cloudinary")) {
                         return "<a href="+ d.value + " target=_blank" + ">" + "<img src=" + d.value + ">" + "</a>"
                     }
                 }
@@ -524,11 +513,42 @@
         $("#my_dataviz").empty();
     }
 
+    function reset_table() {
+        $("#my_table").empty();
+    }
+
     // changes the y-axis variable
     function changeDependent() {
         variable = document.getElementById("yButton").value;
         reset_violin();
         makeViolin(data, variable);
+    }
+
+    // toggles duplicate entries
+    function toggleDuplicates() {
+        reset_violin();
+        //reset_table();
+
+        if (toggle == false) {
+            //$('#my_table').DataTable().clear();
+            //$.fn.dataTable.tables().clear()
+
+            //tabulate(median_data, ["Overall Visibility", "Front Visibility", "Side Visibility", "Percentile", "Make", "Model", "Year", "Body Class",
+            //"Weight Class", "Image", "Front", "Side", "Overhead", "ID"]);
+            //prepareDataTable();
+            makeViolin(median_data, variable);
+            toggle = true;
+        }
+
+        else {
+            //$('#my_table').DataTable().clear();
+            
+            //tabulate(data, ["Overall Visibility", "Front Visibility", "Side Visibility", "Percentile", "Make", "Model", "Year", "Body Class",
+            //"Weight Class", "Image", "Front", "Side", "Overhead", "ID"]);
+            //prepareDataTable();
+            makeViolin(data, variable);
+            toggle = false;
+        }
     }
 </script>
 {% endblock %}
