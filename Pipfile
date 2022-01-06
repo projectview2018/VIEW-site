@@ -10,10 +10,9 @@ requests = "*"
 plotly = "*"
 cloudinary = "*"
 Pillow = "*"
-sympy = "*"
+sympy = "*" 
 kaleido = "*"
 pandas = "*"
-
 
 [requires]
 python_version = "3.9"
