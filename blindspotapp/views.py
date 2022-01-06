@@ -23,6 +23,10 @@ import plotly.graph_objs as go
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+
+# pandas imports
+import pandas as pd
+
 # Create your views here.
 
 def home(request):
@@ -44,7 +48,7 @@ def FAQs(request):
 front_URL = json_data['front_URL']
     side_URL = json_data['side_URL']
     top_URL = json_data['top_URL']
-
+    
 ,
                 'Front Image':[front], 'Side Image':[side], 'Overhead Image':[top]
 """
@@ -52,7 +56,7 @@ def makehistogram(user_data=None):
     # load the data from Airtable
     print("user_data: " + str(user_data))
     at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR')
-
+    
     vehicles = at.get_all()
     perc_vis = [vehicle['fields']['Percent Visible Volume']
                 for vehicle in vehicles]
@@ -73,7 +77,7 @@ def makehistogram(user_data=None):
                 perc_front = perc_data["fields"]["Percent Visible Volume in Front"]
             if "Percent Visible Volume in Passenger Side" in perc_data["fields"].keys():
                 perc_side = perc_data["fields"]["Percent Visible Volume in Passenger Side"]
-
+            
             make = perc_data["fields"]["Make"]
             model = getmodel(perc_data)
             year = getyear(perc_data)
@@ -82,7 +86,7 @@ def makehistogram(user_data=None):
             percentile = getpercentile(perc_data, vehicles)
             # changing perc_data to be percent visible volume instead of a dictionary
             perc_data = perc_data['fields']['Percent Visible Volume']
-
+            
             print("record " + str(perc_data))
             user_data = perc_data
             fig.add_shape(
@@ -124,7 +128,7 @@ def makehistogram(user_data=None):
     # return HttpResponse(plt_div)
     #print(plt_div)
     return (plt_div, user_data, perc_front, perc_side, percentile, make, model, year)
-
+    
 
 def get_images_from_airtable(id_num):
     print("user_data: " + str(id_num))
@@ -135,18 +139,18 @@ def get_images_from_airtable(id_num):
     side_img = ""
     top_img = ""
     """ there are 2 states this field can be in: base64 image string, an https string  """
-
+    
     if 'Image URL' in vehicle['fields']:
-
+        
         panor_img = vehicle['fields']['Image URL']
 
 
-    #if there is nothing in there, it is a previous entry that can be ignored
+    #if there is nothing in there, it is a previous entry that can be ignored 
     if 'Front Image String' in vehicle['fields']:
-        front_img = vehicle['fields']['Front Image String']
+        front_img = vehicle['fields']['Front Image String']    
     if 'Side Image String' in vehicle['fields']:
         side_img = vehicle['fields']['Side Image String']
-
+    
     if 'Overhead Image String' in vehicle['fields']:
         top_img = vehicle['fields']['Overhead Image String']
         #print (top_img)
@@ -155,16 +159,16 @@ def get_images_from_airtable(id_num):
 # generates two sentences at the top of the getinfo page describing the vehicle, and generates the vehicle images
 def getinfo(request, user_data=None):
     plot_div, percen, front_percen, side_percen, percentile, make, model, year = makehistogram(user_data)
-
+    
     """
     img = Image.new('RGB', (10, 10), (255, 0, 0) )
     buffered = BytesIO()
     img.save(buffered, format="PNG")
     img_str = base64.b64encode(buffered.getvalue()).decode()
-    """
+    """ 
     #iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAIAAAACUFjqAAAAEklEQVR4nGP8z4APMOGVHbHSAEEsAROxCnMTAAAAAElFTkSuQmCC
     if user_data is not None and percen is not None:
-
+       
         user_results = ""
         # add vehicle identifier information for make/model/year
         # check if year exists or not, otherwise page will error
@@ -172,7 +176,7 @@ def getinfo(request, user_data=None):
             user_results += "This is a {} {}. This vehicle has an overall percent visible volume of {}%".format(make, model, percen)
         else:
             user_results += "This is a {} {} {}. This vehicle has an overall percent visible volume of {}%".format(year, make, model, percen)
-
+        
         if front_percen and side_percen:
             user_results += ", a front visibility score of {}%".format(front_percen)
             user_results += ", and a side visibility score of {}%".format(side_percen)
@@ -194,9 +198,9 @@ def getinfo(request, user_data=None):
 
         panor_img, front_img, side_img, top_img = get_images_from_airtable(user_data)
         return render(request, "getinfo.html", context={'plot_div': plot_div, 'user_results': user_results, 'id_num':user_data, 'panor_img': panor_img, 'front_img':front_img, 'side_img': side_img, 'top_img':top_img, 'percen': percen})
-
+        
     else:
-
+        
         return render(request, "getinfo.html", context={'plot_div': plot_div,'panor_img':"", 'front_img':"", 'side_img': "", 'top_img':""})
 
 @require_http_methods(["POST"])
@@ -225,8 +229,8 @@ def addvehicle(request):
     image_URL = json_data['image_URL']
     try :
         drawing_URL = json_data['drawing_URL']
-    except:
-        drawing_URL  = "https://res.cloudinary.com/dkrq49vzq/image/upload/v1591716313/sample.jpg"
+    except:     
+        drawing_URL  = "https://res.cloudinary.com/usdot/image/upload/v1641395694/sample.jpg"
     perc_front = json_data['perc_front']
     perc_passenger = json_data['perc_passenger']
     preschool_children = json_data['preschool_children']
@@ -244,7 +248,7 @@ def addvehicle(request):
     print(image_name)
     image = {"url": image_URL}
     drawing = {"url": drawing_URL}
-
+    
     # add record to database
     record = {"Full VIN": fullvin, "Partial VIN": partialvin, "Make": vmake, "Model": vmodel, "Weight Class": vgvwr,
                 "Year": vyear, "Body Class": bodyclass, "Percent Visible Volume": perc_vis[0], 'a':a, "b": b,'c':c, "d": d, "Radial Distance": radial_distance,
@@ -259,28 +263,28 @@ def addvehicle(request):
                 'Total A Pillar Volume':total_volume_between,
                 "Percent Visible Volume (Metric Standard)": perc_vis[1],
                 'Percent Visible Volume in Front (Metric Standard)': perc_front[1],
-                'Percent Visible Volume in Passenger Side (Metric Standard)': perc_passenger[1],
-                'a (cm)': int(a * 2.54), 'b (cm)': int(b * 2.54), 'c (cm)': int(c * 2.54), 'd (cm)': int(d * 2.54),
+                'Percent Visible Volume in Passenger Side (Metric Standard)': perc_passenger[1], 
+                'a (cm)': int(a * 2.54), 'b (cm)': int(b * 2.54), 'c (cm)': int(c * 2.54), 'd (cm)': int(d * 2.54), 
                 'Image':[image], 'Image URL':image_URL, 'Drawing':[drawing], 'Phis and NVPS json':phis_and_nvps, 'Overhead Image String':overhead_string,
                 "Overall Vis Elem":perc_vis[2], "Front Vis Elem":perc_front[2], "Side Vis Elem":perc_passenger[2],
                 "Overall Vis Adult":perc_vis[3], "Front Vis Adult":perc_front[3], "Side Vis Adult":perc_passenger[3]}
     # print(record)
     inserted_record = at.insert(record)
-
+    
     id_num = inserted_record['fields']['ID']
     if perc_vis[0] < 60 :
         strs = getvehicleimages(id_num, 5)
-
+        
     else:
         strs = getvehicleimages(id_num, 1)
     strs[0] = upload_to_cloudinary(strs[0], id_num, "Front")
     strs[1] = upload_to_cloudinary(strs[1], id_num, "Side")
-
+    
     #print( inserted_record['id'] )
     at.update(  inserted_record['id'], {'Front Image String':strs[0]} )
     at.update(  inserted_record['id'], {'Side Image String' :strs[1]} )
     #at.update( [{'id': inserted_record, 'fields':{ strs_dict }} ])
-
+    
 
     return JsonResponse({"message":"Thank you, your vehicle has been added to the database.", "redirect":id_num})
 
@@ -304,7 +308,7 @@ def getinterestarea(request):
     print("starting stick figure")
     preschool_children, grade_school_children, grade_school_bicyclists, wheelchair_users,adult_bicyclists, adults = do_stick_figure_analyses(a,c,d)
     print("finished stick figure")
-    return JsonResponse({"data": interest_area,
+    return JsonResponse({"data": interest_area, 
                         "preschool_children": preschool_children,
                         "grade_school_children": grade_school_children,
                         "grade_school_bicyclists": grade_school_bicyclists,
@@ -325,21 +329,19 @@ def getblindarea(request):
         blind_area[i] = find_total_truck_blind_area(NVPs, angles, DH, b, d, i)
         interest_area[i] = find_total_truck_interest_area(angles, b, d, i)
     return JsonResponse({"data": blind_area, "total_volume":interest_area})
-
-#
+      
+#     
 @require_http_methods(["POST"])
 def getddata(request):
     json_data = json.loads(request.body.decode("utf-8"))
-    at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR')
+    at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR') # base key, table name, API key
     vehicles = at.get_all()
-
-    #return JsonResponse({"data": vehicles})
-
+    
     # each element in scores is a dictionary of [overall visibility, front visibility, side visibility, make, model, year, body class, weight class, image, front, side, overhead, ID]
     scores = []
     # this is the weight class the user chooses
     weight = json_data["weight"]
-    for vehicle in vehicles:
+    for vehicle in vehicles:        
         try:
             if weight == "0":
                 #print( vehicle['fields']['Year'] )
@@ -356,9 +358,10 @@ def getddata(request):
                 overhead = getoverhead(vehicle)
                 percentile = getpercentile(vehicle, vehicles)
 
-                value = { 'Overall Visibility': vehicle['fields']['Percent Visible Volume'], 'Front Visibility': front_visible,
-                'Side Visibility': side_visible, 'Make': vehicle['fields']['Make'], 'Model': model,
-                'Year': year, 'Body Class': bodyclass, 'Weight Class': weight_class, 'Image': image, 'Front': front, 'Side': side,
+                value = { 'Date Added' : vehicle['fields']['Date Added'], 
+                            'Overall Visibility': vehicle['fields']['Percent Visible Volume'], 'Front Visibility': front_visible, 
+                'Side Visibility': side_visible, 'Make': vehicle['fields']['Make'], 'Model': model, 
+                'Year': year, 'Body Class': bodyclass, 'Weight Class': weight_class, 'Image': image, 'Front': front, 'Side': side, 
                 'Overhead': overhead, 'ID': vehicle['fields']['ID'], 'Percentile': percentile}
                 # print(value)
                 scores.append( value )
@@ -367,17 +370,85 @@ def getddata(request):
                 # gets all vehicles of WEIGHT class and that have a year
                 if wclass is not None and wclass == 'Class ' + str(weight):
                     if vehicle['fields']['Year'] != "Please select a year":
-                        value = { 'Overall Visibility': vehicle['fields']['Percent Visible Volume'], 'Front Visibility': vehicle['fields']['Percent Visible Volume in Front'],
-                        'Side Visibility': vehicle['fields']['Percent Visible Volume in Passenger Side'], 'Make': vehicle['fields']['Make'], 'Model': vehicle['fields']['Model'],
+                        value = { 'Date Added' : vehicle['fields']['Date Added'], 
+                            'Overall Visibility': vehicle['fields']['Percent Visible Volume'], 'Front Visibility': vehicle['fields']['Percent Visible Volume in Front'], 
+                        'Side Visibility': vehicle['fields']['Percent Visible Volume in Passenger Side'], 'Make': vehicle['fields']['Make'], 'Model': vehicle['fields']['Model'], 
                         'Year': vehicle['fields']['Year'], 'Weight Class': vehicle['fields']['Weight Class'], 'Image': vehicle['fields']['Image URL'] }
                         scores.append( value )
         except:
             pass
             #print(vehicle['fields'])
-
-    #print(type(scores))
-    #print(type(scores[0]))
+            
     return JsonResponse({"data": scores})
+
+@require_http_methods(["POST"])
+def getunduplicateddata(request):
+    json_data = json.loads(request.body.decode("utf-8"))
+    at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR') # base key, table name, API key
+    vehicles = at.get_all()
+    
+    #return JsonResponse({"data": vehicles})
+    print(vehicles[0])
+    vehicles_df = pd.DataFrame.from_records((v['fields'] for v in vehicles))
+    print(vehicles_df)
+    agg_dict = {
+        'ID': 'first',
+        'Percent Visible Volume': 'median',
+        'Percent Visible Volume in Front': 'median',
+        'Percent Visible Volume in Passenger Side': 'median',
+        'Body Class': 'first',
+        'Weight Class': 'first',
+        'Image URL': 'first',
+        'Front Image String': 'first',
+        'Side Image String': 'first',
+        'Overhead Image String': 'first',
+        'Make': 'first',
+        'Model': 'first',
+        'Year': 'first'
+    }
+
+    rename_dict = {
+        'Percent Visible Volume': 'Overall Visibility',
+        'Percent Visible Volume in Front': 'Front Visibility',
+        'Percent Visible Volume in Passenger Side': 'Side Visibility',
+        'Image URL': 'Image',
+        'Front Image String': 'Front',
+        'Side Image String': 'Side',
+        'Overhead Image String': 'Overhead'
+    }
+
+    make_clean = vehicles_df['Make'].str.lower().str.strip().str.replace(' ', '')
+    model_clean = vehicles_df['Model'].str.lower().str.strip().str.replace(' ', '')
+    year_clean = vehicles_df['Year']
+    vehicles_df['Make Clean'] = make_clean
+    vehicles_df['Model Clean'] = model_clean
+    vehicles_df['Year Clean'] = year_clean
+
+    grouped_df = vehicles_df.groupby(["Make Clean", "Model Clean", "Year Clean"], as_index=False).agg(agg_dict)
+    grouped_df = grouped_df.rename(columns=rename_dict)
+    grouped_df = grouped_df.drop(['Make Clean', 'Model Clean', 'Year Clean'], 1)
+    grouped_df['Percentile'] = 0 # placeholder for now
+
+    # classifies body classes into the categories we defined
+    grouped_df['Body Class'] = grouped_df['Body Class'].replace({
+    'Convertible/Cabriolet': 'Passenger', 'Coupe': 'Passenger', 'Hatchback/Liftback/Notchback': 'Passenger', 'Roadster': 'Passenger', 'Sedan/Saloon': 'Passenger', 'Wagon': 'Passenger',
+    'Sport Utility Vehicle (SUV)/Multi-Purpose Vehicle (MPV)': 'SUV', 'Crossover Utility Vehicle (CUV)': 'SUV',
+    'Minivan': 'Minivan',
+    'Van': 'Van', 'Cargo Van': 'Van',
+    'Pickup': 'Pickup Truck',
+    'Truck': 'Commercial Truck', 'Trailor': 'Commercial Truck', 'Truck-Tractor': 'Commercial Truck',
+    'Bus': 'Bus', 'Bus - School Bus': 'Bus',
+    'No VIN': 'N/A', '': 'N/A', 'Incomplete - Chassis Cab (Number of Cab Unknown)': 'N/A'})
+
+    # replace NaN front/side visibility scores with 0, because otherwise the code errors
+    grouped_df['Front Visibility'] = grouped_df['Front Visibility'].fillna(0)
+    grouped_df['Side Visibility'] = grouped_df['Side Visibility'].fillna(0)
+
+    # dataframes are not JSON serializable, so convert to a list of dictionaries
+    grouped_df_list = grouped_df.to_dict('records')
+    #print(grouped_df_list[0])
+
+    return JsonResponse({"grouped_data": grouped_df_list})
 
 def getfrontvisible(vehicle):
     if ('Percent Visible Volume in Front' not in vehicle['fields']):
@@ -427,7 +498,7 @@ def getbodyclass(vehicle):
     elif (vehicle['fields']['Body Class'] in ['Truck', 'Trailor', 'Truck-Tractor']):
         return 'Commercial Truck'
     # bus
-    elif (vehicle['fields']['Body Class'] in ['Bus', ' Bus - School Bus']):
+    elif (vehicle['fields']['Body Class'] in ['Bus', 'Bus - School Bus']):
         return 'Bus'
     # all other categories
     else:
@@ -479,29 +550,30 @@ def getpercentile(vehicle, vehicles):
     return percentile
 
 # not used at the moment, but returns array with key and value mappings as opposed to just values, like getddata()
-@require_http_methods(["POST"])
+@require_http_methods(["POST"])    
 def getvehicles(request):
     json_data = json.loads(request.body.decode("utf-8"))
     at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR')
     vehicles = at.get_all(fields=['Percent Visible Volume', 'Make', 'Model', 'Year', 'Weight Class'])
     return JsonResponse({"data": vehicles})
-
+    
 def getvehicleimages(index, vru = 1):
 
     strs = create_easy_images(index, 5, vru)
     #print(strs)
-    #return JsonResponse({"front":strs[0], "side":strs[1], "top":strs[2] })
+    #return JsonResponse({"front":strs[0], "side":strs[1], "top":strs[2] }) 
     return strs
-
+    
 @require_http_methods(["POST"])
 def getvehicleimages_vruchanged(request):
         #try:
         json_data = json.loads(request.body.decode("utf-8"))
-        index = int(json_data['id_num'])
+        index = int(json_data['id_num'])        
         vru = int(json_data['vru'])
-
+        
         print("the vru is " + str(vru) )
-
+        print(json_data)
+        
         if vru == json_data['default']:
             at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR')
             vehicle = at.match('ID', index)['fields']
@@ -510,32 +582,32 @@ def getvehicleimages_vruchanged(request):
                 strs = [ vehicle['Front Image String'], vehicle['Side Image String'], vehicle['Overhead Image String'] ]
             except:
                 strs = [ vehicle['Front Image String'], "" ]
-
+            
         else:
             try:
                 if int(json_data['onlyeasy']) == 1:
                     strs = getvehicleimages(index, vru)
-                else:
+                else:   
                     strs = list( create_all_images(index, 2, vru) );
-
+            
             except Exception as e:
                 print( str(e))
                 return JsonResponse( {'data': [str(e)] } )
-
+            
         return JsonResponse( {'data': strs, 'vru': vru} )
         """
         except Exception as e:
-            return JsonResponse({"data": "PYTHON ERROR: " + str(e)})
+            return JsonResponse({"data": "PYTHON ERROR: " + str(e)}) 
         """
-@require_http_methods(["POST"])
+@require_http_methods(["POST"])    
 def getspecificimage(request):
     json_data = json.loads(request.body.decode("utf-8"))
-
+    
     json_string = json_data['json_string']
     index = json_data['index']
     mode = json_data['mode']
     vru = json_data['vru']
-
+    
     if mode == 0:
         image_string = create_specific_image(json_string, 2, vru, index)
         image_string = image_string.decode()
@@ -547,38 +619,46 @@ def getspecificimage(request):
             print(str(e))
             return JsonResponse( {'data': str(e) } )
         """
-    return JsonResponse({"data": image_string, "vru": vru})
-@require_http_methods(["POST"])
-def uploadimages(request):
+    return JsonResponse({"data": image_string, "vru": vru}) 
+@require_http_methods(["POST"]) 
+def uploadimages(request):   
     json_data = json.loads(request.body.decode("utf-8"))
     id_num = json_data['id_num']
     url = json_data['url']
     field = json_data['field']
 
-
+    
     at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR')
     vehicle = at.match('ID', id_num)['id']
-
+    
     #print(vehicle)
 
     at.update(  vehicle, { field + ' Image String' : url } )
-
-
+    
+        
     return HttpResponse("Done")
-
+   
 def upload_to_cloudinary(img_string, i, image_index):
-    cloudinary.config(
-      cloud_name = "dkrq49vzq",
-      api_key = "733231156826462",
-      api_secret = "tf4ebuGXPE1AS5ZlGqG6WkQWTXU",
-      secure = True
+    #Project VIEW Cloudinary
+#    cloudinary.config( 
+#      cloud_name = "dkrq49vzq", 
+#      api_key = "733231156826462", 
+#      api_secret = "tf4ebuGXPE1AS5ZlGqG6WkQWTXU",
+#      secure = True
+#    )
+
+    #Eric Cloudinary
+    cloudinary.config( 
+    cloud_name = "usdot", 
+    api_key = "848361382832925", 
+    api_secret = "-YnQbZxMGQfo0EncUOCnOjk7qZs" 
     )
 
-    uploaded = cloudinary.uploader.upload("data:image/png;base64," + img_string,
-        folder = "generated-images",
+    uploaded = cloudinary.uploader.upload("data:image/png;base64," + img_string, 
+        folder = "generated-images", 
         public_id = str(i) + "-" + image_index,
-        overwrite = True,
+        overwrite = True, 
         notification_url = "https://mysite.example.com/notify_endpoint")
-
+        
     if 'url' in uploaded.keys():
         return uploaded['url']

@@ -94,7 +94,7 @@
   <hr>
   <div id=choosepano class="unhidden" style="font-size:20px">Choose field of view panoramic image to upload:</div>
   <p id=loadmessage class="unhidden" style="font-size:15px">(Photo may take up to 10 seconds to load)</p>
-  <p id="network_error" class="unhidden" style="font-size:15px">If using an unstable internet connection or a VPN, the photo might not be uploaded to our database.</p>
+  <p id="network_error" class="unhidden" style="font-size:15px">If using an unstable internet connection or a VPN, the photo might not be uploaded to our database. VIEW also works best on Chrome.</p>
   <div id="canvas" class="hidden" style="font-size:20px;">Click to draw<br /></div>
   <div id="measurementpole" class="hidden">
     <img src="static/measurement_pole.jpg" style="float:right;width:200px;height:300px" />
@@ -410,10 +410,12 @@
   var total_volume_front = [0, 0, 0, 0];
   var total_volume_between = [0, 0, 0, 0];
   var total_volume_passenger = [0, 0, 0, 0];
-  var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dkrq49vzq/upload';
-  var CLOUDINARY_UPLOAD_PRESET = 'ifmh0adn';
+//  var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dkrq49vzq/upload';
+  var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/usdot/upload';
+//  var CLOUDINARY_UPLOAD_PRESET = 'ifmh0adn';
+  var CLOUDINARY_UPLOAD_PRESET = 'elzascqq'; // unsigned upload preset name (more info here: https://make.cm/blog/make-a-photo-booth)
   var fileURL = "";
-  var drawingURL = "https://res.cloudinary.com/dkrq49vzq/image/upload/v1591716313/sample.jpg";
+  var drawingURL = "https://res.cloudinary.com/usdot/image/upload/v1591716313/sample.jpg";
   var step8_coords = [];
   var unit = "inch";
   var upload_done = [0,0];
@@ -465,12 +467,15 @@
     function saveCanvas(canvas, curr_step) {
       console.log('preparing to save canvas to cloudinary');
       canvas_img = canvas.node.toDataURL();
+      console.log("canvas: ")
+      console.log(canvas_img)
 
       var formData = new FormData();
       formData.append('file', canvas_img);
       formData.append('folder', 'blindspot-app');
       formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
-
+      console.log("formData:")
+      console.log(formData)
       axios({
         url: CLOUDINARY_URL,
         method: 'POST',
@@ -1034,6 +1039,8 @@
       formData.append('folder', 'blindspot-app');
       formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
 
+    console.log("formData:")
+    console.log(formData)
     axios({
 
 		url: CLOUDINARY_URL,
