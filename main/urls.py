@@ -13,6 +13,7 @@ urlpatterns = [
 	path('api/v1/getinterestarea/', blindspotapp.views.getinterestarea),
 	path('api/v1/getblindarea/', blindspotapp.views.getblindarea),
     path('api/v1/getddata/', blindspotapp.views.getddata),
+    path('api/v1/getunduplicateddata/', blindspotapp.views.getunduplicateddata),
     path('api/v1/getvehicles/', blindspotapp.views.getvehicles),
     path('api/v1/uploadimages/', blindspotapp.views.uploadimages),
     path('api/v1/getspecificimage/', blindspotapp.views.getspecificimage),
