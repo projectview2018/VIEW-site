@@ -37,7 +37,7 @@
 
 <br>
 <div class="container">
-    <h5 style="text-align:center;">By default, the table is sorted by overall visibility in decreasing order. Use the search bar to filter by any metric, 
+    <h5 style="text-align:center;">By default, the table is sorted by overall visibility in decreasing order. Use the search bar to filter by any metric,
     and use the range slider to filter by percentile rank. Each vehicle's percentile rank is calculated relative to all other vehicles in the same
     body class. You can also click on the column name to sort by that variable as well.
     </h5>
@@ -212,8 +212,10 @@
         console.log(median_data)
       //  tabulate(data, ["Overall Visibility", "Front Visibility", "Side Visibility", "Percentile", "Make", "Model", "Year", "Body Class",
       //  "Weight Class", "Image", "Front", "Side", "Overhead", "ID"]);
+      //  tabulate(data, ["Date Added", "Overall Visibility", "Front Visibility", "Side Visibility", "Percentile", "Make", "Model", "Year", "Body Class",
+      //  "Weight Class", "Image", "ID"]);
         tabulate(data, ["Date Added", "Overall Visibility", "Front Visibility", "Side Visibility", "Percentile", "Make", "Model", "Year", "Body Class",
-        "Weight Class", "Image", "ID"]);
+        "Weight Class", "ID"]);
         prepareDataTable();
 		makeViolin(data, variable);
 	}
@@ -542,7 +544,7 @@
 
         else {
             //$('#my_table').DataTable().clear();
-            
+
             //tabulate(data, ["Overall Visibility", "Front Visibility", "Side Visibility", "Percentile", "Make", "Model", "Year", "Body Class",
             //"Weight Class", "Image", "Front", "Side", "Overhead", "ID"]);
             //prepareDataTable();
