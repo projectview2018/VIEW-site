@@ -134,7 +134,7 @@ def compress_image_url(img_url):
     #This function adds 'q_auto:eco' to cloudinary urls for compression
     urll = img_url.split('/')
     urll.insert(6, 'q_auto:eco')
-    '/'.join(urll)
+    urll = '/'.join(urll)
     return(urll)
 
 def get_images_from_airtable(id_num):
