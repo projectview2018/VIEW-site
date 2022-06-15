@@ -130,12 +130,12 @@ def makehistogram(user_data=None):
     return (plt_div, user_data, perc_front, perc_side, percentile, make, model, year)
 
 
-def compress_image_url(img_url):
-    #This function adds 'q_auto:eco' to cloudinary urls for compression
-    urll = img_url.split('/')
-    urll.insert(6, 'q_auto:eco')
-    '/'.join(urll)
-    return(urll)
+# def compress_image_url(img_url):
+#     #This function adds 'q_auto:eco' to cloudinary urls for compression
+#     urll = img_url.split('/')
+#     urll.insert(6, 'q_auto:eco')
+#     '/'.join(urll)
+#     return(urll)
 
 def get_images_from_airtable(id_num):
     print("user_data: " + str(id_num))
@@ -150,21 +150,21 @@ def get_images_from_airtable(id_num):
     if 'Image URL' in vehicle['fields']:
 
         panor_img = vehicle['fields']['Image URL']
-        panor_img = compress_image_url(panor_img)
+        #panor_img = compress_image_url(panor_img)
 
 
     #if there is nothing in there, it is a previous entry that can be ignored
     if 'Front Image String' in vehicle['fields']:
         front_img = vehicle['fields']['Front Image String']
-        front_img = compress_image_url(front_img)
+        #front_img = compress_image_url(front_img)
 
     if 'Side Image String' in vehicle['fields']:
         side_img = vehicle['fields']['Side Image String']
-        side_img = compress_image_url(side_img)
+        #side_img = compress_image_url(side_img)
 
     if 'Overhead Image String' in vehicle['fields']:
         top_img = vehicle['fields']['Overhead Image String']
-        top_img = compress_image_url(top_img)
+        #top_img = compress_image_url(top_img)
         #print (top_img)
     return( panor_img, front_img, side_img, top_img )
 
