@@ -125,7 +125,7 @@
 	var grid_mode = 0;
 	var two_column_width = 2.2;
 	// this is so that the website will not try to generate images that will probably return a 503 error
-	var low_vis =  parseInt("{{ percen }}" ) < 50;
+	var low_vis =  parseInt("{{ percen }}" ) < 60;
 	//keep track of all the generated overhead images for time efficiency
 	var default_vru = 1;
 	if (low_vis){
@@ -170,7 +170,11 @@
 	if ( "{{id_num}}" != "" ){
 		//if the top image has not been generated (first page load from addvehicle, display all by the overhead, and then display it later
 
-		if ('{{top_img}}' == "NA") {
+		if ('{{top_img}}' == "NA/q_auto:eco") {
+			document.getElementById('vruselect').disabled = false;
+			console.log("top_img = NA/q_auto:eco")
+//			top_img = generate_overhead(default_vru);
+//			display_images('{{panor_img}}', '{{front_img}}', '{{side_img}}', '{{top_img}}');
 			display_images('{{panor_img}}', '{{front_img}}', '{{side_img}}', "NA");
 			top_img = generate_overhead(default_vru);
 
@@ -317,7 +321,13 @@
 					botleft.replaceWith(top);
 				}
 			} else {
-				document.getElementById('botleft').src = "#";
+				console.log("found it");
+			//	document.getElementById('botleft').src = "#";
+				var botleft = document.getElementById('botleft');
+				console.log("load plotly div")
+				var overhead_view = document.getElementById('overhead_view');
+
+				botleft.replaceWith(top);
 			}
 
 			var botrigh = document.getElementById('botrigh');
@@ -368,10 +378,9 @@
 	}
 
 	//assign the image_string as the source of the element - its own function because of the else statement
-	//REBUILD HEROKU
 	function display_image( image_string, element) {
 		if (image_string !== undefined && image_string !== null){
-			//console.log(image_string.substring(0, 10));
+			console.log(image_string.substring(0, 10));
 			if (image_string.startsWith("http")){
 				element.src = image_string;
 			} else {
@@ -488,6 +497,7 @@
 		let url = "/api/v1/getspecificimage/";
 		request.responseType = "json";
 		var headers = { 'content-type': 'application/json' };
+		console.log("starting generate_overhead")
 
 		started_generating[vru] = true;
 
@@ -595,6 +605,9 @@
 			request.open("POST", url);
 			request.timeout = 30000;
 			console.log(vru_i);
+			console.log("overhead_images[vru_index]");
+
+			console.log(overhead_images[vru_index]);
 			// if the overhead image has not been generated
 			if ( overhead_images[vru_index] === "NA" ){
 				if ( started_generating[vru_index] ) {

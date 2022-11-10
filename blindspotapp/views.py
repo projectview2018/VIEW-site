@@ -56,6 +56,11 @@ def makehistogram(user_data=None):
     # load the data from Airtable
     print("user_data: " + str(user_data))
     at = Airtable('appeO848S1Ia1icdL', 'VEHICLES', 'keyk5gsH5fD2iJrrR')
+    percentile = 0
+    make ="NA"
+    model = "NA"
+    year =1950
+
 
     vehicles = at.get_all()
     perc_vis = [vehicle['fields']['Percent Visible Volume']
@@ -623,7 +628,7 @@ def getspecificimage(request):
     print(mode)
     print(vru)
     print(index)
-    print(json_string)
+    #print(json_string)
 
     if mode == 0:
         image_string = create_specific_image(json_string, 2, vru, index)
@@ -631,6 +636,9 @@ def getspecificimage(request):
     elif mode == 1:
         #try:
         image_string = create_overhead_only(json_string, 2, vru)
+        print("doing image string")
+        print(image_string)
+        print(image_string)
         """
         except Exception as e:
             print(str(e))
