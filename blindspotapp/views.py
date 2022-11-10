@@ -619,6 +619,11 @@ def getspecificimage(request):
     index = json_data['index']
     mode = json_data['mode']
     vru = json_data['vru']
+    print("mode: ")
+    print(mode)
+    print(vru)
+    print(index)
+    print(json_string)
 
     if mode == 0:
         image_string = create_specific_image(json_string, 2, vru, index)

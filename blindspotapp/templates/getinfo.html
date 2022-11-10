@@ -185,6 +185,7 @@
 			if ( low_vis) {
 				generate_all_overhead('{{id_num}}', 3);
 			} else {
+				console.log("low_vis")
 				generate_all_overhead('{{id_num}}', 0);
 			}
 
@@ -290,10 +291,12 @@
 				toprigh.width = base_width / two_column_width;
 			}
 			toprigh.alt = "User-uploaded panoramic image of car vehicle";
-				toprigh.title = "User-uploaded panoramic image of car vehicle";
+			toprigh.title = "User-uploaded panoramic image of car vehicle";
 
-
-			if (top !== "NA"){
+			console.log("top: ")
+			console.log(top)
+			console.log(top.substring(0,2))
+			if (top.substring(0,2) !== "NA"){
 				var vru_index = document.getElementById('vruselect').value;
 				if (vru_index < 10){
 
@@ -416,15 +419,19 @@
 			console.log("started generating " + i);
 			started_generating[i] = true;
 			let request = new XMLHttpRequest();
+
 			let url = "/api/v1/getspecificimage/";
 			request.responseType = "json";
 			var headers = { 'content-type': 'application/json' };
+			console.log("starting getspecificimage")
 			request.onload = function(){
 				let response = this.response;
+				console.log("response started")
 				if (response !== null) {
+					console.log()
 
 					top_string = response['data'];
-					//console.log(top_string);
+					console.log(top_string);
 					//vru was returned when all images were generated at once.
 					vru = response['vru'];
 					console.log("got overhead string index " + vru);
