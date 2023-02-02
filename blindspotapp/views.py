@@ -190,28 +190,10 @@ def getinfo(request, user_data=None):
         # add vehicle identifier information for make/model/year
         # check if year exists or not, otherwise page will error
         if year == "N/A":
-            user_results += "This is a {} {}. This vehicle has an overall percent visible volume of {}%".format(make, model, percen)
+            user_results += "{} {}".format(make, model)
         else:
-            user_results += "This is a {} {} {}. This vehicle has an overall percent visible volume of {}%".format(year, make, model, percen)
+            user_results += "{} {} {}".format(year, make, model)
 
-        if front_percen and side_percen:
-            user_results += ", a front visibility score of {}%".format(front_percen)
-            user_results += ", and a side visibility score of {}%".format(side_percen)
-        elif side_percen:
-            user_results += " and a side visibility score of {}%".format(side_percen)
-        elif front_percen:
-            user_results += " and a front visibility score of {}%".format(front_percen)
-        user_results += ". "
-
-        # percentile ends in 1
-        if (percentile % 10 == 1):
-            user_results += "This vehicle's overall visibility sits at the {}st percentile relative to all other vehicles in the same body class.".format(percentile)
-        # percentile ends in 2
-        elif (percentile % 10 == 2):
-            user_results += "This vehicle's overall visibility sits at the {}nd percentile relative to all other vehicles in the same body class.".format(percentile)
-        # all other cases
-        else:
-            user_results += "This vehicle's overall visibility sits at the {}th percentile relative to all other vehicles in the same body class.".format(percentile)
 
         panor_img, front_img, side_img, top_img = get_images_from_airtable(user_data)
         return render(request, "getinfo.html", context={'plot_div': plot_div, 'user_results': user_results, 'id_num':user_data, 'panor_img': panor_img, 'front_img':front_img, 'side_img': side_img, 'top_img':top_img, 'percen': percen})
