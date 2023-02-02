@@ -31,6 +31,8 @@ import pandas as pd
 
 def home(request):
     return render(request, "home.html")
+def home_dev(request):
+    return render(request, "home_dev.html")
 
 def index(request):
     return render(request, "index.html")

@@ -24,5 +24,6 @@ urlpatterns = [
     re_path(r'^visualize', blindspotapp.views.visualize, name='visualize'),
     re_path(r'^FAQs', blindspotapp.views.FAQs, name='FAQs'),
     re_path(r'^', blindspotapp.views.home, name='home'),
+    re_path(r'^', blindspotapp.views.home_dev, name='home_dev'),
     path('admin/', admin.site.urls),
 ]
