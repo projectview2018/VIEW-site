@@ -635,6 +635,7 @@ def getspecificimage(request):
         image_string = image_string.decode()
     elif mode == 1:
         #try:
+        print("about to start create_overhead_only")
         image_string = create_overhead_only(json_string, 2, vru)
         print("doing image string")
         print(image_string)

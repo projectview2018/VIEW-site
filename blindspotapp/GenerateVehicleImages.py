@@ -1672,9 +1672,13 @@ def create_all_images(id_num, scale, index):
         side_str = ""
 
     print("finished with side image")
+    print("line 1675")
+    print(id_num)
 
     #create overhead
     data = get_data_top(id_num)
+    print("data")
+    print(data)
     if data is not None:
         fig = create_polar(data, scale) #make main plotly plot (back / gray bars with green background)
         print("data:" , data)
