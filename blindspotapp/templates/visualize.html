@@ -5,12 +5,14 @@
 <html>
 {% include 'header.html' %}
 <div id=top_text>
-    <h3 style="text-align:center;font-weight:bold;">Direct Vision Comparison Tool
+    <h3 style="text-align:center;font-weight:bold;">Direct Vision Comparison Table
     <div class="container">
-        <h5>The plot below displays vehicle entries grouped by body class, which are
-        also reflected in the table below. The plot and table will update based on inputs to the search bar and the range filter.
-        Hover over individual points on the plot to find more information about that particular vehicle.
+        <h5>The table below displays all vehicle entries in the VIEW app. The table will update based on inputs to the search bar and the range filter.
+        Click the "Details" column to find more information about that particular vehicle.
         </h5>
+        <h5>Table may take a moment to load.
+            </h5>
+    
     </div>
 </div>
 <meta charset="utf-8">
@@ -19,73 +21,11 @@
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
-<div class="container">
-    <label>Y-Axis Variable</label>
-    <select id="yButton" onchange = changeDependent()>
-        <option selected value="Overall Visibility">Overall Visibility</option>
-        <option value="Front Visibility">Front Visibility</option>
-        <option value="Side Visibility">Side Visibility</option>
-    </select>
-
-    <div style="text-align: center">
-        <button class="btn btn-primary" id="duplicateButton" onclick = toggleDuplicates()>Add/Remove Duplicate Entries</button>
-    </div>
-</div>
-
-<!-- Create a div where the graph will take place -->
-<div id="my_dataviz" align="center"></div>
-
-<br>
-<div class="container">
-    <h5 style="text-align:center;">By default, the table is sorted by overall visibility in decreasing order. Use the search bar to filter by any metric,
-    and use the range slider to filter by percentile rank. Each vehicle's percentile rank is calculated relative to all other vehicles in the same
-    body class. You can also click on the column name to sort by that variable as well.
-    </h5>
-</div>
-
 <!-- Datatables library, makes HTML table filterable -->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
 
 <div class="margintable">
-    <p>
-        <label for="amount">Overall Visibility Percentile Range:</label>
-        <input type="text" id="amount" readonly style="border:0; color:#2196F3; font-weight:bold;">
-    </p>
-    <div id="slider-range"></div>
-    <!-- scripts for the slider -->
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <!-- script below initializes the slider, sets values, and defines what happens when slider changes -->
-    <script>
-    $( function() {
-        $( "#slider-range" ).slider({
-        range: true,
-        min: 0,
-        max: 100,
-        values: [ 0, 100 ],
-        step: 10,
-        slide: function( event, ui ) {
-            $( "#amount" ).val( ui.values[ 0 ] + "th - " + ui.values[ 1 ] + "th Percentile");
-        },
-        change: function( event, ui ) {
-            rangeSearch(ui);
-            var table = $('#my_table').DataTable();
-            table.draw();
-        }
-        });
-        $( "#amount" ).val( $( "#slider-range" ).slider( "values", 0 ) +
-        "th - " + $( "#slider-range" ).slider( "values", 1 ) + "th Percentile" );
-        // referenced from stack overflow and http://jsfiddle.net/6zqFq/305/
-        for (var i = 0; i <= 10; i++) {
-            var el = $('<label>' + (0 + 10 * i) + '</label>').css({'left': (i/10*100) + '%', "position" : "absolute", "width" : "20px", "margin-top" : "15px", "margin-left" : "-10px", "text-align": "center"});
-            $("#slider-range").append(el);
-        }
-    } );
-    </script>
-
-    <br>
-    <br>
     <!-- Create a div where the table will take place -->
     <table id="my_table" class="display" align="center"></table>
 </div>
