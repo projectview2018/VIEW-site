@@ -467,8 +467,8 @@ def getfrontpassengernvps(phis_and_NVPs):
 
     phis_and_NVPs_json = json.loads(phis_and_NVPs)
     start_point = -int(phis_and_NVPs_json['phis'][0])
-    front_nvp = phis_and_NVPs_json['nvps'][start_point]
-    passenger_nvp = phis_and_NVPs_json['nvps'][start_point + 90]
+    passenger_nvp = phis_and_NVPs_json['nvps'][start_point]
+    front_nvp = phis_and_NVPs_json['nvps'][start_point + 90]
 
     return front_nvp, passenger_nvp
 
