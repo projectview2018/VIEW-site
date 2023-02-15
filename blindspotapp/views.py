@@ -248,6 +248,10 @@ def addvehicle(request):
     image = {"url": image_URL}
     drawing = {"url": drawing_URL}
 
+    # add front and passenger nvps
+    front_nvp, passenger_nvp = getfrontpassengernvps(phis_and_nvps)
+
+
     # add record to database
     record = {"Full VIN": fullvin, "Partial VIN": partialvin, "Make": vmake, "Model": vmodel, "Weight Class": vgvwr,
                 "Year": vyear, "Body Class": bodyclass, "Percent Visible Volume": perc_vis[0], 'a':a, "b": b,'c':c, "d": d,  "Comments": comments, "Agency": agency,
@@ -263,7 +267,9 @@ def addvehicle(request):
                 'Percent Visible Volume in Front (Metric Standard)': perc_front[1],
                 'Percent Visible Volume in Passenger Side (Metric Standard)': perc_passenger[1],
                 'a (cm)': int(a * 2.54), 'b (cm)': int(b * 2.54), 'c (cm)': int(c * 2.54), 'd (cm)': int(d * 2.54),
-                'Image':[image], 'Image URL':image_URL, 'Drawing':[drawing], 'Phis and NVPS json':phis_and_nvps, 'Overhead Image String':overhead_string,
+                'Image':[image], 'Image URL':image_URL, 'Drawing':[drawing], 'Phis and NVPS json':phis_and_nvps, "front NVP": front_nvp, 
+                "passenger NVP":passenger_nvp,  
+                'Overhead Image String':overhead_string,
                 "Overall Vis Elem":perc_vis[2], "Front Vis Elem":perc_front[2], "Side Vis Elem":perc_passenger[2],
                 "Overall Vis Adult":perc_vis[3], "Front Vis Adult":perc_front[3], "Side Vis Adult":perc_passenger[3]}
     # print(record)
@@ -453,6 +459,18 @@ def getunduplicateddata(request):
     #print(grouped_df_list[0])
 
     return JsonResponse({"grouped_data": grouped_df_list})
+
+def getfrontpassengernvps(phis_and_NVPs):
+
+    # This function will pull out the front and passenger NVPs 
+    # This will be from the driver eye point to the 0 and 90 degree marks on the ground, respectively
+
+    phis_and_NVPs_json = json.loads(phis_and_NVPs)
+    start_point = -int(phis_and_NVPs_json['phis'][0])
+    front_nvp = phis_and_NVPs_json['nvps'][start_point]
+    passenger_nvp = phis_and_NVPs_json['nvps'][start_point + 90]
+
+    return front_nvp, passenger_nvp
 
 def getfrontvisible(vehicle):
     if ('Percent Visible Volume in Front' not in vehicle['fields']):
