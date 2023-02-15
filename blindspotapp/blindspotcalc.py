@@ -43,7 +43,7 @@ def find_total_truck_interest_area(angles, c, d, r = 0):
     # NVPs is a list of the nearest visible points
     # angles is a list of the  correspnding counterclockwise angular positions of the measurements
     # 0 is straight ahead. Use radians
-    # DH is the driver eye height
+    # a is the driver eye height
     # c is the horizontal distance between the driver's eye and the passenger side of the truck
     # d is the horizontal distance between the driver's eye and the front bumper of the truck
     # e is the horizontal length of the area of interest to the right of the passenger side wall
@@ -72,13 +72,13 @@ def find_total_truck_interest_area(angles, c, d, r = 0):
 
     return interest
 
-def find_total_truck_blind_area(NVPs, angles, DH, c, d, r = 0):
+def find_total_truck_blind_area(NVPs, angles, a, c, d, r = 0):
     # finds the total blind volume for a truck dataset
 
     # NVPs is a list of the nearest visible points
     # angles is a list of the  correspnding counterclockwise angular positions of the measurements
     # 0 is straight ahead. Use radians
-    # DH is the driver eye height
+    # a is the driver eye height
     # c is the horizontal distance between the driver's eye and the passenger side of the truck
     # d is the horizontal distance between the driver's eye and the front bumper of the truck
     # e is the horizontal length of the area of interest to the right of the passenger side wall
@@ -88,7 +88,7 @@ def find_total_truck_blind_area(NVPs, angles, DH, c, d, r = 0):
     blind = 0
     angles = list(map(float, angles))
     NVPs = list(map(float, NVPs))
-    DH = [float(DH), float(DH) * 2.54, float(DH), float(DH)]
+    a = [float(a), float(a) * 2.54, float(a), float(a)]
     c = [int(c), int(c * 2.54), int(c), int(c)]
     d = [int(d), int(d * 2.54), int(d), int(d)]
 
@@ -101,7 +101,7 @@ def find_total_truck_blind_area(NVPs, angles, DH, c, d, r = 0):
         theta = 0.5 * abs(-angles[i + 1] + angles[i])  # width of slice, divided in half for right angle math
         hood = find_rectangular_coordinate(c[r], d[r], angles[i])  # distance of edge of truck
         boundary = find_rectangular_coordinate(c[r] + e[r], d[r] + f[r], angles[i])  # distance of edge of interest
-        blindvolume = 2 * find_blind_volume(NVPs[i], DH[r], hood, boundary, ceiling[r], theta)  # blind volume in slice
+        blindvolume = 2 * find_blind_volume(NVPs[i], a[r], hood, boundary, ceiling[r], theta)  # blind volume in slice
         blind += blindvolume
 
     return blind
@@ -109,10 +109,10 @@ def find_total_truck_blind_area(NVPs, angles, DH, c, d, r = 0):
 # CASE SELECTOR
 
 
-def find_blind_volume(NVP, DH, hood, boundary, ceiling, theta):
+def find_blind_volume(NVP, a, hood, boundary, ceiling, theta):
     """
     NVP: horizontal distance to nearest visible point on ground
-    DH: driver eye height above ground
+    a: driver eye height above ground
     hood: horizontal distance to edge of truck in given direction
     boundary: horixontal distance to outside of area of interest
     ceiling: vertical height of area of interest
@@ -124,17 +124,17 @@ def find_blind_volume(NVP, DH, hood, boundary, ceiling, theta):
         # Case A and B
         #print('100% visibility')
         volume = find_total_slice_volume(hood, boundary, ceiling, theta)
-    elif DH < ceiling and NVP <= boundary:
+    elif a < ceiling and NVP <= boundary:
         # Case D
         #print('Case D')
-        volume = tetra_donut(hood, NVP, DH, theta)
-    elif DH < ceiling and NVP > boundary:
+        volume = tetra_donut(hood, NVP, a, theta)
+    elif a < ceiling and NVP > boundary:
         # Case F
         #print('Case F')
-        volume = trap_donut(hood, boundary, NVP, DH, theta)
-    elif DH > ceiling:
+        volume = trap_donut(hood, boundary, NVP, a, theta)
+    elif a > ceiling:
         # find where sight line intersects area of interest
-        T = radius(NVP, DH, ceiling)
+        T = radius(NVP, a, ceiling)
         if T > boundary:
             # Case J
             #print("0% visibility")
@@ -142,19 +142,19 @@ def find_blind_volume(NVP, DH, hood, boundary, ceiling, theta):
         elif T < hood and NVP < boundary:
             # Case C
             #print('Case C')
-            volume = tetra_donut(hood, NVP, DH, theta)
+            volume = tetra_donut(hood, NVP, a, theta)
         elif T < hood and NVP > boundary:
             # Case E
             #print('Case E')
-            volume = trap_donut(hood, boundary, NVP, DH, theta)
+            volume = trap_donut(hood, boundary, NVP, a, theta)
         elif hood < T < NVP < boundary:  # T always < NVP, just checking if both are between
             # Case G
             #print('Case G')
-            volume = capped_tetra_donut(hood, NVP, ceiling, DH, theta)
+            volume = capped_tetra_donut(hood, NVP, ceiling, a, theta)
         elif hood < T < boundary < NVP:  # T always < NVP, just checking if both are between
             # Case H
             #print('Case H')
-            volume = capped_trap_donut(hood, boundary, NVP, ceiling, DH, theta)
+            volume = capped_trap_donut(hood, boundary, NVP, ceiling, a, theta)
     else:
         volume = None
 
