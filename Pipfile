@@ -3,7 +3,7 @@ url = "https://pypi.python.org/simple"
 verify_ssl = true
 
 [packages]
-django = "3.2.8"
+django = "4.1.7"
 gunicorn = "*"
 django-heroku = "*"
 requests = "*"
