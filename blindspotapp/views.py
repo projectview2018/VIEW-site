@@ -220,8 +220,6 @@ def addvehicle(request):
     perc_vis = json_data['perc']
     b = json_data['b']
     d = json_data['d']
-    radial_distance = json_data['radial_distance']
-    driver_height = json_data['driver_height']
     comments = json_data['comments']
     agency = json_data['agency']
     image_name = json_data['image_name']
@@ -252,8 +250,7 @@ def addvehicle(request):
 
     # add record to database
     record = {"Full VIN": fullvin, "Partial VIN": partialvin, "Make": vmake, "Model": vmodel, "Weight Class": vgvwr,
-                "Year": vyear, "Body Class": bodyclass, "Percent Visible Volume": perc_vis[0], 'a':a, "b": b,'c':c, "d": d, "Radial Distance": radial_distance,
-                "Camera height above ground": driver_height, "Comments": comments, "Agency": agency,
+                "Year": vyear, "Body Class": bodyclass, "Percent Visible Volume": perc_vis[0], 'a':a, "b": b,'c':c, "d": d,  "Comments": comments, "Agency": agency,
                 'Percent Visible Volume in Front': perc_front[0],
                 'Percent Visible Volume in Passenger Side': perc_passenger[0],
                 'Preschool Children in Blindzone':preschool_children,
@@ -296,7 +293,7 @@ def getinterestarea(request):
     angles = json_data['phis']
     b = json_data['b']
     d = json_data['d']
-    a = json_data['DH']
+    a = json_data['a']
     c = json_data['c']
     print("c: ", c)
     print("b: ", b)
@@ -308,6 +305,9 @@ def getinterestarea(request):
         interest_area[i] = find_total_truck_interest_area(angles, b, d, i)
     print("starting stick figure")
     preschool_children, grade_school_children, grade_school_bicyclists, wheelchair_users,adult_bicyclists, adults = do_stick_figure_analyses(a,c,d)
+
+
+
     print("finished stick figure")
     return JsonResponse({"data": interest_area,
                         "preschool_children": preschool_children,
@@ -321,13 +321,16 @@ def getblindarea(request):
     json_data = json.loads(request.body.decode("utf-8"))
     NVPs = json_data['NVPs']
     angles = json_data['phis']
-    DH = json_data['DH']
+    print("phis: ", angles)
+    print("NVPs: ", NVPs)
+
+    a = json_data['a']
     b = json_data['b']
     d = json_data['d']
     blind_area = [0, 0, 0, 0]
     interest_area = [0, 0, 0, 0]
     for i in range(4):
-        blind_area[i] = find_total_truck_blind_area(NVPs, angles, DH, b, d, i)
+        blind_area[i] = find_total_truck_blind_area(NVPs, angles, a, b, d, i)
         interest_area[i] = find_total_truck_interest_area(angles, b, d, i)
     return JsonResponse({"data": blind_area, "total_volume":interest_area})
 

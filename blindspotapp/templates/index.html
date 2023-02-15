@@ -133,7 +133,7 @@
 			  <input type="radio"  name = "select_unit" id="enter_eu" onclick="edit_unit('centi')" />
 			</div>
           <label for="h">Camera height (or driver's eye height) above ground in inches:</label>
-           <input type="number" pattern="[0-9]*" class="form-control" id="dh" placeholder="Enter height eg: 63" min = "24" max = "324" onchange = "check_abcd()" required>
+           <input type="number" pattern="[0-9]*" class="form-control" id="a" placeholder="Enter height eg: 63" min = "24" max = "324" onchange = "check_abcd()" required>
           <small id="radiusdescript" class="form-text text-muted">Measurement 'A' in reference image above. The range of valid values is 24 - 324 in or 61 - 823 cm. </small>
         </div>
         <div class="form-group">
@@ -558,7 +558,7 @@
           image.src = img
         } else if (curr_step == 11) {
           //console.log("clear step 10");
-          document.getElementById('dh').value = "";
+          document.getElementById('a').value = "";
           document.getElementById('rd').value = "";
           document.getElementById("b").value = "";
           document.getElementById("d").value = "";
@@ -893,7 +893,7 @@
             total_volume_between = [0, 0, 0, 0];
             total_volume_passenger = [0, 0, 0, 0];
 
-            driver_height = Math.round(document.getElementById('dh').value * mult, 0);
+            driver_height = Math.round(document.getElementById('a').value * mult, 0);
             marks_dist = Math.round(document.getElementById('rd').value * mult, 0);
             b = Math.round(document.getElementById("b").value * mult, 0);
             d = Math.round(document.getElementById("d").value * mult, 0);
@@ -1177,6 +1177,13 @@
       ground_intersections_front.pop()
     }
 
+    console.log("phis_front")
+    console.log(phis_front)
+    console.log("fov_angle")
+    console.log(fov_angle)
+    console.log("ground_intersections_front")
+    console.log(ground_intersections_front)
+
 
 	calcBlindVolumeFront(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger);
 	make_json_string(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger);
@@ -1198,8 +1205,6 @@
     var headers = { 'content-type': 'application/json' };
     request.onload = function () {
       let response = this.response;
-      console.log("calcBlindVolumeFront");
-      console.log(response);
 
       try {
 		for (var i = 0; i < 4; i ++ ){
@@ -1207,14 +1212,6 @@
 			blind_volume_front[i] = response['data'][i];
 			total_volume_front[i] = response['total_volume'][i];
 		}
-        console.log(blind_volume);
-        console.log(blind_volume_front);
-        console.log(total_volume_front);
-        console.log(1-(blind_volume_front[0]/total_volume_front[0]));
-
-
-        //console.log("about to call calcblindvolumepassenger");
-
         calcBlindVolumePassenger(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger);
         step_11_html(false);
       } catch {
@@ -1223,7 +1220,7 @@
       }
     }
 	  request.open("POST", url);
-	  request.send(body = JSON.stringify({ 'NVPs': ground_intersections_front, 'phis': phis_front, 'DH': driver_height, 'b': b, 'd': d }));
+	  request.send(body = JSON.stringify({ 'NVPs': ground_intersections_front, 'phis': phis_front, 'a': driver_height, 'b': b, 'd': d }));
   }
 
   /*
@@ -1242,8 +1239,6 @@
     var headers = { 'content-type': 'application/json' };
     request.onload = function () {
       let response = this.response;
-      console.log("calcBlindVolumePassenger")
-      console.log(response);
 
 	  for (var i = 0; i < 4; i ++){
 		blind_volume[i] += response['data'][i];
@@ -1251,17 +1246,10 @@
 		total_volume_passenger[i] = response['total_volume'][i];
 	  }
 
-      console.log(blind_volume);
-      console.log(blind_volume_passenger);
-      console.log(total_volume_passenger);
-      console.log(1-(blind_volume_front[0]/total_volume_front[0]));
-
-      console.log(1-(blind_volume_passenger[0]/total_volume_passenger[0]));
-      console.log("about to call calcblindvoluembetween");
 		calcBlindVolumeBetween(phis_front, phis_passenger);
     }
     request.open("POST", url);
-    request.send(body = JSON.stringify({ 'NVPs': ground_intersections_passenger, 'phis': phis_passenger, 'DH': driver_height, 'b': b, 'd': d }));
+    request.send(body = JSON.stringify({ 'NVPs': ground_intersections_passenger, 'phis': phis_passenger, 'a': driver_height, 'b': b, 'd': d }));
 	  get_stick_c(ground_intersections_front, phis_front);
   }
 
@@ -1292,8 +1280,6 @@
     var headers = { 'content-type': 'application/json' };
     request.onload = function () {
       let response = this.response;
-      console.log("calcBlindVolumeBetween")
-      //console.log(response);
 
 	  for (var i = 0; i < 4; i ++ ) {
 		  blind_volume[i] += response['data'][i];
@@ -1301,16 +1287,11 @@
 		  total_volume_between[i] = response['data'][i];
 	  }
 
-      console.log(blind_volume);
-      console.log(blind_volume_between);
-      console.log(total_volume_between);
-      console.log(1-(blind_volume_between[0]/total_volume_between[0]));
       var phis = phis_front.concat(phis_passenger);
-	    console.log("about to call calctotalvolume");
       calcTotalVolume(phis);
     }
     request.open("POST", url);
-    request.send(body = JSON.stringify({ 'phis': bookend_phis, 'b': b, 'd': d, 'DH':driver_height,'c':marks_dist}), headers = headers);
+    request.send(body = JSON.stringify({ 'phis': bookend_phis, 'b': b, 'd': d, 'a':driver_height,'c':marks_dist}), headers = headers);
   }
 
   /*
@@ -1325,11 +1306,8 @@
     var headers = { 'content-type': 'application/json' };
     request.onload = function () {
       let response = this.response;
-      console.log("calcTotalVolume")
-      console.log(response);
 
       total_volume = response['data'];
-	  console.log(total_volume);
       preschool_children = response['preschool_children'];
       grade_school_children = response['grade_school_children'];
       grade_school_bicyclists = response['grade_school_bicyclists'];
@@ -1349,7 +1327,7 @@
 	  var c = -1 * marks_dist / ( 12/driver_height - 1);
 	  console.log("c values " + c + " " + stick_c);
     request.open("POST", url);
-    request.send(body = JSON.stringify({ 'phis': phis, 'b': b, 'd': d, 'DH':driver_height, 'c':Math.max(stick_c, c)}), headers = headers);
+    request.send(body = JSON.stringify({ 'phis': phis, 'b': b, 'd': d, 'a':driver_height, 'c':Math.max(stick_c, c)}), headers = headers);
   }
 
   /*
@@ -1384,7 +1362,7 @@
   }
 
 	function make_json_string(ground_front, ground_passenger, phis_front, phis_passenger ) {
-		var a = Math.round(document.getElementById('dh').value, 0);
+		var a = Math.round(document.getElementById('a').value, 0);
 		var c = Math.round(document.getElementById('rd').value, 0);
 		var b = Math.round(document.getElementById("b").value, 0);
 		var d = Math.round(document.getElementById("d").value, 0);
@@ -1617,7 +1595,7 @@
   currently, it only checks whether all of the values are less than 1, but this
   can be edited for more specific ranges */
   function check_abcd() {
-    var a = Math.round(document.getElementById('dh').value, 0);
+    var a = Math.round(document.getElementById('a').value, 0);
       var c = Math.round(document.getElementById('rd').value, 0);
       var b = Math.round(document.getElementById("b").value, 0);
       var d = Math.round(document.getElementById("d").value, 0);
