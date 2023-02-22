@@ -218,13 +218,13 @@ def addvehicle(request):
     vyear = json_data['vyear']
     bodyclass = json_data['bodyclass']
     perc_vis = json_data['perc']
+    a = json_data['a']
     b = json_data['b']
+    c = json_data['c']
     d = json_data['d']
     comments = json_data['comments']
     agency = json_data['agency']
     image_name = json_data['image_name']
-    a = json_data['a']
-    c = json_data['c']
     image_URL = json_data['image_URL']
     try :
         drawing_URL = json_data['drawing_URL']
@@ -251,6 +251,8 @@ def addvehicle(request):
     # add front and passenger nvps
     front_nvp, passenger_nvp = getfrontpassengernvps(phis_and_nvps)
 
+    grade_school_children_crosswalk, wheelchair_users_crosswalk,adults_crosswalk, grade_school_bicyclists_bikelane,  adult_bicyclists_bikelane = getdirectvisionstandards(a, b, d, phis_and_nvps)
+
 
     # add record to database
     record = {"Full VIN": fullvin, "Partial VIN": partialvin, "Make": vmake, "Model": vmodel, "Weight Class": vgvwr,
@@ -271,7 +273,12 @@ def addvehicle(request):
                 "passenger NVP":passenger_nvp,  
                 'Overhead Image String':overhead_string,
                 "Overall Vis Elem":perc_vis[2], "Front Vis Elem":perc_front[2], "Side Vis Elem":perc_passenger[2],
-                "Overall Vis Adult":perc_vis[3], "Front Vis Adult":perc_front[3], "Side Vis Adult":perc_passenger[3]}
+                "Overall Vis Adult":perc_vis[3], "Front Vis Adult":perc_front[3], "Side Vis Adult":perc_passenger[3],
+                "crosswalk elem child NVP":grade_school_children_crosswalk,
+                "crosswalk adult NVP":adults_crosswalk, "crosswalk wheelchair NVP": wheelchair_users_crosswalk, 
+                "bike lane elem child biker NVP":grade_school_bicyclists_bikelane,
+                "bike lane adult biker NVP": adult_bicyclists_bikelane
+                }
     # print(record)
     inserted_record = at.insert(record)
 
@@ -471,6 +478,54 @@ def getfrontpassengernvps(phis_and_NVPs):
     front_nvp = phis_and_NVPs_json['nvps'][start_point + 90]
 
     return front_nvp, passenger_nvp
+
+def crosswalkcalculation(vru_height, a,d, front_nvp):
+
+    # crosswalk calculations
+    # To calculate the distance to the VRU from the front of the cab we make a similar triangle  calculation. 
+
+    #Variables: height of VRU, a (drivers eye point to ground), d (driver to front of the cab), NVP directly in front of the driver. 
+
+    #First, we subtract a from VRU Height (this produces the opposite side of the small triangle). Then, we divide the product by a/NVP (this produces the adjacent side of the small triangle). Lastly, we subtract d because we are interested in the distance from the car to the VRU 
+
+    dist_to_vru = ((a-vru_height)/(a/front_nvp)) - d
+    return dist_to_vru
+
+
+def bikelanecalculation(vru_height, a,b, passenger_nvp):
+
+    dist_to_vru = ((a-vru_height)/(a/passenger_nvp)) - b
+    return dist_to_vru
+
+
+
+def getdirectvisionstandards(a, b, d, phis_and_NVPs):
+
+    # This function will relate our front and passenger NVPs to VRUs of interest 
+    # This will return the distance to the nearest visible VRU in inches
+    # only including for select group of VRUs but code is there for any VRU if helpful in the future
+
+    phis_and_NVPs_json = json.loads(phis_and_NVPs)
+    start_point = -int(phis_and_NVPs_json['phis'][0])
+    passenger_nvp = phis_and_NVPs_json['nvps'][start_point]
+    front_nvp = phis_and_NVPs_json['nvps'][start_point + 90]
+
+   # preschool_children_crosswalk = crosswalkcalculation(28, a,d, front_nvp)
+    grade_school_children_crosswalk = crosswalkcalculation(37, a,d, front_nvp)
+  #  grade_school_bicyclists_crosswalk = crosswalkcalculation(35, a,d, front_nvp)
+    wheelchair_users_crosswalk = crosswalkcalculation(39, a,d, front_nvp)
+  #  adult_bicyclists_crosswalk = crosswalkcalculation(47, a,d, front_nvp)
+    adults_crosswalk = crosswalkcalculation(49, a,d, front_nvp)
+
+  #  preschool_children_bikelane = bikelanecalculation(28, a,b, passenger_nvp)
+  #  grade_school_children_bikelane = bikelanecalculation(37, a,b, passenger_nvp)
+    grade_school_bicyclists_bikelane = bikelanecalculation(35, a,b, passenger_nvp)
+ #   wheelchair_users_bikelane = bikelanecalculation(39, a,b, passenger_nvp)
+    adult_bicyclists_bikelane = bikelanecalculation(47, a,b, passenger_nvp)
+ #   adults_bikelane = bikelanecalculation(49, a,b, passenger_nvp)
+    
+
+    return grade_school_children_crosswalk, wheelchair_users_crosswalk,adults_crosswalk, grade_school_bicyclists_bikelane,  adult_bicyclists_bikelane
 
 def getfrontvisible(vehicle):
     if ('Percent Visible Volume in Front' not in vehicle['fields']):
