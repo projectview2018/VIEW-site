@@ -249,7 +249,10 @@ def addvehicle(request):
     drawing = {"url": drawing_URL}
 
     # add front and passenger nvps
-    front_nvp, passenger_nvp = getfrontpassengernvps(phis_and_nvps)
+    front_nvp, passenger_nvp, NVP_tally = getfrontpassengernvps(phis_and_nvps)
+
+    forward_starrating = forward_visibility_calculation(perc_front)
+    passenger_starrating = passenger_visibility_calculation(perc_passenger)
 
     grade_school_children_crosswalk, wheelchair_users_crosswalk,adults_crosswalk, grade_school_bicyclists_bikelane,  adult_bicyclists_bikelane = getdirectvisionstandards(a, b, d, phis_and_nvps)
 
@@ -265,6 +268,9 @@ def addvehicle(request):
                 'Adults in Blindzone':adults,
                 'Total Front Volume':total_volume_front,'Total Passenger Volume':total_volume_passenger,
                 'Total A Pillar Volume':total_volume_between,
+                'A Pillar Width': NVP_tally,
+                'Forward Five Star Rating': int((forward_starrating)),
+                'Passenger Side Five Star Rating': int((passenger_starrating)),
                 "Percent Visible Volume (Metric Standard)": perc_vis[1],
                 'Percent Visible Volume in Front (Metric Standard)': perc_front[1],
                 'Percent Visible Volume in Passenger Side (Metric Standard)': perc_passenger[1],
@@ -476,12 +482,22 @@ def getfrontpassengernvps(phis_and_NVPs):
     start_point = -int(phis_and_NVPs_json['phis'][0])
     passenger_nvp = phis_and_NVPs_json['nvps'][start_point]
     front_nvp = phis_and_NVPs_json['nvps'][start_point + 90]
+    nvps_list = phis_and_NVPs_json['nvps']
+    nvps_max = max(nvps_list)
+    NVP_tally = 0 
+    for x in nvps_list:
+        if (x != nvps_max) & (NVP_tally ==0):
+            pass
+        if x == nvps_max:
+            NVP_tally += 1
+        elif (x != nvps_max) & (NVP_tally > 1):
+            break
 
-    return front_nvp, passenger_nvp
+    return front_nvp, passenger_nvp, NVP_tally
 
 def crosswalkcalculation(vru_height, a,d, front_nvp):
 
-    # crosswalk calculations
+    # crosswalk calculation:
     # To calculate the distance to the VRU from the front of the cab we make a similar triangle  calculation. 
 
     #Variables: height of VRU, a (drivers eye point to ground), d (driver to front of the cab), NVP directly in front of the driver. 
@@ -490,6 +506,53 @@ def crosswalkcalculation(vru_height, a,d, front_nvp):
 
     dist_to_vru = ((a-vru_height)/(a/front_nvp)) - d
     return dist_to_vru
+
+def forward_visibility_calculation(perc_front):
+
+    forward_starrating = 0
+
+    if (perc_front[2] & perc_front[3] < 48.0): 
+        forward_starrating = 5
+        return forward_starrating
+    elif (perc_front[2] < 72.0) & (perc_front[3] >= 48.0): 
+        forward_starrating = 4
+        return forward_starrating
+    elif (perc_front[2] < 96.0) & (perc_front[3] >= 72.0): 
+        forward_starrating = 3
+        return forward_starrating
+    elif (perc_front[2] < 120.0) & (perc_front[3] >= 96.0): 
+        forward_starrating = 2 
+        return forward_starrating
+    elif (perc_front[2] >= 120.0):
+        forward_starrating = 1 
+        return forward_starrating
+    else:
+        forward_starrating = 0
+        return forward_starrating
+
+
+def passenger_visibility_calculation(perc_passenger):
+    passenger_starrating = 0
+
+    if (perc_passenger[3] & perc_passenger[2] < 36.0): 
+        passenger_starrating = 5
+        return passenger_starrating
+    elif (perc_passenger[3] < 36.0) & (perc_passenger[2] >= 36.0): 
+        passenger_starrating = 4
+        return passenger_starrating
+    elif (perc_passenger[3] < 72.0) & (perc_passenger[2] >= 36.0): 
+        passenger_starrating = 3
+        return passenger_starrating
+    elif (perc_passenger[3] < 96.0) & (perc_passenger[2] >= 72.0 ): 
+        passenger_starrating = 2 
+        return passenger_starrating
+    elif (perc_passenger[3] >= 96.0):
+        passenger_starrating = 1 
+        return passenger_starrating
+    else:
+        passenger_starrating = 0
+        return passenger_starrating
+
 
 
 def bikelanecalculation(vru_height, a,b, passenger_nvp):
