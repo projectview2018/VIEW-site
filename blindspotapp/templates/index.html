@@ -1351,9 +1351,9 @@
     var ratio_passenger = (total_volume_passenger[r] - blind_volume_passenger[r]) / total_volume_passenger[r];
     var tperc_passenger = ratio_passenger * 100;
     var rounded_perc_passenger = Math.round(tperc_passenger, 0); // at this point we don't feel confident providing more percision
-    if (r == 0) {
-		  percentage.innerHTML = "Percent of volume visible: " + rounded_perc + "%, front: " + rounded_perc_front + "%, passenger: " + rounded_perc_passenger + "%";
-	  }
+    // if (r == 0) {
+		//  percentage.innerHTML = "Percent of volume visible: " + rounded_perc + "%, front: " + rounded_perc_front + "%, passenger: " + rounded_perc_passenger + "%";
+	  // }
     console.log("ratio: " + ratio);
 
     perc[r] = rounded_perc;
@@ -1501,14 +1501,16 @@
       'perc': perc, 'b': b, 'd': d, 'radial_distance': marks_dist,
       'driver_height': driver_height, 'image_name': fileName, 'image_URL': fileURL, 'drawing_URL': drawingURL,
       "comments": comments, "agency": agency,
-      'a': driver_height, 'c': marks_dist,
+      'a': driver_height, 'c': marks_dist, 
       'perc_front': perc_front, 'perc_passenger': perc_passenger,
       'preschool_children':preschool_children,
       'grade_school_children':grade_school_children, 'grade_school_bicyclists':grade_school_bicyclists,
       'wheelchair_users':wheelchair_users, 'adult_bicyclists':adult_bicyclists,
       'adults':adults,
       'total_volume_front':total_volume_front[0],'total_volume_passenger':total_volume_passenger[0],
-			'total_volume_between':total_volume_between[0], 'phis_and_nvps':json_string, 'top_string': top_string
+			'total_volume_between':total_volume_between[0], 'phis_and_nvps':json_string, 'top_string': top_string,
+
+
     }), headers = headers);
   }
 
