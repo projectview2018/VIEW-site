@@ -537,7 +537,7 @@ def add_VRU_top(fig, data, scale, s, index = 0, fast = True):
     #add legend
     drawing = ImageDraw.Draw(img)
     drawing.rectangle( (0, .65 * img.height - 8 * s, img.width, .65 * img.height + 10 * s), fill = "white")
-    font = ImageFont.truetype("blindspotapp/static/car_images/arial.ttf", int(5 * s) )
+    font = ImageFont.truetype("blindspotapp/static/car_images/Roboto-Regular.ttf", int(5 * s) )
     if num_people == 1:
         vru_names = ["preschool child", "elementary school child", "elementary school child on a bicycle", "adult in a wheelchair", "adult on a bicycle", "adult"]
     else:
@@ -658,7 +658,7 @@ def draw_children(img, start_width, children,  s = 10, index = 0):
     """
     """
     drawing = ImageDraw.Draw(img)
-    font = ImageFont.truetype("blindspotapp/static/car_images/arial.ttf", int(10 * s) )
+    font = ImageFont.truetype("blindspotapp/static/car_images/Roboto-Regular.ttf", int(10 * s) )
     if children == 1:
         drawing.text( (000, 000), str(children) + " VRU in blind zone", font = font, fill = "black" )
     else:
@@ -1496,7 +1496,7 @@ def legend_creation(img, s, children, index, mirrored = False):
     lab_h_delta = 16 * s #vertical distance between each elements in the legend
 
     drawing.rectangle( [img_width - 5 * s, 0, width, 50 * s], fill = "white", outline = "black", width = s )
-    font = ImageFont.truetype("blindspotapp/static/car_images/arial.ttf", 6 * s)
+    font = ImageFont.truetype("blindspotapp/static/car_images/Roboto-Regular.ttf", 6 * s)
 
     drawing.line( [ width - 50 * s, lab_height, width - 50* s, lab_height + 12 * s], fill = "brown", width = int( 2*s) );
     drawing.text((text_width, lab_height + 2 * s), "1 foot, for scale", font=font, fill=(0,0,0, 255))
@@ -1518,7 +1518,7 @@ def legend_creation(img, s, children, index, mirrored = False):
         new_img.paste( img, (0, 0) )
         drawing = ImageDraw.Draw(new_img)
 
-        font = ImageFont.truetype("blindspotapp/static/car_images/arial.ttf", 10 * s)
+        font = ImageFont.truetype("blindspotapp/static/car_images/Roboto-Regular.ttf", 10 * s)
         #create text string
         text = ""
         if mirrored:
