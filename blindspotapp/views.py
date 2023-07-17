@@ -244,7 +244,6 @@ def addvehicle(request):
     phis_and_nvps = json_data['phis_and_nvps']
     overhead_string = json_data['top_string']
 
-
     print(image_name)
     image = {"url": image_URL}
     drawing = {"url": drawing_URL}
@@ -284,8 +283,7 @@ def addvehicle(request):
                 "crosswalk elem child NVP":grade_school_children_crosswalk,
                 "crosswalk adult NVP":adults_crosswalk, "crosswalk wheelchair NVP": wheelchair_users_crosswalk, 
                 "bike lane elem child biker NVP":grade_school_bicyclists_bikelane,
-                "bike lane adult biker NVP": adult_bicyclists_bikelane,
-                
+                "bike lane adult biker NVP": adult_bicyclists_bikelane
                 }
     # print(record)
     inserted_record = at.insert(record)

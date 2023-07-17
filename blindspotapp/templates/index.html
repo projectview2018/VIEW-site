@@ -1445,7 +1445,10 @@
 		}
 		var measured = phis_max - phis_min;
 		var other_data = [b, d, max_rad, a];
-		json_string = JSON.stringify( { 'phis': phis, 'nvps':nvps, 'measured': measured, 'other':other_data, 'processed': 1 });
+		json_string = JSON.stringify( { 'phis': phis, 'nvps':nvps, 'measured': measured, 'other':other_data, 'processed': 1, "bottom_view_front": bottom_view_front,
+    "bottom_view_passenger":bottom_view_passenger,"color_marks":color_marks,
+    "neg_90":neg_90, 'zero':zero
+  });
 		/*
 		g_p = [];
 		for (i = 0; i < ground_passenger.length; i ++ ) {
@@ -1512,8 +1515,7 @@
       'wheelchair_users':wheelchair_users, 'adult_bicyclists':adult_bicyclists,
       'adults':adults,
       'total_volume_front':total_volume_front[0],'total_volume_passenger':total_volume_passenger[0],
-			'total_volume_between':total_volume_between[0], 'phis_and_nvps':json_string, 'top_string': top_string,
-
+			'total_volume_between':total_volume_between[0], 'phis_and_nvps':json_string, 'top_string': top_string
 
     }), headers = headers);
   }
