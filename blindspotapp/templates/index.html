@@ -132,23 +132,23 @@
 			  <label class = "radio-inline" for="enter_eu" >Centimeters</label>
 			  <input type="radio"  name = "select_unit" id="enter_eu" onclick="edit_unit('centi')" />
 			</div>
-          <label for="h">Camera height (or driver's eye height) above ground in inches:</label>
+          <label for="h">Camera height (or driver's eye height) above ground:</label>
            <input type="number" pattern="[0-9]*" class="form-control" id="a" placeholder="Enter height eg: 63" min = "24" max = "324" onchange = "check_abcd()" required>
           <small id="radiusdescript" class="form-text text-muted">Measurement 'A' in reference image above. The range of valid values is 24 - 324 in or 61 - 823 cm. </small>
         </div>
         <div class="form-group">
-          <label for="b">Distance from drivers's eye/camera to passenger window in inches:</label>
+          <label for="b">Distance from drivers's eye/camera to passenger window:</label>
            <input type="number" pattern="[0-9]*" class="form-control" id="b" placeholder="Enter distance eg: 45" min = "24" max = "126" onchange = "check_abcd()"  required>
           <small id="radiusdescript" class="form-text text-muted">Measurement 'B' in reference image above. The range of valid values is 24 - 126 in or 61 - 320 cm.</small>
         </div>
         <div class="form-group">
-          <label for="r">Radial distance from driver to measurement stick in inches:</label>
+          <label for="r">Distance from driver to measurement stick:</label>
            <input type="number" pattern="[0-9]*" class="form-control" id="rd" placeholder="Enter distance eg: 94" min = "12" max = "1200" onchange = "check_abcd()" required>
           <small id="radiusdescript" class="form-text text-muted">Measurement 'C' in reference image above. This is not the
             hypotenuse, but the distance along the ground. The range of valid values is 12 - 1200 in or 30 - 3048 cm.</small>
         </div>
         <div class="form-group">
-          <label for="d">Distance from driver's eye/camera to front bumper of vehicle in inches:</label>
+          <label for="d">Distance from driver's eye/camera to front bumper of vehicle:</label>
           <input type="number" pattern="[0-9]*" class="form-control" id="d" placeholder="Enter distance eg: 84" min = "1" max = "192" onchange = "check_abcd()" required>
           <small id="radiusdescript" class="form-text text-muted">Measurement 'D' in reference image above. The range of valid values is 1 - 192 in or 2 - 488 cm. This value must be smaller than measurement 'C'.</small>
         </div>
