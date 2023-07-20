@@ -243,6 +243,9 @@ def addvehicle(request):
     total_volume_between = json_data['total_volume_between']
     phis_and_nvps = json_data['phis_and_nvps']
     overhead_string = json_data['top_string']
+    color_marks = json_data['color_marks']
+    neg_90 = json_data['neg_90']
+    zero = json_data['zero']
 
     print(image_name)
     image = {"url": image_URL}
@@ -283,7 +286,10 @@ def addvehicle(request):
                 "crosswalk elem child NVP":grade_school_children_crosswalk,
                 "crosswalk adult NVP":adults_crosswalk, "crosswalk wheelchair NVP": wheelchair_users_crosswalk, 
                 "bike lane elem child biker NVP":grade_school_bicyclists_bikelane,
-                "bike lane adult biker NVP": adult_bicyclists_bikelane
+                "bike lane adult biker NVP": adult_bicyclists_bikelane,
+                "color_marks":color_marks,
+                "neg_90": neg_90,
+                "zero": zero
                 }
     # print(record)
     inserted_record = at.insert(record)
