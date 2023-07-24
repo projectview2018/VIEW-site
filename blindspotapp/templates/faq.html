@@ -6,21 +6,26 @@
 <link rel="stylesheet" type="text/css" href="{% static 'blindspotapp/home.css' %}">
 {% endblock %}
 <html>
+	<style>
+		body{
+			font-family: Roboto, sans-serif;
+		}
+	</style>
 
 {% include 'header.html' %}
 
 <div class="container">
-	<h2 style="font-famiy: Roboto, sans-serif; color:#2B2D42;">Frequently Asked Questions</h2>
-	<h3 style="font-famiy: Roboto, sans-serif; color:#2B2D42;"> Direct Vision and Blindzones</h3>
+	<h2 style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">Frequently Asked Questions</h2>
+	<h3 style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;"> Direct Vision and Blindzones</h3>
 	<div class="accordion accordion-flush" id="accordionExample">
 
 		<div class="accordion-item">
-			<h2 class="accordion-header" id="heading1" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#info1" aria-expanded="false" aria-controls="info1" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42;">
+			<h2 class="accordion-header" id="heading1" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#info1" aria-expanded="false" aria-controls="info1" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42; font-weight: 500;">
 				What is direct vision?
 				</button>
 			</h2>
-			<div id="info1" class="accordion-collapse collapse" aria-labelledby="heading1" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
+			<div id="info1" class="accordion-collapse collapse" aria-labelledby="heading1" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
 				<div class="accordion-body">
 				<p>Direct vision is anything that can be seen by a driver directly - without the help of any device such as a mirror or a camera.</p>
 				<p></p>
@@ -29,24 +34,24 @@
 			</div>
 		</div>
 		<div class="accordion-item">
-			<h2 class="accordion-header" id="headinginfo2" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#info2" aria-expanded="false" aria-controls="info2" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42;">
+			<h2 class="accordion-header" id="headinginfo2" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#info2" aria-expanded="false" aria-controls="info2" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42; font-weight: 500;">
 				Why is direct vision important?
 				</button>
 			</h2>
-			<div id="info2" class="accordion-collapse collapse" aria-labelledby="heading2" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
+			<div id="info2" class="accordion-collapse collapse" aria-labelledby="heading2" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
 				<div class="accordion-body">
 				<a href = "https://content.tfl.gov.uk/road-safety-benefits-of-direct-vs-indirect-vision-in-hgv-cabs-technical.pdf"> Research shows </a> that drivers respond 0.7 seconds faster with direct vision than with indirect vision. In addition, according to <a href="http://content.tfl.gov.uk/road-safety-benefits-of-direct-vs-indirect-vision-in-hgv-cabs-summary.pdf"> a study done by the University of Leeds,</a> drivers react up to 50% faster to hazards in their direct vision compared to indirect vision. With these statistics, <a href = "https://deepblue.lib.umich.edu/bitstream/handle/2027.42/58728/99830.pdf?sequence=1&isAllowed=y" > various authorities and industry organizations </a> have increased their attention to direct vision as a derteminant of VRU safety. 
 				</div>
 			</div>
 		</div>
 		<div class="accordion-item">
-			<h2 class="accordion-header" id="headinginfo3" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#info3" aria-expanded="false" aria-controls="info3" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42;">
+			<h2 class="accordion-header" id="headinginfo3" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#info3" aria-expanded="false" aria-controls="info3" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42; font-weight: 500;">
 				What is a blind zone?
 				</button>
 			</h2>
-			<div id="info3" class="accordion-collapse collapse" aria-labelledby="heading3" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
+			<div id="info3" class="accordion-collapse collapse" aria-labelledby="heading3" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
 				<div class="accordion-body">
 				<p>A vehicle’s blind zone is the area around the vehicle that cannot be seen directly by the current driver. A blind zone can hold many <b> vulnerable road users, </b> increasing the crash risk. Larger and heavier vehicles like trucks tend to have larger blind zones than smaller vehicles, like passenger cars.</p>
 				<p></p>
@@ -55,52 +60,52 @@
 			</div>
 		</div>
 		<div class="accordion-item">
-			<h2 class="accordion-header" id="headinginfo4" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#info4" aria-expanded="false" aria-controls="info4" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42;">
+			<h2 class="accordion-header" id="headinginfo4" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#info4" aria-expanded="false" aria-controls="info4" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42; font-weight: 500;">
 				What is a Vulnerable Road User?
 				</button>
 			</h2>
-			<div id="info4" class="accordion-collapse collapse" aria-labelledby="headinginfo4" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
+			<div id="info4" class="accordion-collapse collapse" aria-labelledby="headinginfo4" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
 				<div class="accordion-body">
 				<i> Vulnerable Road Users </i> include pedestrians, cyclists, and people who use wheelchairs. In 2021, they accounted for the approximate 20% of the 42,915 people who were killed in motor vehicle crashes. These fatalities have increased by 13% since 2020, <a href = "https://highways.dot.gov/newsroom/us-department-transportation-announces-new-guidance-improve-safety-vulnerable-road-users" > according to the USDOT Federal Highway Administration. </a>
 				</div>
 			</div>
 		</div>
 	</div>
-	<h3 style = "font-family: Roboto, sans-serif; color: #2B2D42;">This Website</h3>
+	<h3 style = "font-family: Roboto, sans-serif; color: #2B2D42; font-weight: 500;">This Website</h3>
 	<div class="accordion accordion-flush" id="accordionExample">
 
 		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingwebsite4" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#website4" aria-expanded="false" aria-controls="website4" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42;">
+			<h2 class="accordion-header" id="headingwebsite4" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#website4" aria-expanded="false" aria-controls="website4" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42; font-weight: 500;">
 				What is the VIEW app?
 				</button>
 			</h2>
-			<div id="website4" class="accordion-collapse collapse" aria-labelledby="heading" style="font-famiy: Roboto, sans-serif; color:#2B2D42;" style ="font-family: Roboto, sans-serif;  color:#2B2D42;">
+			<div id="website4" class="accordion-collapse collapse" aria-labelledby="heading" style="font-famiy: Roboto, sans-serif; color:#2B2D42;" style ="font-family: Roboto, sans-serif;  color:#2B2D42; font-weight: 500;">
 				<div class="accordion-body">
 				The VIEW application is a website which aims to create <b> a crowd-sourced database </b> that documents the blind zones of different cars and trucks. Our goal is to raise awareness about blind zones among consumers, from individuals buying a passenger car for themselves, to fleet managers looking to buy safer trucks for a whole city. 
 				</div>
 			</div>
 		</div>
 		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingwebsite5" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#website5" aria-expanded="false" aria-controls="website5" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42;">
+			<h2 class="accordion-header" id="headingwebsite5" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#website5" aria-expanded="false" aria-controls="website5" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42; font-weight: 500;">
 				Who can use this website?
 				</button>
 			</h2>
-			<div id="website5" class="accordion-collapse collapse" aria-labelledby="heading" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
+			<div id="website5" class="accordion-collapse collapse" aria-labelledby="heading" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
 				<div class="accordion-body">
 				Anyone who is looking into acquiring a vehicle or is interested in our results can browse the "Visualize" tab. In addition, if you have access to a vehicle, feel free to add it to our database. 
 				</div>
 			</div>
 		</div>
 		<div class="accordion-item">
-			<h2 class="accordion-header" id="headingwebsite6" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#website6" aria-expanded="false" aria-controls="website6" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42;">
+			<h2 class="accordion-header" id="headingwebsite6" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#website6" aria-expanded="false" aria-controls="website6" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42; font-weight: 500;">
 				Is this a final version of the website?
 				</button>
 			</h2>
-			<div id="website6" class="accordion-collapse collapse" aria-labelledby="heading" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
+			<div id="website6" class="accordion-collapse collapse" aria-labelledby="heading" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
 				<div class="accordion-body">
 				This site is an on-going Volpe project and is therefore constantly being upgraded on. The VIEW app contains baseline features and functionality, including calculations of percent visibility from the driver's seat in the front and side directions. More recently, we have added data visualizations and some blind zone visuals. They are visible on the "Visualize" tab and after adding a vehicle, respectively. We always welcome feedback about this version, and look forward to the opportunity to grow and expand this site. (Our contact information can be found below)
 				</div>
@@ -108,22 +113,22 @@
 		</div>
 	</div>
 
-	<h3 style="font-famiy: Roboto, sans-serif; color:#2B2D42;">Measurements</h3>
+	<h3 style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">Measurements</h3>
 	<div class="accordion accordion-flush" id="accordionExample">
 
 		{% include 'faq_measurements.html' %}
 	</div>
 
-	<h3 style="font-famiy: Roboto, sans-serif; color:#2B2D42;">Specific Pages</h3>
+	<h3 style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">Specific Pages</h3>
 	<div class="accordion accordion-flush" id="accordionExample">
 
 		<div class="accordion-item">
-			<h2 class="accordion-header" id="heading7" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
-				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#question7" aria-expanded="false" aria-controls="question7" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42;">
+			<h2 class="accordion-header" id="heading7" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#question7" aria-expanded="false" aria-controls="question7" id = "button_text" style ="font-family: Roboto, sans-serif;  color:#2B2D42; font-weight: 500;">
 				How do I add my vehicle to the database?
 				</button>
 			</h2>
-			<div id="question7" class="accordion-collapse collapse" aria-labelledby="heading" style="font-famiy: Roboto, sans-serif; color:#2B2D42;">
+			<div id="question7" class="accordion-collapse collapse" aria-labelledby="heading" style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500;">
 				<div class="accordion-body">
 				To add your vehicle, all you need is a phone, a tape measure, a 5-foot tall pole, and 20 minutes of your time. The “Add Vehicle” page of our website contains text instructions and a video to help you input your vehicle.
 				</div>
@@ -132,7 +137,7 @@
 		{% include 'faq_visualize.html' %}
 
 	</div>
-	<h3 style="font-famiy: Roboto, sans-serif; color:#2B2D42; text-align: center;">Please contact blindzoneapp@dot.gov if you have any other questions or concerns, or if your organization is interested in working with us.</h3>
+	<h3 style="font-famiy: Roboto, sans-serif; color:#2B2D42; font-weight: 500; text-align: center;">Please contact blindzoneapp@dot.gov if you have any other questions or concerns, or if your organization is interested in working with us.</h3>
 </div>
 
 <!--
