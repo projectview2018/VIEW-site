@@ -328,6 +328,11 @@
 <!-- <div id="bottom"></div> -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
 </html>
+<style>
+  canvas:hover{
+    cursor:crosshair;
+  }
+</style>
 
 <script type="text/javascript">
   // clear button
@@ -408,7 +413,6 @@
 
   // this entire function is called after the panoramic image loads
   function c(img) {
-
     // creates new canvas element and appends it as a child to the parent element,
     // and returns the reference to the newly created canvas element
     function createCanvas(parent, width, height) {
@@ -476,7 +480,6 @@
     // ctx is canvas context, width and height are dimensions of canvas
     function addCanvasPoints(ctx, width, height) {
       ctx.strokeStyle = '#ffcc00';
-
       // add foot markings by drawing horizontal strokes across the entire canvas
       for (i = 0; i < color_marks.length; i++) {
         ctx.beginPath();
@@ -522,7 +525,8 @@
         this.moveTo(x, y);
         this.arc(x, y, radius, 0, Math.PI * 2, false);
         this.fill();
-      };
+      }
+      ;
 
       ctx.addClear = function (img) {
         // <= 10 instead of = 9 because the below if statements are done so that curr_step is always one step ahead
