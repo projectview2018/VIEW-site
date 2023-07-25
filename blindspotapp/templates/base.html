@@ -52,6 +52,7 @@
       color: inherit;
     }
 
+
     button.close {
       -webkit-appearance: none;
       padding: 0;
@@ -160,6 +161,22 @@
 
     .unhidden {
       display: block;
+    }
+
+    .accordion-button:not(.collapsed) {
+      background-color: #F1F2F5;
+      border-color: #D4D9E1;
+      outline:none;
+      box-shadow:none;
+    }
+
+    .accordion-button::after{
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%232B2D42'><path fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/></svg>") !important;
+    }
+
+    button.accordion-button:focus{
+      box-shadow:none;
+      outline: none;
     }
 
     .youtube {
@@ -903,6 +920,7 @@
 		to{
 			-webkit-transform:rotate(360deg);
 			transform:rotate(360deg)
+
 	}}
 	@keyframes spinner-border {
 		to{
