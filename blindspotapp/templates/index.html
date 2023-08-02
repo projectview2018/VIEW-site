@@ -101,9 +101,6 @@
   <p id=loadmessage class="unhidden" style="font-size:15px;color:#2B2D42; font-family: Roboto, sans-serif; ">(Photo may take up to 10 seconds to load)</p>
   <p id="network_error" class="unhidden" style="font-size:15px;color:#2B2D42; font-family: Roboto, sans-serif; ">If using an unstable internet connection or a VPN, the photo might not be uploaded to our database. VIEW also works best on Chrome.</p>
   <div id="canvas" class="hidden" style="font-size:20px;color:#2B2D42;">Click to draw<br /></div>
-  <div id="measurementpole" class="hidden">
-    <img src="static/measurement_pole.jpg" style="float:right;width:200px;height:300px" />
-  </div>
   <br>
   <div id="steps" class="hidden">
     <div id="buttons" class="unhidden">
@@ -125,7 +122,7 @@
       <form>
         <div class="form-group">
           <div id="vehiclemeasurements">
-            <img src="static/vehiclemeasurements.jpg" style="vertical-align:middle;width:751px;height:547px" />
+            <img src="static/vehiclemeasurements.jpg" style="vertical-align:middle;width:751px;height:547px" />  
             </div>
             <br>
 			 <label for="h">Choose your input units:</label>
@@ -605,7 +602,9 @@
             var avg = getAverage(coords);
             color_marks.push(avg); // adds avg to the end of the color_marks array
             coords = [];
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): If the " + curr_step + " foot mark (M" + curr_step + ") is visible on the measurement pole, use your finger or your mouse to draw a small horizontal line on the mark. After making a line on the mark, hit next. If the mark is not visible, click next. Press clear if any errors are made.";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "If the " + curr_step + " foot mark (M" + curr_step + ") is visible on the measurement pole, use your finger or your mouse to draw a small horizontal line on the mark. After making a line on the mark, hit next. If the mark is not visible, click next. Press clear if any errors are made.";
             if (prev_step >2){
               curr_step += 1;
             }
@@ -615,7 +614,9 @@
             var avg = getAverage(coords);
             color_marks.push(avg); // save color marks representing feet
             coords = [];
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw a vertical line at 90 degrees (directly in front of the driver where the measuring stick was placed).";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw a vertical line at 90 degrees (directly in front of the driver where the measuring stick was placed).";
             curr_step += 1;
             console.log("after if statement: ", curr_step);
           } else if (curr_step == 7) {
@@ -623,7 +624,9 @@
             var avg = getAverage(coords);
             zero = avg; // save zero degree point
             coords = [];
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw vertical line at 0 degrees (directly to the right of the driver out of passenger window).";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw vertical line at 0 degrees (directly to the right of the driver out of passenger window).";
             curr_step += 1;
             console.log("after if statement: ", curr_step);
           } else if (curr_step == 8) {
@@ -631,7 +634,9 @@
             var avg = getAverage(coords);
             neg_90 = avg; // save negative 90 degree point
             coords = [];
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw line along the bottom of the front field of view. Please make sure that there are as few unintended gaps between dots as possible.";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw line along the bottom of the front field of view. Please make sure that there are as few unintended gaps between dots as possible.";
             curr_step += 1
             console.log("after if statement: ", curr_step);
           } else if (curr_step == 9) {
@@ -685,7 +690,9 @@
                 item.className = 'unhidden';
               }
             }
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw line along the bottom of the passenger side field of view. Be sure to draw above the sideview mirror. Please make sure that there are as few unintended gaps between dots as possible.";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw line along the bottom of the passenger side field of view. Be sure to draw above the sideview mirror. Please make sure that there are as few unintended gaps between dots as possible.";
             coords = [];
             curr_step += 1;
             console.log("after if statement: ", curr_step);
@@ -765,7 +772,9 @@
             var avg = getAverage(coords);
             color_marks.push(avg);
             coords = [];
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): If the " + curr_step + " foot mark (M" + curr_step + ") is visible on the measurement pole, use your finger or your mouse to draw a small horizontal line on the mark. After making a line on the mark, hit next. If the mark is not visible, click next. Press clear if any errors are made.";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "If the " + curr_step + " foot mark (M" + curr_step + ") is visible on the measurement pole, use your finger or your mouse to draw a small horizontal line on the mark. After making a line on the mark, hit next. If the mark is not visible, click next. Press clear if any errors are made.";
             var item = document.getElementById("canvastips");
             if (item) {
               if (item.className == 'hidden') {
@@ -780,7 +789,9 @@
             var avg = getAverage(coords);
             color_marks.push(avg); // save color marks representing feet
             coords = [];
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw a vertical line at 0 degrees (directly in front of the driver where the measuring stick was placed).";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw a vertical line at 0 degrees (directly in front of the driver where the measuring stick was placed).";
             curr_step += 1;
             console.log("after next if statement: ", curr_step);
           } else if (curr_step == 7) {
@@ -788,7 +799,9 @@
             var avg = getAverage(coords);
             zero = avg; // save zero degree point
             coords = [];
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw vertical line at 90 degrees (directly to the right of the driver out of passenger window).";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw vertical line at 90 degrees (directly to the right of the driver out of passenger window).";
             curr_step += 1;
             console.log("after next if statement: ", curr_step);
           } else if (curr_step == 8) {
@@ -796,13 +809,17 @@
             var avg = getAverage(coords);
             neg_90 = avg; // save negative 90 degree point
             coords = [];
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw line along the bottom of the front field of view. Please make sure that there are as few unintended gaps between dots as possible.";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw line along the bottom of the front field of view. Please make sure that there are as few unintended gaps between dots as possible.";
             curr_step += 1
             console.log("after next if statement: ", curr_step);
           } else if (curr_step == 9) {
 			      $(document.getElementById('btn_next1')).addClass("disabled");
             bottom_view_front = coords;
-            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Draw line along the bottom of the passenger side field of view. Be sure to draw above the sideview mirror. Please make sure that there are as few unintended gaps between dots as possible.";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw line along the bottom of the passenger side field of view. Be sure to draw above the sideview mirror. Please make sure that there are as few unintended gaps between dots as possible.";
             step8_coords = coords;
             coords = [];
             curr_step += 1;
