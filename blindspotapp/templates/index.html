@@ -1086,8 +1086,8 @@
           inches_val += increment;
         }
       } else if (color_marks[i]) { // end of the list
-        var diff = color_marks[i - 1] - color_marks[i];
-        var increment = 12 / diff;
+        var diff = color_marks[i - 1] - color_marks[i]; //positive val difference in heights (inches per pixel)
+        var increment = 12 / diff; 
         var inches_val = i * 12;
         // we extend upward to handle all trucks
         for (var j = color_marks[i]; j >= color_marks[i] - (diff * 5); j--) {
