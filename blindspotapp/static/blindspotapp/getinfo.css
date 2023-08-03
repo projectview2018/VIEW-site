@@ -4,6 +4,7 @@
 }
 
 .grid-container-1 {
+
   display: grid;
   grid-template-columns: auto;
   padding: 10px;
@@ -39,8 +40,10 @@
   
 }
 .grid-item-4 {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.8);
+  /*background-color: rgba(255, 255, 255, 0.8);*/
+  border: 1px dashed #2B2D42;
+ /* border-image-width: 5;
+  border-image-slice: 2;*/
   padding: 10px;
   font-size: 20px;
   text-align: center;
