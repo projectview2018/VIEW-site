@@ -1,0 +1,229 @@
+.vehicle-database-loading-container {
+  width: 100%;
+  display: flex;
+  overflow: auto;
+  min-height: 100vh;
+  align-items: center;
+  flex-direction: column;
+}
+.vehicle-database-loading-vehicle-database-loading {
+  width: 100%;
+  height: 1024px;
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  align-items: flex-start;
+  flex-shrink: 0;
+  background-color: rgba(255, 255, 255, 1);
+}
+.vehicle-database-loading-rectangle24 {
+  top: 100px;
+  left: 0px;
+  width: 1440px;
+  height: 238px;
+  position: absolute;
+  border-radius: 5px;
+}
+.vehicle-database-loading-text {
+  top: 140px;
+  left: 48px;
+  color: var(--dl-color-text-darktext);
+  height: auto;
+  position: absolute;
+  text-align: left;
+  line-height: normal;
+}
+.vehicle-database-loading-text02 {
+  top: 225px;
+  left: 48px;
+  color: var(--dl-color-text-darktext);
+  width: 1344px;
+  height: auto;
+  position: absolute;
+  text-align: left;
+  line-height: normal;
+}
+.vehicle-database-loading-text04 {
+  top: 589px;
+  left: 617px;
+  color: rgba(0, 0, 0, 1);
+  height: auto;
+  position: absolute;
+  text-align: left;
+  line-height: normal;
+}
+.vehicle-database-loading-loading-animationv2 {
+  top: 473px;
+  left: 678.48193359375px;
+  width: 84px;
+  height: 84.31055450439453px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+.vehicle-database-loading-subtract {
+  top: 0px;
+  left: 0px;
+  width: 84px;
+  height: 84px;
+  position: absolute;
+}
+.vehicle-database-loading-footer {
+  top: 864px;
+  left: 0px;
+  width: 1440px;
+  height: 160px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+.vehicle-database-loading-rectangle8 {
+  top: 0px;
+  left: 0px;
+  width: 1440px;
+  height: 160px;
+  position: absolute;
+}
+.vehicle-database-loading-text06 {
+  top: 20px;
+  left: 24px;
+  color: rgba(255, 255, 255, 1);
+  width: 264px;
+  height: auto;
+  position: absolute;
+  font-size: 20px;
+  font-style: SemiBold;
+  text-align: left;
+  font-family: Roboto;
+  font-weight: 600;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.vehicle-database-loading-text11 {
+  top: 20px;
+  left: 359px;
+  color: rgba(255, 255, 255, 1);
+  width: 1057px;
+  height: auto;
+  position: absolute;
+  font-size: 16px;
+  font-style: italic;
+  text-align: left;
+  font-family: Roboto;
+  font-weight: 400;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.vehicle-database-loading-nav-bar {
+  top: 0px;
+  left: 0px;
+  width: 1440px;
+  height: 100px;
+  display: flex;
+  position: absolute;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+.vehicle-database-loading-rectangle9 {
+  top: 0px;
+  left: 0px;
+  width: 1440px;
+  height: 100px;
+  position: absolute;
+}
+.vehicle-database-loading-frame1 {
+  gap: 46px;
+  top: 20px;
+  left: 777px;
+  width: 627px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+}
+.vehicle-database-loading-text13 {
+  color: var(--dl-color-text-whitetext);
+  height: auto;
+  font-size: 24px;
+  font-style: SemiBold;
+  text-align: center;
+  font-family: Roboto;
+  font-weight: 600;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.vehicle-database-loading-text15 {
+  color: var(--dl-color-text-whitetext);
+  height: auto;
+  font-size: 24px;
+  font-style: SemiBold;
+  text-align: center;
+  font-family: Roboto;
+  font-weight: 600;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.vehicle-database-loading-text17 {
+  color: var(--dl-color-text-whitetext);
+  width: 57px;
+  height: auto;
+  font-size: 24px;
+  font-style: SemiBold;
+  text-align: center;
+  font-family: Roboto;
+  font-weight: 600;
+  line-height: normal;
+  font-stretch: normal;
+  text-decoration: none;
+}
+.vehicle-database-loading-component1 {
+  width: 180px;
+  height: 60px;
+  display: flex;
+  position: relative;
+  align-items: flex-start;
+  flex-shrink: 0;
+}
+.vehicle-database-loading-rectangle10 {
+  top: 0px;
+  left: 0px;
+  width: 180px;
+  height: 60px;
+  position: absolute;
+  border-radius: 29px;
+}
+.vehicle-database-loading-text19 {
+  top: 16px;
+  left: 26px;
+  color: var(--dl-color-text-whitetext);
+  height: auto;
+  position: absolute;
+  text-align: center;
+  line-height: normal;
+}
+.vehicle-database-loading-frame2 {
+  gap: 16px;
+  top: 28px;
+  left: 26px;
+  width: 382px;
+  display: flex;
+  position: absolute;
+  align-items: center;
+}
+.vehicle-database-loading-text21 {
+  color: var(--dl-color-text-whitetext);
+  height: auto;
+  font-size: 36px;
+  font-style: italic;
+  text-align: left;
+  font-family: Roboto;
+  font-weight: 700;
+  line-height: normal;
+  font-stretch: condensed;
+  text-decoration: none;
+}

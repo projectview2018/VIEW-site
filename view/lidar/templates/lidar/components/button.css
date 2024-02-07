@@ -1,0 +1,32 @@
+.button-container {
+  display: flex;
+  position: relative;
+}
+.button-button {
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  transition: 0.3s;
+  background-color: var(--dl-color-secondaryblue-secondaryblue);
+}
+.button-button:focus {
+  box-shadow: 0px 3px 4px 2px rgba(0, 0, 0, 0.25);
+  background-color: var(--dl-color-secondaryblue-secondarybluebuttonfocus);
+}
+.button-button:hover {
+  box-shadow: 0px 3px 4px 2px rgba(0, 0, 0, 0.25);
+  background-color: var(--dl-color-secondaryblue-secondarybluebuttonfocus);
+}
+.button-button:active {
+  color: var(--dl-color-text-whitetext);
+  box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.15);
+  background-color: var(--dl-color-secondaryblue-secondarybluedark);
+}
+.button-button:disabled {
+  background-color: var(--dl-color-secondaryblue-secondarybluelight);
+}
+.button-text {
+  font-style: normal;
+  font-stretch: normal;
+}
+.button-root-class-name {
+  align-self: center;
+}

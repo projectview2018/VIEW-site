@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="english">
+  <head>
+    <title>exported project</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta property="twitter:card" content="summary_large_image" />
+
+    <style data-tag="reset-style-sheet">
+      html {  line-height: 1.15;}body {  margin: 0;}* {  box-sizing: border-box;  border-width: 0;  border-style: solid;}p,li,ul,pre,div,h1,h2,h3,h4,h5,h6,figure,blockquote,figcaption {  margin: 0;  padding: 0;}button {  background-color: transparent;}button,input,optgroup,select,textarea {  font-family: inherit;  font-size: 100%;  line-height: 1.15;  margin: 0;}button,select {  text-transform: none;}button,[type="button"],[type="reset"],[type="submit"] {  -webkit-appearance: button;}button::-moz-focus-inner,[type="button"]::-moz-focus-inner,[type="reset"]::-moz-focus-inner,[type="submit"]::-moz-focus-inner {  border-style: none;  padding: 0;}button:-moz-focus,[type="button"]:-moz-focus,[type="reset"]:-moz-focus,[type="submit"]:-moz-focus {  outline: 1px dotted ButtonText;}a {  color: inherit;  text-decoration: inherit;}input {  padding: 2px 4px;}img {  display: block;}html { scroll-behavior: smooth  }
+    </style>
+    <style data-tag="default-style-sheet">
+      html {
+        font-family: Inter;
+        font-size: 16px;
+      }
+
+      body {
+        font-weight: 400;
+        font-style:normal;
+        text-decoration: none;
+        text-transform: none;
+        letter-spacing: normal;
+        line-height: 1.15;
+        color: var(--dl-color-gray-black);
+        background-color: var(--dl-color-gray-white);
+
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&amp;display=swap"
+      data-tag="font"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&amp;display=swap"
+      data-tag="font"
+    />
+
+    <!--This is the head section-->
+    <!-- <style> ... </style> -->
+    <style>
+      /*** Begin file selector button styling ***/
+      /* Style file selector button */
+      input[type="file"]::file-selector-button {
+        border: none;
+        height: 50px;
+        padding: 0.5rem 1.25rem;
+        border-radius: 150px;
+        box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+        background-color: var(--dl-color-secondaryblue-secondaryblue);
+        color: var(--dl-color-text-whitetext);
+        font-size: 20px;
+        font-family: Roboto;
+        font-weight: 500;
+        line-height: 1.15;
+        text-transform: none;
+        text-decoration: none;
+        transition: 0.3s;
+      }
+
+      /* Style file selector button (focus/hover)*/
+      input[type="file"]::file-selector-button:hover, input[type="file"]::file-selector-button:focus{
+        box-shadow: 0px 3px 4px 2px rgba(0, 0, 0, 0.25);
+        background-color: var(--dl-color-secondaryblue-secondarybluebuttonfocus);
+      }
+
+      /* Style file selector button (active)*/
+      input[type="file"]::file-selector-button:active{
+        box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.15);
+        background-color: var(--dl-color-secondaryblue-secondarybluedark);
+      }
+
+      /* Style file selector button (disabled)*/
+      input[type="file"]::file-selector-button:disabled{
+        background-color: var(--dl-color-secondaryblue-secondarybluelight);
+      }
+      /*** End file selector styling ***/
+
+      /*** Begin data upload styling ***/
+      #lidar-file-selector.data-upload-textinput6 {
+        padding: 0 8px 0 0; /* remove padding so button hits edges */
+        height: auto; /* autosize based on button */
+      }
+
+      /* Prevent clipping of button shadow (NOT WORKING) */
+      #lidar-file-selector{
+        overflow: visible !important;
+      }
+      /*** End data upload styling ***/
+    </style>
+  </head>
+  <body>
+    {% load static %}
+
+    <link rel="stylesheet" href="{% static 'lidar/style.css' %}" />
+    <div>
+      <link href="{% static 'lidar/data-upload.css' %}" rel="stylesheet" />
+
+      <div class="data-upload-container">
+        <div class="header-v2-container header-v2-root-class-name2">
+          <header data-thq="thq-navbar" class="header-v2-navbar-interactive">
+            <span class="header-v2-text">
+              <span class="header-v2-text01">VIEW Blind Zone Calculator</span>
+              <br />
+            </span>
+            <div data-thq="thq-navbar-nav" class="header-v2-desktop-menu">
+              <nav class="header-v2-links">
+                <a href="{% url 'lidar:index' %}" class="header-v2-navlink">
+                  
+                  <span>Home</span>
+                </a>
+                <a
+                  href="{% url 'lidar:vehicle_database_table' %}"
+                  class="header-v2-navlink1"
+                >
+                  <span>Vehicle Database</span>
+                </a>
+                <a href="{% url 'lidar:faq' %}" class="header-v2-navlink2">
+                  <span>FAQ</span>
+                </a>
+              </nav>
+              <div class="header-v2-buttons">
+                <a href="{% url 'lidar:add_vehicle' %}" class="header-v2-add-vehicle button">
+                  <span class="header-v2-text03">
+                    <span>Add Vehicle</span>
+                    <br />
+                  </span>
+                </a>
+                <a
+                  href="{% url 'lidar:add_vehicle' %}"
+                  class="header-v2-add-vehicle1 button"
+                >
+                  <span class="ButtonText">Add Vehicle</span>
+                </a>
+              </div>
+            </div>
+            <div data-thq="thq-burger-menu" class="header-v2-burger-menu">
+              <svg
+                id="burger-menu"
+                viewBox="0 0 1024 1024"
+                class="header-v2-icon"
+              >
+                <path
+                  d="M128 554.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 298.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667zM128 810.667h768c23.552 0 42.667-19.115 42.667-42.667s-19.115-42.667-42.667-42.667h-768c-23.552 0-42.667 19.115-42.667 42.667s19.115 42.667 42.667 42.667z"
+                ></path>
+              </svg>
+            </div>
+            <div data-thq="thq-mobile-menu" class="header-v2-mobile-menu">
+              <div class="header-v2-nav">
+                <div class="header-v2-top">
+                  <img
+                    alt="image"
+                    src="https://presentation-website-assets.teleporthq.io/logos/logo.png"
+                    class="header-v2-logo"
+                  />
+                  <div data-thq="thq-close-menu" class="header-v2-close-menu">
+                    <svg viewBox="0 0 1024 1024" class="header-v2-icon02">
+                      <path
+                        d="M810 274l-238 238 238 238-60 60-238-238-238 238-60-60 238-238-238-238 60-60 238 238 238-238z"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <nav class="header-v2-links1">
+                  <span class="header-v2-text07"><span>About</span></span>
+                  <span class="header-v2-text08"><span>Features</span></span>
+                  <span class="header-v2-text09"><span>Pricing</span></span>
+                  <span class="header-v2-text10"><span>Team</span></span>
+                  <span class="header-v2-text11"><span>Blog</span></span>
+                </nav>
+                <div class="header-v2-buttons1">
+                  <button class="header-v2-login button">
+                    <span>Login</span>
+                  </button>
+                  <button class="button"><span>Register</span></button>
+                </div>
+              </div>
+              <div>
+                <svg
+                  viewBox="0 0 950.8571428571428 1024"
+                  class="header-v2-icon04"
+                >
+                  <path
+                    d="M925.714 233.143c-25.143 36.571-56.571 69.143-92.571 95.429 0.571 8 0.571 16 0.571 24 0 244-185.714 525.143-525.143 525.143-104.571 0-201.714-30.286-283.429-82.857 14.857 1.714 29.143 2.286 44.571 2.286 86.286 0 165.714-29.143 229.143-78.857-81.143-1.714-149.143-54.857-172.571-128 11.429 1.714 22.857 2.857 34.857 2.857 16.571 0 33.143-2.286 48.571-6.286-84.571-17.143-148-91.429-148-181.143v-2.286c24.571 13.714 53.143 22.286 83.429 23.429-49.714-33.143-82.286-89.714-82.286-153.714 0-34.286 9.143-65.714 25.143-93.143 90.857 112 227.429 185.143 380.571 193.143-2.857-13.714-4.571-28-4.571-42.286 0-101.714 82.286-184.571 184.571-184.571 53.143 0 101.143 22.286 134.857 58.286 41.714-8 81.714-23.429 117.143-44.571-13.714 42.857-42.857 78.857-81.143 101.714 37.143-4 73.143-14.286 106.286-28.571z"
+                  ></path></svg
+                ><svg
+                  viewBox="0 0 877.7142857142857 1024"
+                  class="header-v2-icon06"
+                >
+                  <path
+                    d="M585.143 512c0-80.571-65.714-146.286-146.286-146.286s-146.286 65.714-146.286 146.286 65.714 146.286 146.286 146.286 146.286-65.714 146.286-146.286zM664 512c0 124.571-100.571 225.143-225.143 225.143s-225.143-100.571-225.143-225.143 100.571-225.143 225.143-225.143 225.143 100.571 225.143 225.143zM725.714 277.714c0 29.143-23.429 52.571-52.571 52.571s-52.571-23.429-52.571-52.571 23.429-52.571 52.571-52.571 52.571 23.429 52.571 52.571zM438.857 152c-64 0-201.143-5.143-258.857 17.714-20 8-34.857 17.714-50.286 33.143s-25.143 30.286-33.143 50.286c-22.857 57.714-17.714 194.857-17.714 258.857s-5.143 201.143 17.714 258.857c8 20 17.714 34.857 33.143 50.286s30.286 25.143 50.286 33.143c57.714 22.857 194.857 17.714 258.857 17.714s201.143 5.143 258.857-17.714c20-8 34.857-17.714 50.286-33.143s25.143-30.286 33.143-50.286c22.857-57.714 17.714-194.857 17.714-258.857s5.143-201.143-17.714-258.857c-8-20-17.714-34.857-33.143-50.286s-30.286-25.143-50.286-33.143c-57.714-22.857-194.857-17.714-258.857-17.714zM877.714 512c0 60.571 0.571 120.571-2.857 181.143-3.429 70.286-19.429 132.571-70.857 184s-113.714 67.429-184 70.857c-60.571 3.429-120.571 2.857-181.143 2.857s-120.571 0.571-181.143-2.857c-70.286-3.429-132.571-19.429-184-70.857s-67.429-113.714-70.857-184c-3.429-60.571-2.857-120.571-2.857-181.143s-0.571-120.571 2.857-181.143c3.429-70.286 19.429-132.571 70.857-184s113.714-67.429 184-70.857c60.571-3.429 120.571-2.857 181.143-2.857s120.571-0.571 181.143 2.857c70.286 3.429 132.571 19.429 184 70.857s67.429 113.714 70.857 184c3.429 60.571 2.857 120.571 2.857 181.143z"
+                  ></path></svg
+                ><svg
+                  viewBox="0 0 602.2582857142856 1024"
+                  class="header-v2-icon08"
+                >
+                  <path
+                    d="M548 6.857v150.857h-89.714c-70.286 0-83.429 33.714-83.429 82.286v108h167.429l-22.286 169.143h-145.143v433.714h-174.857v-433.714h-145.714v-169.143h145.714v-124.571c0-144.571 88.571-223.429 217.714-223.429 61.714 0 114.857 4.571 130.286 6.857z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+          </header>
+        </div>
+        <div class="data-upload-container1">
+          <div class="data-upload-container2">
+            <h1 class="data-upload-text HeadingH1">Add a Vehicle</h1>
+            <h2 class="data-upload-text01 HeadingH2">Vehicle Measurements</h2>
+            <form action="{% url 'lidar:data_upload' %}" method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              <div class="data-upload-container3">
+                <span class="data-upload-text02 Body">
+                  <span>
+                    Did you start the scan on the left side of the car?
+                  </span>
+                </span>
+                <div class="data-upload-select">
+                  {{ form.driver_side_start }}
+                </div>
+              </div>
+              <div class="data-upload-container4">
+                <div class="data-upload-container5">
+                  <div class="data-upload-eye-height-entry">
+                    <span class="data-upload-text04 Body">
+                      Eye height (distance from ground to eye height):
+                    </span>
+                    {{ form.eye_y_ft }}
+                    <span class="data-upload-text05 Body">ft</span>
+                    {{ form.eye_y_in }}
+                    <span class="data-upload-text06 Body">in</span>
+                  </div>
+                </div>
+              </div>
+              <div class="data-upload-eye-to-hood-entry">
+                <span class="data-upload-text07">
+                  Eye-to-hood (distance from eye point to end of the vehicle’s
+                  hood):
+                </span>
+                {{ form.eye_z_ft }}
+                <span class="data-upload-text08 Body">ft</span>
+                {{ form.eye_z_in }}
+                <span class="data-upload-text09 Body">in</span>
+              </div>
+              <div class="data-upload-eye-to-door-entry">
+                <span class="data-upload-text10">
+                  Eye-to-door (distance from eye point to outermost point on
+                  driver's side):
+                </span>
+                {{ form.eye_x_ft }}
+                <span class="data-upload-text11 Body">ft</span>
+                {{ form.eye_x_in }}
+                <span class="data-upload-text12 Body">in</span>
+              </div>
+              <h2 class="data-upload-text13 HeadingH2">Upload LiDAR Scan</h2>
+              <span class="data-upload-text14 Body">
+                Scan your vehicle in Polycam, making sure to capture the front and
+                sides of the vehicle up to the B pillar (just behind the front
+                door) on either side. Export your scan as a GLB (.glb) file on
+                your device.
+              </span>
+              <div class="data-upload-container6">
+                <div class="data-upload-container7">
+                  <div class="data-upload-li-dar-scan-upload-file-selector">
+                    {{ form.lidar_scan }}
+                    <button
+                      name="Choose file"
+                      type="file"
+                      class="data-upload-button button"
+                    >
+                      <span class="ButtonText">
+                        <span>Choose File</span>
+                        <br />
+                      </span>
+                    </button>
+                    <span class="data-upload-text18 Body">No file selected.</span>
+                  </div>
+                </div>
+              </div>
+              {{ form.vehicle }}
+              <div class="data-upload-submit-entry">
+                <button
+                  name="submit entry"
+                  type="submit"
+                  class="data-upload-button1 button"
+                >
+                  <span class="ButtonText">
+                    <span>Submit Entry</span>
+                    <br />
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <footer class="footer-footer footer-root-class-name1">
+          <span class="footer-text">
+            <span class="footer-text1">Contact us :</span>
+            <br />
+          </span>
+          <span class="footer-text3">
+            <span>
+              This document is funded by the Santos Family Foundation and
+              disseminated under the sponsorship of the Department of
+              Transportation in the interest of information exchange. The United
+              States Government assumes no liability for the contents or use
+              thereof. The United States Government does not endorse products,
+              manufacturers, or state or local policies or laws unless
+              specifically indicated. Trade or manufacturers’ names may appear
+              herein solely because they are considered essential to the
+              objective of this document. Site contents represent the best
+              technical judgement of U.S. DOT Volpe Center staff based on their
+              independent and objective technical analysis and expertise, and
+              are not to be misconstrued as statements of U.S. DOT policy or
+              guidance.
+            </span>
+          </span>
+        </footer>
+      </div>
+    </div>
+    <script
+      defer=""
+      src="https://unpkg.com/@teleporthq/teleport-custom-scripts"
+    ></script>
+  </body>
+</html>
