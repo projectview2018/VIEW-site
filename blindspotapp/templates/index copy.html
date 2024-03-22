@@ -11,15 +11,318 @@
 		}
 	</style>
 {% include 'header.html' %}
-<div id=top_text>
-  <h3 style="text-align:center;font-weight:bold;color:#2B2D42; font-family: Roboto-Regular.ttf, sans-serif; ">Under Construction!
-  <div class="container">
-      <h5>The team is working to upgrade the VIEW website, which will include new methods to visualize and analyze blind zones. Stay tuned for more! 
-          </h5>
-  
-          <img src="static/under_construction.jpg " style="width:100%; height: 100%; border: #2B2D42; border-color: #2B2D42;" alt="Italian Trulli">
-
+<div class="container">
+  <br>
+  <div id="description" style="font-size:20px;color:#2B2D42;">The VIEW app measures vehicles'
+    percent visibility from the driver's seat.
+    <!-- If webpage length is extended, use this to send user to the bottom of page when clicked:-->
+    <!-- <a style="font-size:20px;" href="#bottom">Returning users: click to begin</a> -->
   </div>
+
+  <hr>
+  <div class="highlights">
+    <div class="content">
+      <a target="_blank" rel="noopener noreferrer"
+        href="https://drive.google.com/file/d/1dBKWV4FKDzOAZ1XBk_M11k31cXpctE2_/view?usp=sharing">
+        <img src="static/camera_ruler.jpg" style="max-width:70%;max-height:70%;" id = "meas_instruc" />
+        <h3 target="_blank" rel="noopener noreferrer"
+          href="https://drive.google.com/file/d/1dBKWV4FKDzOAZ1XBk_M11k31cXpctE2_/view?usp=sharing">Measurement
+          Instructions <img src="static/new_tab.png" style="max-width:5%;max-height:5%;" />
+      </a></h3>
+      <p style="font-size:15px;color:#2B2D42;">Vehicle measurement and panoramic photo instructions.</p>
+    </div>
+    <div class="content">
+      <a target="_blank" rel="noopener noreferrer"
+        href="https://drive.google.com/file/d/14HpL7bXwLZ-ja1Lthe0eZT7BdDs8vo4Y/view?usp=sharing">
+        <img src="static/clipboard.png" style="max-width:38%;max-height:38%;" />
+        <h3 target="_blank" rel="noopener noreferrer"
+          href="https://drive.google.com/file/d/14HpL7bXwLZ-ja1Lthe0eZT7BdDs8vo4Y/view?usp=sharing">
+          Recording Sheet <img src="static/new_tab.png" style="max-width:5%;max-height:5%;" />
+      </a></h3>
+      <p style="font-size:15px;color:#2B2D42;">Print-off version of vehicle measurement sheet.</p>
+    </div>
+    <div class="content">
+      <a target="_blank" rel="noopener noreferrer"
+        href="https://res.cloudinary.com/dkrq49vzq/video/upload/v1632095383/instructions/IMG_0099_ulsr9y.mp4">
+        <img src="static/video.jpg" style="max-width:45%;max-height:45%;" />
+        <h3 target="_blank" rel="noopener noreferrer"
+          href="https://res.cloudinary.com/dkrq49vzq/video/upload/v1632095383/instructions/IMG_0099_ulsr9y.mp4">
+          Adding a Vehicle <img src="static/new_tab.png" style="max-width:5%;max-height:5%;" />
+    </a></h3>
+    <p style="font-size:15px;color:#2B2D42;">First time user video walkthrough of how to add a vehicle.</p>
+    </div>
+  </div>
+  <br>
+  <!-- condensed instructions -->
+  <div class="accordion accordion-flush" id="accordionExample">
+		<div class="accordion-item"  style = "border: 1px solid #dddddd;">
+			<h2 class="accordion-header" id="headinginstructions">
+				<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#instructions" aria-expanded="false" aria-controls="instructions" id = "button_text" style = "font-family: Roboto, sans-serif; color: #2B2D42;">
+        For a condensed version of the measurement instructions, click here.
+				</button>
+			</h2>
+			<div id="instructions" class="accordion-collapse collapse" aria-labelledby="heading">
+				<div class="accordion-body">
+					<div class="accordion accordion-flush" id="accordionExample">
+						<p>Please refer to this <a target="_blank" href="https://drive.google.com/file/d/1dBKWV4FKDzOAZ1XBk_M11k31cXpctE2_/view?usp=sharing" style="font-size:14px;color:blue">
+              document</a> for more comprehensive instructions.</p>
+
+            <p>Materials:</p>
+            <li>5-foot pole with one-foot interval markings</li>
+            <li>Smartphone camera</li>
+            <li>Tape measure</li>
+            <br>
+
+            <ol>
+              <li>Park the vehicle on level ground and place the 5-foot pole on the ground directly in front of the driver’s seat.
+                The first foot mark on the pole should barely be visible from the driver’s perspective.
+              </li>
+              <li>Using this <a target="_blank" href="https://drive.google.com/file/d/14HpL7bXwLZ-ja1Lthe0eZT7BdDs8vo4Y/view?usp=sharing" style="font-size:14px;color:blue">
+                recording sheet</a>, use the tape measure to calculate the A-D measurements. Each measurement should start from the camera lens and be vertical or horizontal.
+              </li>
+              <li>
+                Sit upright in the driver’s seat as you normally would when driving and open the panorama option on your phone. Hold the phone in portrait mode.
+              </li>
+              <li>
+                Position the phone directly in front of your face and take a panorama from the left-side of the front windshield to the right-side of the passenger window.
+                Slowly swivel the phone in place along its axis as demonstrated in this <a target="_blank" href="https://res.cloudinary.com/dkrq49vzq/video/upload/v1632095383/instructions/IMG_0099_ulsr9y.mp4" style="font-size:14px;color:blue">video</a>.
+              </li>
+              <li>
+                Upload this panoramic below, inputting the A-D measurements and your vehicle’s VIN number.
+              </li>
+            </ol>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+  <hr>
+  <div id=choosepano class="unhidden" style="font-size:20px;color:#2B2D42;font-family: Roboto, sans-serif; ">Choose field of view panoramic image to upload:</div>
+  <p id=loadmessage class="unhidden" style="font-size:15px;color:#2B2D42; font-family: Roboto, sans-serif; ">(Photo may take up to 10 seconds to load)</p>
+  <p id="network_error" class="unhidden" style="font-size:15px;color:#2B2D42; font-family: Roboto, sans-serif; ">If using an unstable internet connection or a VPN, the photo might not be uploaded to our database. VIEW also works best on Chrome.</p>
+  <div id="canvas" class="hidden" style="font-size:20px;color:#2B2D42;">Click to draw<br /></div>
+  <br>
+  <div id="steps" class="hidden">
+    <div id="buttons" class="unhidden">
+      <button class="btn btn-primary" id = "btn_back1" onclick="backPanel()">Back</button>
+      <button class="btn btn-primary" id = "btn_clear2" onclick="clearPanel()">Clear</button>
+      <button class="btn btn-primary" id="btn_next1" onclick="nextPanel()">Next</button>
+    </div>
+    <div id="instructiontxt"></div>
+    <hr>
+    <div id="canvastips" class="hidden" style="font-size:20px;font-weight:bold;color:#2B2D42;font-family: Roboto, sans-serif; ">Marking Tips:
+      <ul>
+        <li style="font-weight:normal;color:#2B2D42; font-family: Roboto, sans-serif; ">Try to be as accurate as possible with your measurements and
+          panoramic photo scan.</li>
+        <li style="font-weight:normal;color:#2B2D42; font-family: Roboto, sans-serif; ">Turn phone horizontally for best results.</li>
+        <li style="font-weight:normal;color:#2B2D42; font-family: Roboto, sans-serif; ">Pan/zoom in the white space outside of the image.</li>
+      </ul>
+    </div>
+    <div id="dataentry" class="hidden">
+      <form>
+        <div class="form-group">
+          <div id="vehiclemeasurements">
+            <img src="static/vehiclemeasurements.jpg" style="vertical-align:middle;width:751px;height:547px" />  
+            </div>
+            <br>
+			 <label for="h">Choose your input units:</label>
+			<div class="form-group">
+			  <label class = "radio-inline" for="enter_us">Inches</label>
+			  <input type="radio" name = "select_unit" id="enter_us" onclick="edit_unit('inch')" checked="checked">
+			</div>
+			<div class="form-group">
+			  <label class = "radio-inline" for="enter_eu" >Centimeters</label>
+			  <input type="radio"  name = "select_unit" id="enter_eu" onclick="edit_unit('centi')" />
+			</div>
+          <label for="h">Camera height (or driver's eye height) above ground:</label>
+           <input type="number" pattern="[0-9]*" class="form-control" id="a" placeholder="Enter height eg: 63" min = "24" max = "324" onchange = "check_abcd()" required>
+          <small id="radiusdescript" class="form-text text-muted">Measurement 'A' in reference image above. The range of valid values is 24 - 324 in or 61 - 823 cm. </small>
+        </div>
+        <div class="form-group">
+          <label for="b">Distance from drivers's eye/camera to passenger window:</label>
+           <input type="number" pattern="[0-9]*" class="form-control" id="b" placeholder="Enter distance eg: 45" min = "24" max = "126" onchange = "check_abcd()"  required>
+          <small id="radiusdescript" class="form-text text-muted">Measurement 'B' in reference image above. The range of valid values is 24 - 126 in or 61 - 320 cm.</small>
+        </div>
+        <div class="form-group">
+          <label for="r">Distance from driver to measurement stick:</label>
+           <input type="number" pattern="[0-9]*" class="form-control" id="rd" placeholder="Enter distance eg: 94" min = "12" max = "1200" onchange = "check_abcd()" required>
+          <small id="radiusdescript" class="form-text text-muted">Measurement 'C' in reference image above. This is not the
+            hypotenuse, but the distance along the ground. The range of valid values is 12 - 1200 in or 30 - 3048 cm.</small>
+        </div>
+        <div class="form-group">
+          <label for="d">Distance from driver's eye/camera to front bumper of vehicle:</label>
+          <input type="number" pattern="[0-9]*" class="form-control" id="d" placeholder="Enter distance eg: 84" min = "1" max = "192" onchange = "check_abcd()" required>
+          <small id="radiusdescript" class="form-text text-muted">Measurement 'D' in reference image above. The range of valid values is 1 - 192 in or 2 - 488 cm. This value must be smaller than measurement 'C'.</small>
+        </div>
+
+      </form>
+      <hr>
+    </div>
+
+    <h3>
+      <div id="percentage"  class="hidden">
+
+      </div>
+    </h3>
+
+    <div id="vinfoentry" class="hidden">
+      <form>
+        <div class="form-group">
+          <label for="selectvin" onclick="check1('selectvin')">VIN Number</label>
+          <input type="radio" name="vinORnoVIN" id="selectvin" onclick="check1('selectvin')">
+        </div>
+        <div class="form-group">
+          <label for="selectnovin" onclick="check1('selectnovin')">Make, Model, Year, Weight Class</label>
+          <input type="radio" name="vinORnoVIN" id="selectnovin" onclick="check1('selectnovin')" />
+        </div>
+      </form>
+    </div>
+    <div id="vinchoice" class="hidden">
+      <form>
+        <div class="form-group">
+          <label for="vin">VIN Number:</label>
+          <input type="text" class="form-control" id="vin" placeholder="Eg: 1C3CCBBGXCN287756" onchange = "check_model_info('selectvin')">
+		   <small id="radiusdescript" class="form-text text-muted">Both full (17 digit) and partial (9-10 digit) VINs are allowed. </small>
+        </div>
+      </form>
+    </div>
+    <div id="novinchoice" class="hidden">
+      <form>
+        <div class="form-group">
+          <label for="vmake">Vehicle Make:</label>
+          <input type="text" list = "json_makes" class="form-control" id="vmake" placeholder="Eg: Ford" onchange = "mm_changed('make')" required />
+		  <datalist id = "json_makes"></datalist>
+        </div>
+        <div class="form-group">
+          <label for="vmodel">Vehicle Model:</label>
+          <input type="text" list = "json_models" class="form-control" id="vmodel" placeholder="Eg: F-150" onchange = "mm_changed('model')" required>
+		  <datalist id = "json_models"></datalist>
+        </div>
+        <!-- To select year from dropdown list: -->
+        <div class="form-group">
+          <label for="vyear">Vehicle Year:</label>
+          <select class="form-control chosen" id="vyear">
+            <option selected>Please select a year</option>
+            <option value="2021">2021</option>
+            <option value="2020">2020</option>
+            <option value="2019">2019</option>
+            <option value="2018">2018</option>
+            <option value="2017">2017</option>
+            <option value="2016">2016</option>
+            <option value="2015">2015</option>
+            <option value="2014">2014</option>
+            <option value="2013">2013</option>
+            <option value="2012">2012</option>
+            <option value="2011">2011</option>
+            <option value="2010">2010</option>
+            <option value="2009">2009</option>
+            <option value="2008">2008</option>
+            <option value="2007">2007</option>
+            <option value="2006">2006</option>
+            <option value="2005">2005</option>
+            <option value="2004">2004</option>
+            <option value="2003">2003</option>
+            <option value="2002">2002</option>
+            <option value="2001">2001</option>
+            <option value="2000">2000</option>
+            <option value="1999">1999</option>
+            <option value="1998">1998</option>
+            <option value="1997">1997</option>
+            <option value="1996">1996</option>
+            <option value="1995">1995</option>
+            <option value="1994">1994</option>
+            <option value="1993">1993</option>
+            <option value="1992">1992</option>
+            <option value="1991">1991</option>
+            <option value="1990">1990</option>
+            <option value="1989">1989</option>
+            <option value="1988">1988</option>
+            <option value="1987">1987</option>
+            <option value="1986">1986</option>
+            <option value="1985">1985</option>
+            <option value="1984">1984</option>
+            <option value="1983">1983</option>
+            <option value="1982">1982</option>
+            <option value="1981">1981</option>
+            <option value="1980">1980</option>
+            <option value="1979">1979</option>
+            <option value="1978">1978</option>
+            <option value="1977">1977</option>
+            <option value="1976">1976</option>
+            <option value="1975">1975</option>
+            <option value="1974">1974</option>
+            <option value="1973">1973</option>
+            <option value="1972">1972</option>
+            <option value="1971">1971</option>
+            <option value="1970">1970</option>
+            <option value="1969">1969</option>
+            <option value="1968">1968</option>
+            <option value="1967">1967</option>
+            <option value="1966">1966</option>
+            <option value="1965">1965</option>
+            <option value="1964">1964</option>
+            <option value="1963">1963</option>
+            <option value="1962">1962</option>
+            <option value="1961">1961</option>
+            <option value="1960">1960</option>
+            <option value="1959">1959</option>
+            <option value="1958">1958</option>
+            <option value="1957">1957</option>
+            <option value="1956">1956</option>
+            <option value="1955">1955</option>
+            <option value="1954">1954</option>
+            <option value="1953">1953</option>
+            <option value="1952">1952</option>
+            <option value="1951">1951</option>
+            <option value="1950">1950</option>
+          </select>
+        </div>
+        <!-- To select weight class from dropdown list: -->
+        <div class="form-group">
+          <label for="vwc">Vehicle Weight Class:</label>
+          <select class="form-control chosen" id="vwc">
+            <option selected>Please select a class</option>
+            <option value="Class 1">Class 1: &lt;6,000 lbs (Ex: Most Passenger Cars)</option>
+            <option value="Class 2">Class 2: 6,001-10,000 lbs (Ex: Full-Size Pickup Trucks)</option>
+            <option value="Class 3">Class 3: 10,001-14,000 lbs (Ex: Walk-In Trucks) </option>
+            <option value="Class 4">Class 4: 14,001-16,000 lbs (Ex: City Delivery Trucks)</option>
+            <option value="Class 5">Class 5: 16,001-19,500 lbs (Ex: Bucket Trucks)</option>
+            <option value="Class 6">Class 6: 19,501-26,000 lbs (Ex: School Bus)</option>
+            <option value="Class 7">Class 7: 26,001-33,000 lbs (Ex: Garbage Trucks)</option>
+            <option value="Class 8">Class 8: &gt;33,001 lbs (Ex: Dump Trucks)</option>
+          </select>
+        </div>
+      </form>
+    </div>
+
+    <div id="addcomments" class="hidden">
+      <form>
+        <div class="form-group">
+          <label for="comments">General Comments:</label>
+          <input type="text" class="form-control" id="comments" placeholder="Comments">
+        </div>
+      </form>
+      <form>
+        <div class="form-group">
+          <label for="agency">Agency:</label>
+          <input type="text" class="form-control" id="agency" placeholder="Agency">
+        <small id="radiusdescript" class="form-text text-muted">Optional field, for agencies to keep track of their vehicle entries.</small>
+        </div>
+      </form>
+    </div>
+
+
+    <div id="buttons2" class="hidden">
+      <button class="btn btn-primary" onclick="backPanel()">Back</button>
+      <button class="btn btn-primary" id = "btn_clear2" onclick="clearPanel()">Clear</button>
+      <button class="btn btn-primary" id = "btn_next2" onclick="nextPanel()">Next</button>
+    </div>
+  </div>
+  <div id="uploadbutton" class="unhidden">
+    <input type="file" accept= "image/*" style="font-size:15px" class="unhidden" onchange="previewFile()"><br>
+  </div>
+  <img src="" height="0" alt="">
+  <hr>
 </div>
 
 </div>
