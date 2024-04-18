@@ -2,268 +2,1552 @@
 {% load static %}
 
 {% block content %}
-{% block css %}
+<base href="/">
 <link rel="stylesheet" type="text/css" href="{% static 'blindspotapp/home.css' %}">
-{% endblock %}
 <html>
-	<style>
+  <style>
 		body{
-			background-color: #2B2D42;
-			margin-top: 0px;
-			margin-left: 0px;
-			margin-bottom: 0px;
-			margin-right: 0px;
-
+			font-family: Roboto, sans-serif;
 		}
 	</style>
-<!--
-<div class="alert alert-info alert-dismissible" role="alert" style="background-color=black">
-    <button aria-label="Close" class="close" data-dismiss="alert" type="button"><span
-            aria-hidden="true">×</span></button>
-    <p style="color:white">Welcome to the Beta version of the VIEW Blind Zone Calculator for Vehicles. This is not yet a fully functioning
-        version of the site, however, it contains baseline features and functionality, including calculation of percent
-        visibility from the driver’s seat. We look forward to receiving feedback about this version and look forward to
-        the opportunity to grow and expand this site. Please contact blindzoneapp@dot.gov if your organization is
-        interested in working with us.</p>
-</div> -->
 {% include 'header.html' %}
-
-<div id="carouselExampleControls" class="carousel"  style="background-color:#2B2D42; border-color:#2B2D42; padding:0rem">
-  <div class="carousel-inner">
-    <div class="carousel-item active" >
-		<img class="d-block w-100" src="static/Export for Screens@4x.jpg" alt="Landing Page Image" style="width:100%; height: 100%; border: #2B2D42; border-color: #2B2D42;">
-		<div class="carousel-caption d-none d-md-block">
-			</a>
-	  </div>
-    </div>
-	<div class="carousel-item">
-		<img class="d-block w-100" src="static/caro_img_22_clear.jpeg" alt="A car with preschool children in its front blind zone" style="width:100%">
-		<div class="carousel-caption d-none d-md-block">
-		  <a href="/getinfo/682">
-		  <h5 id = "carousel_caption_custom" style = 'font-family: Roboto, sans-serif; background:#2B2D42;'>See Vehicle Blind Zones</h5>
-		  </a>
-		</div>
-	</div>
-    <div class="carousel-item">
-      <img class="d-block w-100" src="static/caro_img_11_clear.jpg" alt="A car with preschool children in its front blind zone" style="width:100%">
-	  <div class="carousel-caption d-none d-md-block">
-		<a href="/addvehicle">
-		<h5 id = "carousel_caption_custom" style = 'font-family: Roboto, sans-serif; background:#2B2D42;'>See Blind Zones Of Your Vehicles</h5>
-		</a>
-	  </div>
-    </div>
-	<div class="carousel-item">
-      <img class="d-block w-100" src="static/caro_img_4.png" alt="Question marks" style="width:100%">
-	  <div class="carousel-caption d-none d-md-block">
-		<a href="/FAQs">
-		<h5 id = "carousel_caption_custom"style = 'font-family: Roboto, sans-serif;background:#2B2D42;'>Frequently Asked Questions 
-		</h5>
-		</a>
-	  </div>
-    </div>
-  </div>
-  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-<!-- <hr> -->
 <div id=top_text>
-    <h3 style="text-align:center;font-family: Roboto, sans-serif; font-weight:bold;font-style: italic; color:white;">Our Free, Smartphone-Based Blind Zone Measurement Tool Enables:
-    </h3>
-</div>
-<!-- <hr> -->
-<div class="container">
-	<div class = "card-deck">
+  <h3 style="text-align:center;font-weight:bold;color:#2B2D42; font-family: Roboto-Regular.ttf, sans-serif; ">Under Construction!
+  <div class="container">
+      <h5>We've moved! The team has upgraded the VIEW website: Our new website is available at https://blindzonesafety.org/ 
+          </h5>
+  
+          <img src="static/under_construction.jpg " style="width:100%; height: 100%; border: #2B2D42; border-color: #2B2D42;" alt="Italian Trulli">
 
-		<div class="card text-center align-items-center" style = "padding:0px;margin;0px">
-			<img src="static/VEHICLE BUYERS-9.png" class="card-img-top img-responsive"></img>
-			<div class = "card-body">
-				<h3 class="card-title" style = "font-family: Roboto, sans-serif; font-size: 20px; color:#fff" >Compare and select the best-in-class direct vision makes and models </h3>
-			</div>
-		</div>
-		<div class="card text-center align-items-center" style = "padding:0px;margin;0px">
-			<img src="static/VEHICLE BUYERS-7.png" class="card-img-top img-responsive"></img>
-			<div class = "card-body">
-				<h3 class="card-title" style = "font-family: Roboto, sans-serif; font-size: 20px; color:#fff" >Understand the risks of blind zones </h3>
-			</div>
-		</div>
-		<div class="card text-center align-items-center" style = "padding:0px;margin;0px">
-			<img src="static/VEHICLE BUYERS-8.png" class="card-img-top img-responsive"></img>
-			<div class = "card-body">
-				<h3 class="card-title" style = "font-family: Roboto, sans-serif; font-size: 20px; color:#fff" >Discover how much can be seen from their vehicle and risk to Vulnerable Road Users</h3>
-			</div>
-		</div>
-	</div>
-	<div>
-		<br>
-		
-		
-		
-	</br>
+  </div>
+</div>
 
-	</div>
 </div>
-<!--
-<div class="form-row text-center">
-    <div class="col-12">
-        <a href="/addvehicle" style="font-size:30px;margin:0.5em;" class="btn btn-primary">Add Vehicle</a>
-        <a href="/getinfo" style="font-size:30px;margin:0.5em;" class="btn btn-primary">Access Vehicle Database</a>
-    </div>
-</div>
--->
-<!--
-<hr>
-<div class="container">
-    <div id=homephotos2>
-        <h3 style="text-align:center;font-weight:bold;">Direct Vision: What a Driver can see with the Naked Eye</h3>
-		 <h3 style="text-align:center;">Whether in a car or in a Class 8 truck, directly seeing others on the road
-                lets a driver react 50% faster than through a mirror or camera—and potentially stop a tragedy.</h3>
-        <div class="container">
-
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="card">
-                        <div class="card-block">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <img src="static/part2_1.jpg" style="max-width:75%;max-height:75%;"
-                                        class="img-responsive" alt="">
-                                </div>
-                                <br></br>
-                                <div class="col-md-6">
-                                    <img src="static/part2_2.jpg" class="img-responsive" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
-        <section>
-            <br>
-            <br>
-			<img src="static/part2_3.jpg" class="center" style="max-width:100%;max-height:100%;"></img>
-		   <h3 style="text-align:center;">Blind zones vary wildly between vehicles and can be deceptively large.</h3>
-            <br>
-
-
-        </section>
-    </div>
-</div>
-<hr>
-<div class="container">
-    <div id="homephotos3">
-		<h3 style="text-align:center;font-weight:bold;"><a href="/addvehicle">Measure</a> your vehicle's blind zones </h3>
-        <h3 style="text-align:center">All you need is a smartphone, a tape measure, a pole, and 20
-            minutes:</h3>
-        <div class="home_photos">
-			<section>
-				<div class="homephotos">
-					<header>
-							<img src="static/part3_1.jpg" style="max-width:85%;max-height:85%;"></img>
-						<h3>Measure vehicle, </h3>
-					</header>
-					<p style="font-size:17px">To compare and select the
-						best-in-class direct vision makes and models</p>
-				</div>
-			</section>
-			<section>
-				<div class="homephotos">
-					<header>
-							<img src="static/part3_2.jpg" style="max-width:85%;max-height:85%;"></img>
-						<h3>take panoramic photograph, </h3>
-					</header>
-					<p style="font-size:17px">To compare and select the
-						best-in-class direct vision makes and models</p>
-				</div>
-			</section>
-			<section>
-				<div class="homephotos">
-					<header>
-							<img src="static/part3_3.jpg" style="max-width:85%;max-height:85%;"></img>
-						<h3>and trace.</h3>
-					</header>
-					<p style="font-size:17px">To compare and select the
-						best-in-class direct vision makes and models</p>
-				</div>
-			</section>
-        </div>
-	</div>
-</div>
-<hr>
-<div class="container">
-    <div id="page3">
-		<h4 style="text-align:center;font-size:25px;font-weight:bold;"><a href="/getinfo">See</a> percent visibility results and blind zone visualizations
-        </h4>
-		<h4 style="text-align:center;font-size:25px;">Know how many Vulnerable Road Users are invisible to you from the driver's seat.
-        </h4>
-        <br>
-		<div class="container">
-            <div id="homephotos4">
-                <section>
-                    <img src="static/part4_1.JPG" class="img-responsive"
-                        style="float:right;max-width:100%;max-height:100%;" id = "img_border"></img>
-                    <hr>
-                </section>
-            </div>
-        </div>
-        <br>
-		<div class="col-xs-12">
-			<div id="homephotos4_2" class = "row">
-				<div class="col-md-8">
-					<img src="static/part4_2.JPG" class="img-responsive"
-					style="float:right;max-width:100%;max-height:100%;" id = "img_border_height"></img>
-				</div>
-				<div class="col-md-4">
-				<img src="static/part4_4.JPG" class="img-responsive"
-					style="float:right;max-width:100%;max-height:100%;" id = "img_border_height"></img>
-				</div>
-			</div>
-		 </div>
-	</div>
-</div>
-<br>
-<hr>
-<div class="container">
-    <div id="page5">
-		<h4 style="text-align:center;font-size:25px;font-weight:bold;"><a href="/visualize">View</a> our complete vehicle database
-        </h4>
-		<h4 style="text-align:center;font-size:25px;">Find a specific vehicle's visibility scores
-        </h4>
-		<div class="container">
-            <div id="homephotos4">
-                <section>
-				<span class="border border-secondary">
-                    <img src="static/part_5.PNG" class="img-responsive border border-primary" id = "img_border"
-                        style="float:right;max-width:100%;max-height:100%;"></img>
-				</span>
-                </section>
-            </div>
-        </div>
-        <br>
-	</div>
-</div>
--->
-<br>
 {% include 'footer.html' %}
+<!-- <div id="bottom"></div> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
+</html>
+<style>
+  canvas:hover{
+    cursor:crosshair;
+  }
+</style>
 
-<div class="container">
-	<!-- <h3 style="text-align:center;font-weight:bold;">
-		Click <a href="/addvehicle">here</a> to test your vehicle's percent
-		visibility
-		and add it to the vehicle database
-	</h3>
-	-->
-</div>
+<script type="text/javascript">
+  // clear button
+  function clearPanel() {
+    ctx.addClear(my_image);
+  }
+
+  // next button
+  function nextPanel() {
+    ctx.addNext(my_image);
+  }
+
+  // back button
+  function backPanel() {
+    ctx.addBack(my_image);
+  }
+
+  function check1(vinOrNoVIN) {
+    if (vinOrNoVIN == "selectvin") {
+      if (document.getElementById('vinchoice').className == 'hidden') {
+        document.getElementById('vinchoice').className = "unhidden";
+        document.getElementById('novinchoice').className = "hidden";
+      }
+    }
+    else if (vinOrNoVIN == "selectnovin") {
+      if (document.getElementById('novinchoice').className == 'hidden') {
+        document.getElementById('novinchoice').className = "unhidden";
+        document.getElementById('vinchoice').className = "hidden";
+		    load_makes();
+      }
+    }
+	  check_model_info(vinOrNoVIN);
+  }
+
+  var color_marks = []; // array with the height of each foot mark on the pole
+  var curr_step = 1;
+  var bottom_view_front = [];
+  var bottom_view_passenger = [];
+  var height_map = {};
+  var neg_90;
+  var zero;
+  var angle_map = {};
+  var driver_height; // the first val in the form
+  var marks_dist; // the third val in the form
+  var b; // the second val in the form
+  var d; // the fourth val in the form
+  var total_volume = [0, 0, 0, 0];
+  var blind_volume = [0, 0, 0, 0];
+  var perc = [];
+  var perc_front = [];
+  var perc_passenger = [];
+  var fileName; // the name of the image
+  var comments = "NA"; // any user-added comments
+  var agency = "NA"; // optional, name of agency adding vehicle
+  var blind_volume_front = [0, 0, 0, 0];
+  var blind_volume_between = [0, 0, 0, 0];
+  var blind_volume_passenger = [0, 0, 0, 0];
+  var total_volume_front = [0, 0, 0, 0];
+  var total_volume_between = [0, 0, 0, 0];
+  var total_volume_passenger = [0, 0, 0, 0];
+//  var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dkrq49vzq/upload';
+  var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/usdot/upload';
+//  var CLOUDINARY_UPLOAD_PRESET = 'ifmh0adn';
+  var CLOUDINARY_UPLOAD_PRESET = 'elzascqq'; // unsigned upload preset name (more info here: https://make.cm/blog/make-a-photo-booth)
+  var fileURL = "";
+  var drawingURL = "https://res.cloudinary.com/usdot/image/upload/v1591716313/sample.jpg";
+  var step8_coords = [];
+  var unit = "inch";
+  var upload_done = [0,0];
+  var json_string = "";
+  var top_string = "NA";
+  var stick_c = 0;
+
+  var no_models_for_make = false;
+  var models = [];
+  var valid_make = false;
+  var valid_model = false;
+
+  // this entire function is called after the panoramic image loads
+  function c(img) {
+    // creates new canvas element and appends it as a child to the parent element,
+    // and returns the reference to the newly created canvas element
+    function createCanvas(parent, width, height) {
+      var canvas = {};
+      canvas.node = document.createElement("canvas");
+      canvas.context = canvas.node.getContext("2d");
+      canvas.node.width = width || 100;
+      canvas.node.height = height || 100;
+      parent.appendChild(canvas.node);
+      return canvas;
+    }
+
+    // used for front bottom view and passenger bottom view
+    function storeCoordinate(xVal, yVal, array) {
+      array.push({ x: xVal, y: yVal });
+    }
+
+    // stores the averaged x or y coordinate, used for foot marks and 0/90 degree points
+    function storeOneCord(oVal, array) {
+      array.push(oVal);
+    }
+
+    function getAverage(array) {
+      var sum = 0;
+      for (var i = 0; i < array.length; i++) {
+        sum += parseInt(array[i], 10); // don't forget to add the base
+      }
+      var avg = sum / array.length;
+      avg = Math.round(avg);
+      return avg;
+    }
+
+    // saves canvas using axios library
+    function saveCanvas(canvas, curr_step) {
+      console.log('preparing to save canvas to cloudinary');
+      canvas_img = canvas.node.toDataURL();
+      console.log("canvas: ")
+      console.log(canvas_img)
+
+      var formData = new FormData();
+      formData.append('file', canvas_img);
+      formData.append('folder', 'blindspot-app');
+      formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+      console.log("formData:")
+      console.log(formData)
+      axios({
+        url: CLOUDINARY_URL,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: formData
+      }).then(function(res) {
+        console.log(res);
+        drawingURL = res["data"]["secure_url"];
+		upload_done[1] = 2;
+        console.log(drawingURL);
+      }).catch(function(err) {
+        console.log(err);
+		upload_done[1] = 1;
+      });
+    }
+
+    // draws points from steps 1-8 onto the canvas
+    // ctx is canvas context, width and height are dimensions of canvas
+    function addCanvasPoints(ctx, width, height) {
+      ctx.strokeStyle = '#ffcc00';
+      // add foot markings by drawing horizontal strokes across the entire canvas
+      for (i = 0; i < color_marks.length; i++) {
+        ctx.beginPath();
+        ctx.moveTo(0, color_marks[i]);
+        ctx.lineTo(width || 100, color_marks[i]);
+        ctx.stroke();
+      }
+
+      // add 0 degree point
+      ctx.beginPath();
+      ctx.moveTo(zero, 0);
+      ctx.lineTo(zero, height || 100);
+      ctx.stroke()
+
+      // add neg_90 degree point
+      ctx.beginPath();
+      ctx.moveTo(neg_90, 0);
+      ctx.lineTo(neg_90, height || 100);
+      ctx.stroke();
+
+      // add step 8 coords
+      for (i = 0; i < step8_coords.length; i += 1) {
+        ctx.fillCircle(step8_coords[i]['x'], step8_coords[i]['y'], 3, '#ff0000');
+      }
+    }
+
+    // container is the HTML canvas element
+    function init(container, width, height, fillColor) {
+      var canvas = createCanvas(container, width, height);
+      var coords = [];
+      ctx = canvas.context;
+	    // this is to stop the ruler and camera image from changing
+	    // document.getElementById("meas_instruc").src = "static/camera_ruler.jpg";
+	    var wrong_image = document.getElementById("meas_instruc");
+	    wrong_image.src = "static/camera_ruler.jpg";
+	    // this is for measurement input validation in step 10
+	    $(document.getElementById('btn_next2')).addClass("disabled");
+	    load_makes();
+      // define a custom fillCircle method
+      ctx.fillCircle = function (x, y, radius, fillColor) {
+        this.fillStyle = fillColor;
+        this.beginPath();
+        this.moveTo(x, y);
+        this.arc(x, y, radius, 0, Math.PI * 2, false);
+        this.fill();
+      }
+      ;
+
+      ctx.addClear = function (img) {
+        // <= 10 instead of = 9 because the below if statements are done so that curr_step is always one step ahead
+        // so curr_step = 10 corresponds to step 9 on the website
+        if (curr_step <= 10 ) {
+          var image = new Image()
+          image.onload = function () {
+            coords = [];
+            ctx.drawImage(image, 0, 0, width, height);
+          }
+          image.src = img
+        } else if (curr_step == 11) {
+          //console.log("clear step 10");
+          document.getElementById('a').value = "";
+          document.getElementById('rd').value = "";
+          document.getElementById("b").value = "";
+          document.getElementById("d").value = "";
+          check_abcd();
+        } else if (curr_step == 12) {
+          if ( document.getElementById("selectvin").checked ) {
+            document.getElementById("vin").value = "";
+          } else if (document.getElementById("selectnovin").checked ) {
+            document.getElementById("vmake").value = "";
+            document.getElementById("vmodel").value = "";
+            document.getElementById("vyear").selectedIndex = "0";
+            document.getElementById("vwc").selectedIndex = "0";
+
+          }
+          document.getElementById('comments').value = "";
+          //console.log("clear step 11");
+          check_model_info("selectnovin");
+        }
+      }
+      ctx.addClear(img);
+
+      ctx.addBack = function (img) {
+        var image = new Image()
+        // var item = document.getElementById("uploadbutton");
+        // if (item) {
+        //   if (item.className == 'unhidden') {
+        //     item.className = 'hidden';
+        //   }
+        // }
+        image.onload = function () {
+          console.log("before function: ", curr_step);
+		      var item = document.getElementById("network_error");
+
+          prev_step = curr_step
+          if (curr_step >2) {
+            curr_step = curr_step-2;
+            console.log("subtract one: ", curr_step);
+          }
+       // if (curr_step >3) {
+       //    curr_step = curr_step-2;
+       //    console.log("subtract one: ", curr_step);
+       //
+       // }
+          if (curr_step <= 5) { // right now we are accepting marks up to 6 feet
+            $(document.getElementById('btn_next1')).removeClass("disabled");
+            if (curr_step == 1) {
+              $(document.getElementById('btn_back1')).addClass("disabled");
+            } else {
+              $(document.getElementById('btn_back1')).removeClass("disabled");
+            }
+            var item = document.getElementById("network_error");
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var avg = getAverage(coords);
+            color_marks.push(avg); // adds avg to the end of the color_marks array
+            coords = [];
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "If the " + curr_step + " foot mark (M" + curr_step + ") is visible on the measurement pole, use your finger or your mouse to draw a small horizontal line on the mark. After making a line on the mark, hit next. If the mark is not visible, click next. Press clear if any errors are made.";
+            if (prev_step >2){
+              curr_step += 1;
+            }
+            console.log("after if statement: ", curr_step);
+          } else if (curr_step == 6) {
+			      $(document.getElementById('btn_next1')).addClass("disabled");
+            var avg = getAverage(coords);
+            color_marks.push(avg); // save color marks representing feet
+            coords = [];
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw a vertical line at 90 degrees (directly in front of the driver where the measuring stick was placed).";
+            curr_step += 1;
+            console.log("after if statement: ", curr_step);
+          } else if (curr_step == 7) {
+			      $(document.getElementById('btn_next1')).addClass("disabled");
+            var avg = getAverage(coords);
+            zero = avg; // save zero degree point
+            coords = [];
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw vertical line at 0 degrees (directly to the right of the driver out of passenger window).";
+            curr_step += 1;
+            console.log("after if statement: ", curr_step);
+          } else if (curr_step == 8) {
+			      $(document.getElementById('btn_next1')).addClass("disabled");
+            var avg = getAverage(coords);
+            neg_90 = avg; // save negative 90 degree point
+            coords = [];
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw line along the bottom of the front field of view. Please make sure that there are as few unintended gaps between dots as possible.";
+            curr_step += 1
+            console.log("after if statement: ", curr_step);
+          } else if (curr_step == 9) {
+			      $(document.getElementById('btn_next1')).addClass("disabled");
+            bottom_view_front = coords;
+            var item = document.getElementById('buttons');
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById('buttons2');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById('dataentry');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById("canvas");
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById("measurementpole");
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById("canvastips");
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById("choosepano");
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById("loadmessage");
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw line along the bottom of the passenger side field of view. Be sure to draw above the sideview mirror. Please make sure that there are as few unintended gaps between dots as possible.";
+            coords = [];
+            curr_step += 1;
+            console.log("after if statement: ", curr_step);
+          } else if (curr_step == 10) {
+            bottom_view_passenger = coords;
+			      check_abcd();
+            var item = document.getElementById('dataentry');
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById('vinfoentry');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById('addcomments');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById('vinchoice');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById('novinchoice');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById('percentage');
+            if (item) {
+              if (item.className == 'unhidden') {
+              item.className = 'hidden';
+              }
+            }
+			      //document.getElementById('vinchoice').className = "unhidden";
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Enter vehicle measurements A, B, C, and D. All values should be positive.";
+            curr_step += 1;
+            console.log("after if statement: ", curr_step);
+          }
+        }
+        image.src = img
+      }
+      ctx.addBack(img);
+
+      /**
+      step instruction block, controls flow of user entered info
+      data collected in each step is stored in the next because this is what happens after the
+      user clicks next on that step
+
+      img is base64 representation of image
+      **/
+      ctx.addNext = function (img) {
+        var image = new Image()
+        var item = document.getElementById("uploadbutton");
+        if (item) {
+          if (item.className == 'unhidden') {
+            item.className = 'hidden';
+          }
+        }
+        image.onload = function () {
+          console.log("starting next statement: ", curr_step);
+          if (curr_step <= 5) { // right now we are accepting marks up to 6 feet
+            $(document.getElementById('btn_next1')).removeClass("disabled");
+            if (curr_step == 1) {
+              $(document.getElementById('btn_back1')).addClass("disabled");
+            } else {
+              $(document.getElementById('btn_back1')).removeClass("disabled");
+            }
+            var avg = getAverage(coords);
+            color_marks.push(avg);
+            coords = [];
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "If the " + curr_step + " foot mark (M" + curr_step + ") is visible on the measurement pole, use your finger or your mouse to draw a small horizontal line on the mark. After making a line on the mark, hit next. If the mark is not visible, click next. Press clear if any errors are made.";
+            var item = document.getElementById("canvastips");
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            curr_step += 1;
+            console.log("after next if statement: ", curr_step);
+          } else if (curr_step == 6) {
+            console.log("now, markings are necessary");
+            $(document.getElementById('btn_next1')).addClass("disabled");
+            var avg = getAverage(coords);
+            color_marks.push(avg); // save color marks representing feet
+            coords = [];
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw a vertical line at 0 degrees (directly in front of the driver where the measuring stick was placed).";
+            curr_step += 1;
+            console.log("after next if statement: ", curr_step);
+          } else if (curr_step == 7) {
+			      $(document.getElementById('btn_next1')).addClass("disabled");
+            var avg = getAverage(coords);
+            zero = avg; // save zero degree point
+            coords = [];
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw vertical line at 90 degrees (directly to the right of the driver out of passenger window).";
+            curr_step += 1;
+            console.log("after next if statement: ", curr_step);
+          } else if (curr_step == 8) {
+			      $(document.getElementById('btn_next1')).addClass("disabled");
+            var avg = getAverage(coords);
+            neg_90 = avg; // save negative 90 degree point
+            coords = [];
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw line along the bottom of the front field of view. Please make sure that there are as few unintended gaps between dots as possible.";
+            curr_step += 1
+            console.log("after next if statement: ", curr_step);
+          } else if (curr_step == 9) {
+			      $(document.getElementById('btn_next1')).addClass("disabled");
+            bottom_view_front = coords;
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11):<br>";
+            instructiontxt.innerHTML += "<img src =\"static/Step "+curr_step+".jpg\" width= \"976px\" height =\"282px\"><br>";
+            instructiontxt.innerHTML += "Draw line along the bottom of the passenger side field of view. Be sure to draw above the sideview mirror. Please make sure that there are as few unintended gaps between dots as possible.";
+            step8_coords = coords;
+            coords = [];
+            curr_step += 1;
+            console.log("after next if statement: ", curr_step);
+          } else if (curr_step == 10) {
+            addCanvasPoints(ctx, width, height);
+            saveCanvas(canvas, curr_step);
+            bottom_view_passenger = coords;
+            var item = document.getElementById('buttons');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById('buttons2');
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById('dataentry');
+            if (item) {
+              if (item.className == 'hidden') {
+                item.className = 'unhidden';
+              }
+            }
+            var item = document.getElementById("canvas");
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById("measurementpole");
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById("canvastips");
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById("choosepano");
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById("loadmessage");
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+
+            instructiontxt.innerHTML = "(Step " + curr_step + " of 11): Enter vehicle measurements A, B, C, and D. All values should be positive.";
+            curr_step += 1;
+
+            console.log("after next if statement: ", curr_step);
+
+          } else if (curr_step == 11) {
+            mult = 1.0;
+            if (unit == "centi") {
+              mult = 1 / 2.54;
+            }
+
+            total_volume = [0, 0, 0, 0];
+            blind_volume = [0, 0, 0, 0];
+            blind_volume_front = [0, 0, 0, 0];
+            blind_volume_between = [0, 0, 0, 0];
+            blind_volume_passenger = [0, 0, 0, 0];
+            total_volume_front = [0, 0, 0, 0];
+            total_volume_between = [0, 0, 0, 0];
+            total_volume_passenger = [0, 0, 0, 0];
+
+            driver_height = Math.round(document.getElementById('a').value * mult, 0);
+            marks_dist = Math.round(document.getElementById('rd').value * mult, 0);
+            b = Math.round(document.getElementById("b").value * mult, 0);
+            d = Math.round(document.getElementById("d").value * mult, 0);
+            console.log(driver_height + " " + marks_dist + " " + b + " " + d);
+            createHeightMap();
+            console.log("about to call calcgroundintersection");
+
+            calcGroundIntersection();
+
+            // more data validation
+            $(document.getElementById('btn_next2')).addClass("disabled");
+
+            var item = document.getElementById('dataentry');
+            if (item) {
+              if (item.className == 'unhidden') {
+              item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById('percentage');
+            if (item) {
+              if (item.className == 'hidden') {
+              item.className = 'unhidden';
+              }
+            }
+            curr_step += 1;
+            console.log("after next if statement: ", curr_step);
+          } else { // enter vin or vehicle info:
+            var vin = document.getElementById('vin').value;
+            var comments = document.getElementById('comments').value;
+            var agency = document.getElementById('agency').value;
+            console.log(comments)
+            if (vin.length == 0) {
+              var vin = "NA";
+              var partialvin = "NA";
+              var vmake = document.getElementById('vmake').value;
+              var vmodel = document.getElementById('vmodel').value;
+              var vyear = document.getElementById('vyear').value;
+              var vwc = document.getElementById('vwc').value;
+              truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, b, d, marks_dist, driver_height, comments, agency);
+            } else {
+              truckInfoFromVIN(vin, perc, b, d, marks_dist, driver_height, comments, agency);
+            }
+            instructiontxt.innerHTML = "Thank you. Your vehicle was added to the vehicle database. You can access the database on the 'Vehicle Database' page.";
+            var item = document.getElementById('vinfoentry');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            var item = document.getElementById('addcomments');
+            if (item) {
+              if (item.className == 'unhidden') {
+                item.className = 'hidden';
+              }
+            }
+            console.log("redirecting to getinfo page from timeout");
+            /**
+			      setTimeout(() => {  console.log("TIMEOUT!"); }, 6000);
+            location.href = '/getinfo';
+			      **/
+          }
+          ctx.drawImage(image, 0, 0, width, height); // this line clears the drawings every step, or rather, adds the car image
+          // on top of the existing image each time, creating a blank image
+        }
+        image.src = img;
+      }
+      ctx.addNext(img);
+
+      // bind mouse/finger events
+      canvas.node.onpointermove = function (e) {
+        if (!canvas.isDrawing) {
+          return;
+        }
+        var x = e.pageX - this.offsetLeft;
+        var y = e.pageY - this.offsetTop;
+        var threshold = 5;
+        if (y > height - threshold || x > width - threshold || x < threshold || y < threshold) {
+          canvas.isDrawing = false;
+        }
+        var radius = 3; // or whatever
+        var fillColor = '#ff0000';
+        if (curr_step <= 6) {
+          storeOneCord(y, coords);
+        } else if (curr_step <= 8) {
+          storeOneCord(x, coords);
+        } else {
+          storeCoordinate(x, y, coords);
+        }
+        ctx.fillCircle(x, y, radius, fillColor);
+      };
+      canvas.node.onpointerdown = function (e) {
+        canvas.isDrawing = true;
+        console.log("canvas")
+        console.log(canvas);
+      };
+      canvas.node.onpointerup = function (e) {
+        canvas.isDrawing = false;
+		    check_coords(coords, curr_step);
+      };
+    }
+
+    var container = document.getElementById('canvas');
+    var width = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    if (width < 1200) width = 1200;
+
+    init(container, width * .75, width * .4, '#ddd', img);
+  };
+
+  // previewFile displays the truck image
+  function previewFile() {
+	console.log("previewfile function");
+    // Where you will display your image
+    var item = document.getElementById('canvas');
+    if (item) {
+      if (item.className == 'hidden') {
+        item.className = 'unhidden';
+      }
+    }
+    var item = document.getElementById('measurementpole');
+    if (item) {
+      if (item.className == 'hidden') {
+        item.className = 'unhidden';
+      }
+    }
+    var item = document.getElementById('steps');
+    if (item) {
+      if (item.className == 'hidden') {
+        item.className = 'unhidden';
+      }
+    }
+    var preview = document.querySelector('img');
+    // The button where the user chooses the local image to display
+    var file = document.querySelector('input[type=file]').files[0];
+    console.log("file and file[name]")
+    console.log(file);
+    console.log(file["name"]);
+    fileName = file["name"];
+    // FileReader instance
+    var reader = new FileReader();
+
+    var formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', 'blindspot-app');
+      formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+    console.log("formData:")
+    console.log(formData)
+    axios({
+
+		url: CLOUDINARY_URL,
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        data: formData
+      }).then(function(res) {
+        console.log(res);
+        fileURL = res["data"]["secure_url"];
+		upload_done[0] = 2;
+        console.log(fileURL);
+      }).catch(function(err) {
+        console.log(err);
+		upload_done[0] = 1;
+      });
+
+    // When the image is loaded we will set it as source of our img tag
+    reader.onloadend = function () {
+      preview.src = reader.result; // reader.result is a base64 encoded string
+      my_image = preview.src;
+      c(preview.src);
+    }
+
+    if (file) {
+      // Load image as a base64 encoded URI
+      reader.readAsDataURL(file);
+
+    } else {
+      preview.src = "";
+    }
+  }
+
+  /*
+  createHeightMap creates a hashmap mapping pixel locations on the image to the height they
+  correspond with at the radial distance the measurment stick is at
+  */
+  function createHeightMap() {
+    for (var i = 0; i < color_marks.length; i++) {
+      if (color_marks[i] & color_marks[i + 1]) {
+        var diff = color_marks[i] - color_marks[i + 1];
+        var increment = 12 / diff;
+        var inches_val = i * 12;
+        for (var j = color_marks[i]; j >= color_marks[i + 1]; j--) {
+          height_map[j] = inches_val;
+          inches_val += increment;
+        }
+      } else if (color_marks[i + 1] & color_marks[i + 2]) { // beginning of list
+        var diff = color_marks[i + 1] - color_marks[i + 2];
+        var increment = 12 / diff;
+        var inches_val = (i - 9) * 12; // needed at the begining not the end because we increment up
+        // we extend downward to handle all trucks
+        for (var j = color_marks[i + 1] + (diff * 10); j >= color_marks[i + 1]; j--) {
+          height_map[j] = inches_val;
+          inches_val += increment;
+        }
+      } else if (color_marks[i]) { // end of the list
+        var diff = color_marks[i - 1] - color_marks[i]; //positive val difference in heights (inches per pixel)
+        var increment = 12 / diff; 
+        var inches_val = i * 12;
+        // we extend upward to handle all trucks
+        for (var j = color_marks[i]; j >= color_marks[i] - (diff * 5); j--) {
+          height_map[j] = inches_val;
+          inches_val += increment;
+        }
+      }
+    }
+    console.log("Height Map:");
+    console.log(height_map);
+  }
+
+  /*
+  getPhi takes a x pixel location on the image and converts it to a radian value
+  where 0 is directly in front of the driver as marked by the user
+
+  px_x: the x pixel location
+  */
+  function getPhi(px_x) {
+    var diff = zero - neg_90; // px difference between the angle marks
+    var degree_v = diff / 90; // number of px each angle, 90 is diff angle size
+    var past_zero = px_x - zero; // number of px off zero deg
+    var deg = past_zero / degree_v;
+    var radians = deg * (Math.PI / 180);
+    return radians;
+  }
+
+  function getTanDeg(deg) {
+    var rad = deg * Math.PI / 180;
+    return Math.tan(rad);
+  }
+
+  function getATanDeg(deg) {
+    return Math.atan(deg) * (180 / Math.PI);
+  }
+
+  /*
+  Creates list of phis and nvps (ground intersection points) for both front and passenger views.
+  Starts chain of requests initiated in each requests onload which
+  end in the percentage visible area being displayed
+  */
+  function calcGroundIntersection() {
+    var ground_intersections_front = []; // distance from the driver for that particular dot
+    var ground_intersections_passenger = [];
+    var phis_front = []; // angle of that particular dot
+    var phis_passenger = [];
+
+    // make lists of phis and nvps for front and passenger
+    for (var i = 0; i < bottom_view_front.length; i++) {
+      var bottom_view_inches = height_map[Math.round(bottom_view_front[i].y)];
+      var opposite_side = driver_height - bottom_view_inches;
+      var fov_angle = getATanDeg(opposite_side / marks_dist);
+      var ground_intersection = driver_height * getTanDeg(90 - fov_angle);
+      ground_intersections_front.push(ground_intersection);
+
+      var phi = getPhi(bottom_view_front[i].x);
+      phis_front.push(phi);
+    }
+
+    for (var i = 0; i < bottom_view_passenger.length; i++) {
+      var bottom_view_inches = height_map[Math.round(bottom_view_passenger[i].y)];
+      var opposite_side = driver_height - bottom_view_inches;
+      var fov_angle = getATanDeg(opposite_side / marks_dist);
+      var ground_intersection = driver_height * getTanDeg(90 - fov_angle);
+      ground_intersections_passenger.push(ground_intersection);
+
+      var phi = getPhi(bottom_view_passenger[i].x);
+      phis_passenger.push(phi);
+    }
+
+    // remove any overlap in front and passenger window if it exists
+    while (phis_front[phis_front.length - 1] <= phis_passenger[0]) {
+      phis_front.pop()
+      ground_intersections_front.pop()
+    }
+
+    console.log("phis_front")
+    console.log(phis_front)
+    console.log("fov_angle")
+    console.log(fov_angle)
+    console.log("ground_intersections_front")
+    console.log(ground_intersections_front)
+    console.log("bottom_view_front")
+    console.log(bottom_view_front)
+    console.log("bottom_view_passenger")
+    console.log(bottom_view_passenger)
 
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+	calcBlindVolumeFront(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger);
+	make_json_string(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger);
+  }
+
+  /*
+  calcBlindVolumeFront makes a request to the getblindarea end point with the
+  front window information, onload it calls calcBlindVolumePassenger
+
+  ground_intersections_front: list(int), nearest visible points along the bottom of field of view from user drawn points along the front window
+  ground_intersections_passenger: list(int), nearest visible points along the bottom of field of view from user drawn points along the passenger window
+  phis_front: list(int), list of radians corresponding to ground_intersection_front
+  phis_passenger: list(int), list of radians corresponding to ground_intersection_passenger
+  */
+  function calcBlindVolumeFront(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger) {
+    let request = new XMLHttpRequest();
+    let url = "/api/v1/getblindarea/";
+    request.responseType = "json";
+    var headers = { 'content-type': 'application/json' };
+    request.onload = function () {
+      let response = this.response;
+
+      try {
+		for (var i = 0; i < 4; i ++ ){
+			blind_volume[i] += response['data'][i];
+			blind_volume_front[i] = response['data'][i];
+			total_volume_front[i] = response['total_volume'][i];
+		}
+        calcBlindVolumePassenger(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger);
+        step_11_html(false);
+      } catch {
+        console.log("got an error in front");
+        step_11_html(true);
+      }
+    }
+	  request.open("POST", url);
+	  request.send(body = JSON.stringify({ 'NVPs': ground_intersections_front, 'phis': phis_front, 'a': driver_height, 'b': b, 'd': d }));
+  }
+
+  /*
+  calcBlindVolumePassenger makes a request to the getblindarea end point with the
+  passenger window information, onload it calls calcBlindVolumeBetween
+
+  ground_intersections_front: list(int), nearest visible points along the bottom of field of view from user drawn points along the front window
+  ground_intersections_passenger: list(int), nearest visible points along the bottom of field of view from user drawn points along the passenger window
+  phis_front: list(int), list of radians corresponding to ground_intersection_front
+  phis_passenger: list(int), list of radians corresponding to ground_intersection_passenger
+  */
+  function calcBlindVolumePassenger(ground_intersections_front, ground_intersections_passenger, phis_front, phis_passenger) {
+	let request = new XMLHttpRequest();
+    let url = "/api/v1/getblindarea/";
+    request.responseType = "json";
+    var headers = { 'content-type': 'application/json' };
+    request.onload = function () {
+      let response = this.response;
+
+	  for (var i = 0; i < 4; i ++){
+		blind_volume[i] += response['data'][i];
+		blind_volume_passenger[i] = response['data'][i];
+		total_volume_passenger[i] = response['total_volume'][i];
+	  }
+
+		calcBlindVolumeBetween(phis_front, phis_passenger);
+    }
+    request.open("POST", url);
+    request.send(body = JSON.stringify({ 'NVPs': ground_intersections_passenger, 'phis': phis_passenger, 'a': driver_height, 'b': b, 'd': d }));
+	  get_stick_c(ground_intersections_front, phis_front);
+  }
+
+  /*
+  calcBlindVolumeBetween makes a request to the getinterestarea end point with the
+  phi on either side of the barrier between the front and passenger window information, onload it calls calcTotalVolume
+
+  phis_front: list(int), list of radians corresponding to ground_intersection_front
+  phis_passenger: list(int), list of radians corresponding to ground_intersection_passenger
+  */
+  function calcBlindVolumeBetween(phis_front, phis_passenger) {
+    // bookend_phis is the phis which bookend the blind area between the front and passenger window
+    var bookend_phis = [phis_front[phis_front.length - 1], phis_passenger[0]];
+    /**
+	  console.log("phis_front")
+    console.log(phis_front)
+    console.log("phis_passenger")
+    console.log(phis_passenger)
+    console.log("bookend_phis")
+    console.log(bookend_phis)
+	  **/
+
+    let request = new XMLHttpRequest();
+    // getinterestarea is instead of getblindarea because want the entire slice
+    // of area blocked
+    let url = "/api/v1/getinterestarea/";
+    request.responseType = "json";
+    var headers = { 'content-type': 'application/json' };
+    request.onload = function () {
+      let response = this.response;
+
+	  for (var i = 0; i < 4; i ++ ) {
+		  blind_volume[i] += response['data'][i];
+		  blind_volume_between[i] = response['data'][i];
+		  total_volume_between[i] = response['data'][i];
+	  }
+
+      var phis = phis_front.concat(phis_passenger);
+      calcTotalVolume(phis);
+    }
+    request.open("POST", url);
+    request.send(body = JSON.stringify({ 'phis': bookend_phis, 'b': b, 'd': d, 'a':driver_height,'c':marks_dist}), headers = headers);
+  }
+
+  /*
+  calcTotalVolume makes a request to the getinterestarea endpoint and onload calls postRatio()
+
+  phis: list(int), list of all phis from both windows
+  */
+  function calcTotalVolume(phis) {
+    let request = new XMLHttpRequest();
+    let url = "/api/v1/getinterestarea/";
+    request.responseType = "json";
+    var headers = { 'content-type': 'application/json' };
+    request.onload = function () {
+      let response = this.response;
+
+      total_volume = response['data'];
+      preschool_children = response['preschool_children'];
+      grade_school_children = response['grade_school_children'];
+      grade_school_bicyclists = response['grade_school_bicyclists'];
+      wheelchair_users = response['wheelchair_users'];
+      adult_bicyclists = response['adult_bicyclists'];
+      adults = response['adults'];
+      console.log(total_volume);
+      console.log('adults:');
+      console.log(adults);
+      console.log("preschool_children");
+      console.log(preschool_children);
+	  for (var i = 0; i < 4; i ++ ){
+		postRatio(i);
+	  }
+
+    }
+	  var c = -1 * marks_dist / ( 12/driver_height - 1);
+	  console.log("c values " + c + " " + stick_c);
+    request.open("POST", url);
+    request.send(body = JSON.stringify({ 'phis': phis, 'b': b, 'd': d, 'a':driver_height, 'c':Math.max(stick_c, c)}), headers = headers);
+  }
+
+  /*
+  Calculates the precentage visible volume and displays it
+  */
+  function postRatio(r) {
+    console.log("postRatio function start");
+	console.log(total_volume);
+    console.log(blind_volume);
+
+
+    var ratio = (total_volume[r] - blind_volume[r]) / total_volume[r];
+    var tperc = ratio * 100;
+    var rounded_perc = Math.round(tperc, 0); // at this point we don't feel confident providing more percision
+    console.log("ratio: " + ratio);
+    //front
+    var ratio_front = (total_volume_front[r] - blind_volume_front[r]) / total_volume_front[r];
+    var tperc_front = ratio_front * 100;
+    var rounded_perc_front = Math.round(tperc_front, 0); // at this point we don't feel confident providing more percision
+    console.log("ratio_front: " + ratio_front);
+    var ratio_passenger = (total_volume_passenger[r] - blind_volume_passenger[r]) / total_volume_passenger[r];
+    var tperc_passenger = ratio_passenger * 100;
+    var rounded_perc_passenger = Math.round(tperc_passenger, 0); // at this point we don't feel confident providing more percision
+    // if (r == 0) {
+		//  percentage.innerHTML = "Percent of volume visible: " + rounded_perc + "%, front: " + rounded_perc_front + "%, passenger: " + rounded_perc_passenger + "%";
+	  // }
+    console.log("ratio: " + ratio);
+
+    perc[r] = rounded_perc;
+    perc_front[r] = rounded_perc_front;
+    perc_passenger[r] = rounded_perc_passenger;
+  }
+
+	function make_json_string(ground_front, ground_passenger, phis_front, phis_passenger ) {
+		var a = Math.round(document.getElementById('a').value, 0);
+		var c = Math.round(document.getElementById('rd').value, 0);
+		var b = Math.round(document.getElementById("b").value, 0);
+		var d = Math.round(document.getElementById("d").value, 0);
+		var i = 0;
+		  // console.log("phis_front rounded");
+		  //do processing here?
+
+		var nvps = new Array(360).fill(0);
+		var counts = new Array(360).fill(0);
+
+		var phis_max = -360;
+		var phis_min = 360;
+
+		//p_f = []
+		for (i = 0; i < phis_front.length; i ++ ) {
+		  // console.log( parseInt(phis_front[i].toFixed(3)) );
+		  curr_phi = Math.round( phis_front[i] * 60 + 90, 0);
+		  //p_f.push( parseFloat( curr_phi.toFixed(0) ));
+		  nvps[ curr_phi  ] += ground_front[i];
+		  counts[ curr_phi] += 1;
+		  phis_max = Math.max(phis_max, curr_phi)
+		}
+		/*
+		g_f = []
+		for (i = 0; i < ground_front.length; i ++ ) {
+		  g_f.push( parseFloat(  ground_front[i].toFixed(0)) );
+		}
+		*/
+
+		//p_p = [];
+		for (i = 0; i < phis_passenger.length; i ++ ) {
+		  curr_phi = Math.round( phis_passenger[i] * 60 + 90, 0);
+
+      if (curr_phi < 0) {
+        nvps[curr_phi + 360] += ground_passenger[i];
+        counts[curr_phi + 360] += 1
+      }
+      else {
+        //p_p.push( parseFloat( curr_phi.toFixed(0) ));
+		    nvps[ curr_phi  ] += ground_passenger[i];
+		    counts[ curr_phi] += 1;
+      }
+		  phis_min = Math.min(phis_min, curr_phi);
+		}
+		var front_max = ground_front.reduce(function(a, b) {
+			return Math.max(a, b);
+		}, 0);
+		var pass_max = ground_passenger.reduce(function(a, b) {
+			return Math.max(a, b);
+		}, 0);
+
+
+
+
+		max_rad = Math.round( Math.max( front_max, pass_max ), 0 );
+
+		for (var i = 0; i < 360; i ++ ){
+			if (counts[i] == 0){
+				nvps[i] = max_rad;
+			} else {
+				nvps[i] = Math.round( nvps[i] / counts[i] );
+			}
+		}
+
+
+		function arrayRotate(arr, count) {
+		  count -= arr.length * Math.floor(count / arr.length);
+		  arr.push.apply(arr, arr.splice(0, count));
+		  return arr;
+		}
+
+		nvps = arrayRotate(nvps, phis_min);
+		var phis = []
+		for (var i = 0; i < 360; i ++ ){
+			phis.push(phis_min + i);
+		}
+		var measured = phis_max - phis_min;
+		var other_data = [b, d, max_rad, a];
+		json_string = JSON.stringify( { 'phis': phis, 'nvps':nvps, 'measured': measured, 'other':other_data, 'processed': 1, "bottom_view_front": bottom_view_front,
+    "bottom_view_passenger":bottom_view_passenger,"color_marks":color_marks,
+    "neg_90":neg_90, 'zero':zero});
+    mark_string = JSON.stringify({'color_marks':color_marks});
+    string_90 = JSON.stringify({'neg_90':neg_90});
+    zero_string = JSON.stringify({'zero': zero});
+		/*
+		g_p = [];
+		for (i = 0; i < ground_passenger.length; i ++ ) {
+		  g_p.push( parseFloat( ground_passenger[i].toFixed(0) ));
+		}
+		8?
+		  json_string = JSON.stringify( {'pf': p_f, 'gf': g_f, 'pp': p_p, 'gp': g_p, 'processed': 0 });
+
+		  full_json_string = JSON.stringify( {'pf': p_f, 'gf': g_f, 'pp': p_p, 'gp': g_p, 'a': a, 'b': b, 'c':c, 'd': d });
+		/*
+		let request = new XMLHttpRequest();
+		  let url = "/api/v1/getspecificimage/";
+		  request.responseType = "json";
+		  var headers = { 'content-type': 'application/json' };
+
+		request.onload = function(){
+		  let response = this.response;
+		  console.log("got string");
+
+		  top_string = response['data'];
+		  //console.log(top_string);
+		}
+
+		request.open("POST", url);
+		request.send(body = JSON.stringify( {"json_string": full_json_string, "index" : 3, 'mode':0}));
+
+		//console.log(json_string);
+		//, 'Full VIN': "NA"
+		*/
+	}
+
+  //Enter vehicle w/o vin # :
+
+  function truckInfoNoVin(vin, partialvin, vmake, vmodel, vyear, vwc, perc, b, d, marks_dist, driver_height, comments, agency) {
+    let request = new XMLHttpRequest();
+    let url = "/api/v1/addvehicle/";
+    var uvin = vin.toUpperCase();
+    var bodyclass = "No VIN"
+    request.responseType = "json";
+    var headers = { 'content-type': 'application/json' };
+
+    request.onload = function () {
+      let response = this.response;
+      console.log(response);
+	    var redirect = response["redirect"];
+	    console.log(redirect);
+      console.log("redirecting to getinfo page from novin");
+
+	    // concat the user's perc_vis with the getinfo url to return custom getinfo page
+      location.href = '/getinfo/' + redirect;
+    }
+    request.open("POST", url, true);
+    console.log("posting data to addvehicles");
+	  console.log("fileurl " + fileURL);
+    request.send(body = JSON.stringify({ 'vin': uvin, 'partialvin': partialvin,
+      'vmake': vmake, 'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear,'bodyclass':bodyclass,
+      'perc': perc, 'b': b, 'd': d, 'radial_distance': marks_dist,
+      'driver_height': driver_height, 'image_name': fileName, 'image_URL': fileURL, 'drawing_URL': drawingURL,
+      "comments": comments, "agency": agency,
+      'a': driver_height, 'c': marks_dist, 
+      'perc_front': perc_front, 'perc_passenger': perc_passenger,
+      'preschool_children':preschool_children,
+      'grade_school_children':grade_school_children, 'grade_school_bicyclists':grade_school_bicyclists,
+      'wheelchair_users':wheelchair_users, 'adult_bicyclists':adult_bicyclists,
+      'adults':adults,
+      'total_volume_front':total_volume_front[0],'total_volume_passenger':total_volume_passenger[0],
+			'total_volume_between':total_volume_between[0], 'phis_and_nvps':json_string, 'top_string': top_string,
+      'color_marks':mark_string, 'neg_90':string_90, 'zero':zero_string
+
+    }), headers = headers);
+  }
+
+  function get_stick_c(ground_front, phis_front) {
+    closest_phi = 0;
+    closest_i = 0;
+    for (i = 0; i < phis_front.length; i ++ ) {
+      if (Math.abs(phis_front[i] - 90) < 1){
+        closest_i = i;
+        break;
+      } else if (Math.abs(closest_phi - 90) >  Math.abs(phis_front[i] - 90) ){
+        closest_i = i;
+      }
+    }
+    stick_c = ground_front[closest_i]
+  }
+
+  /*
+  If user enters vin, truckInfoFromVIN gets truck model info to store in the database
+  Uses the National Highway Traffic Saftey Administrations Product Informaton Catalog's API
+
+  vin: string, either a ful or partial vehicle vin
+  perc: int, the percentage visible area
+  */
+  function truckInfoFromVIN(vin, perc, b, d, marks_dist, driver_height, comments, agency) {
+    // var vin = "5PVNC6JK562S10283"; // example
+    let request = new XMLHttpRequest();
+    var uvin = vin.toUpperCase();
+    let url = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValues/" + uvin + "?format=json";
+
+    request.onload = function () {
+      if (this.readyState === 4 && this.status === 200) {
+        let response = JSON.parse(this.responseText);
+        getElements(response);
+      }
+    }
+
+    request.open("GET", url, true);
+    request.send();
+
+    getElements = function (response) {
+      console.log(response);
+      var vmake = response["Results"]["0"]["Make"];
+      var vmodel = response["Results"]["0"]["Model"];
+      var vgvwr = response["Results"]["0"]["GVWR"];
+      var vyear = response["Results"]["0"]["ModelYear"];
+      var bodyclass = response["Results"]["0"]["BodyClass"];
+      var partialvin = uvin.substring(0, 10);
+      var vwc = vgvwr.substring(0, 7);
+      let request = new XMLHttpRequest();
+      let url = "/api/v1/addvehicle/";
+      request.responseType = "json";
+      var headers = { 'content-type': 'application/json' };
+      request.onload = function () {
+        let response = this.response;
+        console.log(response);
+        var redirect = response["redirect"];
+        console.log("redirecting to getinfo page from vin");
+
+        // concat the user's perc_vis with the getinfo url to return custom getinfo page
+        location.href = '/getinfo/' + redirect;
+		  }
+
+      request.open("POST", url);
+      request.send(body = JSON.stringify({
+        'vin': uvin, 'partialvin': partialvin, 'vmake': vmake,
+        'vmodel': vmodel, 'vwc': vwc, 'vyear': vyear, 'bodyclass': bodyclass, 'perc': perc, 'b': b, 'd': d,
+        'radial_distance': marks_dist, 'driver_height': driver_height,
+        'image_name': fileName, 'image_URL': fileURL, 'drawing_URL': drawingURL, "comments":comments, "agency": agency,
+        'a': driver_height, 'c': marks_dist,
+        'perc_front': perc_front, 'perc_passenger': perc_passenger,
+        'preschool_children':preschool_children,
+        'grade_school_children':grade_school_children, 'grade_school_bicyclists':grade_school_bicyclists,
+        'wheelchair_users':wheelchair_users, 'adult_bicyclists':adult_bicyclists,
+        'adults':adults,
+        'total_volume_front':total_volume_front[0],'total_volume_passenger':total_volume_passenger[0],
+        'total_volume_between':total_volume_between[0], 'phis_and_nvps':json_string, 'top_string': top_string,
+        'color_marks':mark_string, 'neg_90':string_90, 'zero':zero_string
+      }), headers = headers);
+    }
+  }
+
+
+  /* this function performs input validation for the measurements in step 10
+  currently, it only checks whether all of the values are less than 1, but this
+  can be edited for more specific ranges */
+  function check_abcd() {
+    var a = Math.round(document.getElementById('a').value, 0);
+      var c = Math.round(document.getElementById('rd').value, 0);
+      var b = Math.round(document.getElementById("b").value, 0);
+      var d = Math.round(document.getElementById("d").value, 0);
+
+    valid = true;
+    //console.log(unit);
+    if (unit === "inch" ) {
+      if (a < 24 || a > 324 || b < 24 || b > 126 || c < 12 || c > 1200 || d < 1|| d > 192 || c < d ){
+        valid = false;
+      }
+    } else { /* basically the values above but rounded */
+      if (a < 61 || a > 823 || b <61 || b > 320 || c < 30 || c > 3048 || d < 2 || d > 488 || c < d ){
+        valid = false;
+      }
+    }
+    if (valid) {
+      $(document.getElementById('btn_next2')).removeClass("disabled");
+    } else {
+      $(document.getElementById('btn_next2')).addClass("disabled");
+    }
+  }
+
+  /* this is to make sure that for steps 6 - 9, the user puts in at least some values
+  the length cutoff should probably be a lot higher than what it is, and perhaps extended to steps 1-5.  */
+  function check_coords(coords, step) {
+    if (step < 6 ||coords.length > 0) {
+      if ($(document.getElementById('btn_next1')).hasClass("disabled") ){
+        $(document.getElementById('btn_next1')).removeClass("disabled");
+      }
+    } else {
+      if (!$(document.getElementById('btn_next1')).hasClass("disabled") ){
+        $(document.getElementById('btn_next1')).addClass("disabled");
+      }
+    }
+  }
+
+  function mm_changed(makeormodel) {
+    if (makeormodel == "make") {
+      var vmake_value = document.getElementById('vmake').value;
+      var list = document.getElementById("json_makes").options;
+      document.getElementById("json_models").innerHTML = "";
+      if (! (vmake_value.trim() === "")) {
+        for (i = 0; i < list.length; i ++) {
+          if (vmake_value.toUpperCase() === list[i].value ) {
+            valid_make = true;
+            load_models(vmake_value);
+            break;
+          }
+        }
+      } else {
+        list.innerHTML = "";
+        valid_make = false;
+        valid_model = false;
+        no_models_for_make = false;
+        document.getElementById('vmodel').value = "";
+      }
+    } else if (makeormodel == "model") {
+      var vmodel_value = document.getElementById('vmodel').value;
+      valid_model = models.includes(vmodel_value);
+    }
+    check_model_info("selectnovin");
+  }
+
+  /* does an api call solely to make sure that the vin is valid - could probably be combined with the truckinfofromvin function so it's not repeated */
+  function check_model_info(vinOrNoVIN) {
+    var valid = false;
+    // console.log("check model info");
+    if (vinOrNoVIN == "selectvin") {
+      var vin_value = document.getElementById('vin').value.trim();
+      vin_value = vin_value.toUpperCase();
+      var vin_regex = new RegExp("^[A-HJ-NPR-Z0-9]{9}([A-HJ-NPR-Z0-9]{1})?([A-HJ-NPR-Z0-9]{7})?$", "i");
+      if ( vin_regex.test(vin_value) ) {
+        // console.log("passed regex");
+        if (unit === "inch") {
+          let request = new XMLHttpRequest();
+          let url = "https://vpic.nhtsa.dot.gov/api/vehicles/DecodeVINValues/" + vin_value + "?format=json";
+
+          request.onload = function () {
+            if (this.readyState === 4 && this.status === 200) {
+            let response = JSON.parse(this.responseText);
+            getElements(response);
+            }
+          }
+          try {
+
+          request.open("GET", url, true);
+          request.send();
+
+          } catch (e) {
+            valid = true;
+          }
+
+          getElements = function (response) {
+            //console.log(response["Results"]["0"]["ErrorCode"]);
+            var errors = response["Results"]["0"]["ErrorCode"];
+            //console.log(  ! errors.includes("7") );
+            if ( ! errors.includes("7") ) {
+              valid = true;
+              edit_button();
+            }
+          }
+        } else if (unit === "centi") {
+          valid = true;
+        }
+      }
+      edit_button();
+    } else if (vinOrNoVIN.includes("selectnovin")) {
+      // var vmodel_value = document.getElementById('vmodel').value;
+      if ( unit === "centi" ) {
+        valid = true;
+      } else {
+        console.log(valid_make, valid_model, no_models_for_make);
+        valid = valid_make && (valid_model || no_models_for_make);
+      }
+      edit_button();
+    }
+
+    function edit_button() {
+      // console.log("check valid");
+      if (valid) {
+        $(document.getElementById('btn_next2')).removeClass("disabled");
+      } else {
+        $(document.getElementById('btn_next2')).addClass("disabled");
+      }
+    }
+  }
+
+	function edit_unit(cur_unit) {
+		if (cur_unit == "centi" ) {
+			unit = cur_unit;
+		} else {
+			unit = "inch";
+		}
+		check_abcd();
+	}
+
+	function load_makes() {
+		console.log("loading makes")
+		var list = document.getElementById("json_makes");
+		let request = new XMLHttpRequest();
+
+		request.onload = function() {
+			if (this.readyState === 4 && this.status === 200 ) {
+				let jsonOptions = JSON.parse(this.responseText);
+				getElements(jsonOptions);
+			}
+		}
+		let url = "https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json";
+		request.open('GET', url, true);
+		request.send();
+
+		getElements = function (response) {
+			// console.log(response);
+
+			no_models_for_make = (response["Results"].length == 0);
+
+			response["Results"].forEach(function(item) {
+				var option = document.createElement('option');
+				option.value = item['Make_Name'];
+				list.appendChild(option);
+			});
+		}
+	}
+
+	function load_models(vmake) {
+		console.log("loading models for " + vmake);
+		var list = document.getElementById("json_models");
+
+		var vmodel = document.getElementById("vmodel").value;
+
+		let request = new XMLHttpRequest();
+
+		request.onload = function() {
+			if (this.readyState === 4 && this.status === 200 ) {
+
+				let jsonOptions = JSON.parse(this.responseText);
+				getElements(jsonOptions);
+
+			}
+		}
+		let url = "https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformake/" + vmake + "?format=json";
+		request.open('GET', url, true);
+		request.send();
+
+		getElements = function (response) {
+			console.log(response);
+
+			var valid_model = false;
+
+			response["Results"].forEach(function(item) {
+				var option = document.createElement('option');
+				option.value = item['Model_Name'];
+				if (vmodel === option.value) {
+					valid_model = true;
+				}
+				list.appendChild(option);
+				models.push(item['Model_Name']);
+			});
+
+			if (!valid_model) {
+				document.getElementById("vmodel").value = "";
+				list.text = '';
+
+				no_models_for_make = false;
+			}
+		}
+	}
+
+	function step_11_html(error) {
+		if (curr_step >= 11) {
+			if (error) {
+				instructiontxt.innerHTML = "Based on your inputs, your visibility scores were not able to be calculated. To try again, please refresh the page.";
+
+			} else {
+				var item = document.getElementById('vinfoentry');
+				if (item) {
+				  if (item.className == 'hidden') {
+					item.className = 'unhidden';
+				  }
+				}
+				var item = document.getElementById('addcomments');
+				if (item) {
+				  if (item.className == 'hidden') {
+					item.className = 'unhidden';
+				  }
+				}
+				if (document.getElementById('selectvin').checked) {
+					check1('selectvin');
+				} else if (document.getElementById('selectnovin').checked) {
+					check1('selectnovin');
+				}
+				else if (upload_done[0] < 2) {
+					instructiontxt.innerHTML = "(Step 11 of 11): Due to a network error, your image will not be uploaded to our database. However, your vehicle measurements can still be recorded. In order to add to the vehicle database, would you like to add your vehicle using the VIN number, or the vehicle make, model, year, and weight class? (Choose one):";
+
+				}else if (upload_done[0] == 2) {
+					instructiontxt.innerHTML = "(Step 11 of 11): In order to add to the vehicle database, would you like to add your vehicle using the VIN number, or the vehicle make, model, year, and weight class? (Choose one):";
+				}
+			}
+		}
+	}
+</script>
 {% endblock %}
